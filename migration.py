@@ -49,9 +49,10 @@ class Migration:
         >>> Migration.parse_filename('V02_01__ADDING_PARSES_PATTERNS.sql')
         (2, 1, 'ADDING_PARSES_PATTERNS')
         '''
-        major, minor, _, *name = filename.split('_')
-        name = '_'.join(name)
-        return int(major[1:]), int(minor), name.split('.')[0]
+        version, name = filename.split('__')
+        major, minor = version.split('_')
+        name = name.split('.')[0]
+        return int(major[1:]), int(minor), name
 
     def __repr__(self, *args, **kwargs):
         class_name = self.__class__.__name__
