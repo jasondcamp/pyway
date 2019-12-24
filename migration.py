@@ -24,7 +24,6 @@ class Migration:
         self.minor = int(minor)
         self.name = str(name)
 
-
     @classmethod
     def fromfile(cls, file):
         '''
@@ -55,7 +54,6 @@ class Migration:
         class_name = self.__class__.__name__
         return '{}(major={}, minor={}, name={})'.format(
             class_name, self.major, self.minor, repr(self.name))
-
 
 
 def _test():
