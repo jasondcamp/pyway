@@ -55,8 +55,8 @@ class Migration:
 
     def __repr__(self, *args, **kwargs):
         class_name = self.__class__.__name__
-        return "{}(major={}, minor={}, name='{}')".format(
-            class_name, self.major, self.minor, self.name)
+        return '{}(major={}, minor={}, name={})'.format(
+            class_name, self.major, self.minor, repr(self.name))
 
 
 
