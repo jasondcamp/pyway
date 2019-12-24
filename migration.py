@@ -9,10 +9,10 @@ class Migration:
 
     >>> ddl_migration  = Migration(name='database_creation', major=0, minor=0)
 
-    A migration normaly will be generate from two main places, at least what I
+    A migration normally will be generate from two main places, at least what I
     may think for now, from a file or from database.
 
-    Mostly this class will not be instanciated by contructor, but by its
+    Mostly this class will not be instantiated by constructor, but by its
     alternative constructors, for example, from file:
 
     >>> Migration.fromfile('V00_01__DDL.sql')
