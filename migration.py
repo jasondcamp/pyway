@@ -1,6 +1,3 @@
-import unittest
-
-
 class Migration:
     '''
     This class represents a migration for the database.
