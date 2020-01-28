@@ -1,0 +1,1 @@
+ALTER TABLE example_table ADD COLUMN IF NOT EXISTS example_column1 INTEGER NOT NULL
