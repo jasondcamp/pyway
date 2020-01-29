@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # build the docs
+mkdir -p docs
 cd docs
 make clean
 make html
