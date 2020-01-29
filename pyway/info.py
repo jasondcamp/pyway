@@ -3,13 +3,13 @@ from tabulate import tabulate
 from .helpers import Utils
 from .log import logger, bcolors
 from .migration import Migration
-from .sgbds.database import factory
+from .dbms.database import factory
 
 
 class Info():
 
     def __init__(self, conf):
-        self._db = factory(conf.SGBD)(conf)
+        self._db = factory(conf.DBMS)(conf)
         self.headers = ["version", "extension", "name", "checksum"]
         self.tablefmt = "fancy_grid"
 

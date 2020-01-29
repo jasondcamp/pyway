@@ -63,8 +63,7 @@ class Utils():
 
     @staticmethod
     def basepath():
-        dirname = Path(os.path.dirname(__file__)).parent
-        return os.path.join(dirname, settings.DATABASE_MIGRATION_DIR)
+        return os.path.join(os.getcwd(), settings.DATABASE_MIGRATION_DIR)
 
     @staticmethod
     def get_min_version_from_local_migrations():

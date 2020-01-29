@@ -38,5 +38,9 @@ setup(
     author='Sérgio Ferreira Filho',
     install_requires=install_requires,
     dependency_links=dependency_links,
-    author_email='sergio.ferreira.filho@gmail.com'
+    author_email='sergio.ferreira.filho@gmail.com',
+    py_modules=['pyway'],
+    entry_points={
+        'console_scripts': ['pyway=pyway.scripts.main:cli']
+    }
 )

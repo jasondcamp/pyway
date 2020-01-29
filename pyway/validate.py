@@ -1,6 +1,6 @@
 from .log import logger
 from .helpers import Utils
-from .sgbds.database import factory
+from .dbms.database import factory
 from .migration import Migration
 from .errors import OUT_OF_DATE_ERROR, DIFF_NAME_ERROR, DIFF_CHECKSUM_ERROR, VALID_NAME_ERROR
 
@@ -8,7 +8,7 @@ from .errors import OUT_OF_DATE_ERROR, DIFF_NAME_ERROR, DIFF_CHECKSUM_ERROR, VAL
 class Validate():
 
     def __init__(self, conf):
-        self._db = factory(conf.SGBD)(conf)
+        self._db = factory(conf.DBMS)(conf)
 
     def run(self):
         local_migrations = self._get_all_local_migrations()
@@ -22,6 +22,7 @@ class Validate():
             self._name_format(local_migration.name)
             self._diff_names(local_migration, db_migration)
             self._diff_checksum(local_migration, db_migration)
+            logger.success("%s VALID" % db_migration.name)
 
     def _out_of_date(self, local_migration, db_migration):
         if local_migration is None:

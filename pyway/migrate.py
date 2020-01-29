@@ -2,14 +2,14 @@ from .log import logger
 from .helpers import Utils
 from .validate import Validate
 from .migration import Migration
-from .sgbds.database import factory
+from .dbms.database import factory
 
 
 class Migrate():
 
     def __init__(self, conf):
         Validate(conf).run()
-        self._db = factory(conf.SGBD)(conf)
+        self._db = factory(conf.DBMS)(conf)
 
     def run(self):
         migrations_to_be_executed = self._get_migration_files_to_be_executed()
