@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/sergiosbx/pyway.svg?branch=master)](https://travis-ci.org/sergiosbx/pyway)
+
+
 Pyway Database Version Control
 ===============================
 
