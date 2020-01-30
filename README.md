@@ -4,7 +4,7 @@
 Pyway Database Version Control
 ===============================
 
-version number: 0.1.0
+version number: 0.2.0
 
 
 Overview

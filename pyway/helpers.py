@@ -11,11 +11,11 @@ class Utils():
 
     @staticmethod
     def subtract(list_a, list_b):
-        '''
-        TODO
-        '''
-        checksum_list_b = [b.checksum for b in list_b]
-        return [a for a in list_a if a.checksum not in checksum_list_b]
+        result = []
+        if list_a and list_b:
+            checksum_list_b = [b.checksum for b in list_b]
+            result = [a for a in list_a if a.checksum not in checksum_list_b]
+        return result
 
     @staticmethod
     def expected_pattern():
@@ -75,9 +75,6 @@ class Utils():
             dir_list = os.listdir(path)
         except OSError:
             logger.error(DIRECTORY_NOT_FOUND % path)
-
-        if len(dir_list) == 0:
-            logger.error(MIGRATIONS_NOT_FOUND)
         return dir_list
 
     @staticmethod
