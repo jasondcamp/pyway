@@ -1,4 +1,20 @@
 import os
+
+from .log import logger
+from .settings import DATABASE_MIGRATION_DIR, LOGS_DIR
+
+
+def _dir_maker(dir_):
+    if not os.path.exists(dir_):
+        logger.info("%s don't found, creating local folder" % dir_)
+        os.makedirs(dir_)
+
+
+_dir_maker(LOGS_DIR)
+_dir_maker(DATABASE_MIGRATION_DIR)
+
+'''
+import os
 import sys
 import logging
 import dotenv
@@ -19,3 +35,4 @@ if not os.path.exists(env_dotfile):
 else:
     logger.info('Loading dotenv for environment %s: %s', ENVIRONMENT, env_dotfile)
     dotenv.load_dotenv(dotenv_path=env_dotfile)
+'''

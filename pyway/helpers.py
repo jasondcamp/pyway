@@ -1,10 +1,8 @@
 import os
 import re
 import zlib
-from pathlib import Path
 
-from simple_settings import settings
-
+from . import settings
 from .log import logger
 from .errors import VALID_NAME_ERROR, DIRECTORY_NOT_FOUND, MIGRATIONS_NOT_FOUND, OUT_OF_DATE_ERROR
 

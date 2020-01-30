@@ -2,7 +2,8 @@ import os
 import sys
 import logging
 from datetime import date
-from simple_settings import settings
+
+from . import settings
 
 
 class bcolors:

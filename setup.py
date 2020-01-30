@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 from codecs import open
 from os import path
 
-from version import __version__
+from pyway.version import __version__
 
 
 here = path.abspath(path.dirname(__file__))

@@ -4,11 +4,10 @@ sphinx_rtd_theme
 nose
 coverage
 pypi-publisher
-python-dotenv==0.10.3
 click==7.0
-simple-settings==0.19.1
 tabulate==0.8.6
-git+git://github.com/orseni/pydbwrapper@v1.1.4
 pytest==5.3.5
 pytest-env==0.6.2
 pytest-cov==2.8.1
+
+git+git://github.com/orseni/pydbwrapper@v1.1.4

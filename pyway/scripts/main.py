@@ -1,9 +1,8 @@
 import click
 
-from simple_settings import settings
-
-from pyway.log import logger
+from pyway import settings
 from pyway.info import Info
+from pyway.log import logger
 from pyway.migrate import Migrate
 from pyway.validate import Validate
 
