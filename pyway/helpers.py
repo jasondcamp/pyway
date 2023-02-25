@@ -11,7 +11,6 @@ class Utils():
 
     @staticmethod
     def subtract(list_a, list_b):
-        # Subtract list_b from list_a
         result = []
         if list_a and list_b:
             checksum_list_b = [b.checksum for b in list_b]

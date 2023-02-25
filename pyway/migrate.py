@@ -9,7 +9,6 @@ from .errors import MIGRATIONS_NOT_FOUND
 class Migrate():
 
     def __init__(self, conf):
-#        Validate(conf).run()
         self._db = factory(conf.DBMS)(conf)
         self._migration_dir = conf.DATABASE_MIGRATION_DIR
 
