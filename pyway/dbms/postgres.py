@@ -23,7 +23,7 @@ class Postgres():
 
     def connect(self):
         return Datasource(Config(config_dict={
-            "host": self.config.DATABASE_URL,
+            "host": self.config.DATABASE_HOST,
             "port": self.config.DATABASE_PORT,
             "dbname": self.config.DATABASE_NAME,
             "user": self.config.DATABASE_USERNAME,

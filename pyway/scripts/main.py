@@ -14,24 +14,23 @@ def cli():
 
 @cli.command()
 def migrate():
-    logger.info('STARTING MIGRATE PROCESS . . .')
+    logger.info('Starting migration process...')
     Migrate(settings).run()
-    logger.info('.MIGRATE ENDED.')
+    logger.info('Migration completed.')
 
 
 @cli.command()
 def validate():
-    logger.info('STARTING VALIDATE PROCESS . . .')
+    logger.info('Starting validation process')
     Validate(settings).run()
-    logger.info('.VALIDATE ENDED.')
+    logger.info('Validation completed.')
 
 
 @cli.command()
 def info():
-    logger.info('INFO . . .')
+    logger.info('Gathering info...')
     Info(settings).run()
-    logger.info('.INFO ENDED.')
-
+    print()
 
 if __name__ == '__main__':
     cli()

@@ -46,7 +46,7 @@ class _Log():
     def error(self, msg):
         if self.logger:
             self.logger.error(self._colored(msg, bcolors.FAIL))
-        raise Exception(msg)
+#        raise Exception(msg)
 
     def warn(self, msg):
         if self.logger:

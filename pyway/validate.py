@@ -2,8 +2,8 @@ from .log import logger
 from .helpers import Utils
 from .dbms.database import factory
 from .migration import Migration
-from .errors import OUT_OF_DATE_ERROR, DIFF_NAME_ERROR, DIFF_CHECKSUM_ERROR, VALID_NAME_ERROR, MIGRATIONS_NOT_FOUND
-
+from .errors import OUT_OF_DATE_ERROR, DIFF_NAME_ERROR, DIFF_CHECKSUM_ERROR, VALID_NAME_ERROR, MIGRATIONS_NOT_FOUND, MIGRATIONS_NOT_STARTED
+import sys
 
 class Validate():
 
@@ -13,7 +13,11 @@ class Validate():
 
     def run(self):
         local_migrations = self._get_all_local_migrations()
-        db_migrations = Migration.from_list(self._db.get_all_schema_migrations())
+        db_migrations = self._db.get_all_schema_migrations()
+
+        if not db_migrations:
+            logger.error(MIGRATIONS_NOT_STARTED)
+            sys.exit(1)
 
         if db_migrations and not local_migrations:
             logger.error(MIGRATIONS_NOT_FOUND % self._migration_dir)

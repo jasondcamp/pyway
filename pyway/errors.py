@@ -4,3 +4,4 @@ DIFF_CHECKSUM_ERROR = "ERROR: Local file [%s] with diff script (%s) of the datab
 VALID_NAME_ERROR = "ERROR: Local file [%s] has invalid format name - expected: %s"
 DIRECTORY_NOT_FOUND = "ERROR: directory not found ('%s')"
 MIGRATIONS_NOT_FOUND = "ERROR: no local migration files found in (%s) folder"
+MIGRATIONS_NOT_STARTED = "ERROR: no migrations applied yet, no validation necessary."

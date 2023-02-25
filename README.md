@@ -50,15 +50,26 @@ CONFIGURATION
 
 #### DATABASE
 
-| Variable | Description | Default
-| --------------- | -------------- | :--------------: |
-| DATABASE_URL | URL to connect to the database | *required* |
-| DATABASE_PORT | Port to connect to the database | *required* |
-| DATABASE_NAME | Name of database to connect | *required* |
-| DATABASE_USERNAME | User to use to connect to the database | *required* |
-| DATABASE_PASSWORD | Password to use to connect to the database | *required* |
+| Variable | Description | Default | Example |
+| --------------- | -------------- | :--------------: | -------------- |
+| DATABASE_HOST | Host to connect to the database | *required* | db.mydomain.com |
+| DATABASE_PORT | Port to connect to the database | *required* | 3306 |
+| DATABASE_NAME | Name of database to connect | *required* | mydatabase |
+| DATABASE_USERNAME | User to use to connect to the database | *required* | admin |
+| DATABASE_PASSWORD | Password to use to connect to the database | *required* | 123456 |
 | DATABASE_CONNECT_TIMEOUT | Timeout to connect to the database (seconds) | 30 |
 | DATABASE_MAX_CONNECTIONS | Max connections to the database | 10 |
+
+
+PYWAY FILES
+-------
+Files are raw SQL files that are named like the following:
+
+V{major}_{minor}_{description}.sql
+
+Example: V01_01_initial_schema.sql
+
+Note that the description needs to match the word regexp [A-Za-z0-9_]
 
 
 USAGE

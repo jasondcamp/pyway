@@ -11,10 +11,14 @@ class Utils():
 
     @staticmethod
     def subtract(list_a, list_b):
+        # Subtract list_b from list_a
         result = []
         if list_a and list_b:
             checksum_list_b = [b.checksum for b in list_b]
             result = [a for a in list_a if a.checksum not in checksum_list_b]
+        elif list_a and not list_b:
+            # List B is empty (usually from a new install)
+            return list_a
         return result
 
     @staticmethod
@@ -32,6 +36,15 @@ class Utils():
     def sort_migrations_list(migrations):
         return sorted(migrations, key=lambda x: [x.get("version"), x.get("name")] if isinstance(x, dict) else
                                                 [x.version, x.name], reverse=False)
+
+
+    @staticmethod
+    def flatten_migrations(migrations):
+        migration_list = []
+        for m in migrations:
+            migration_list.append({ 'version': m.version, 'extension': m.extension, 'name': m.name, 'checksum': m.checksum, 'apply_timestamp': m.apply_timestamp })
+        return migration_list
+
 
     @staticmethod
     def get_version_from_name(name):
