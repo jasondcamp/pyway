@@ -57,9 +57,9 @@ PYWAY FILES
 -------
 Files are raw SQL files that are named like the following:
 
-V{major}_{minor}_{description}.sql
+V{major}__{minor}____{description}.sql
 
-Example: V01__01____initial__schema.sql
+Example: V01_01__initial_schema.sql
 
 Note that the description needs to match the word regexp [A-Za-z0-9_]
 
