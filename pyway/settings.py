@@ -1,8 +1,9 @@
 import os
 import argparse
 import yaml
+import sys
 
-from .version import __version__
+from pyway.version import __version__
 
 # Initialization
 LOGO = f"PyWay {__version__}"
@@ -21,9 +22,10 @@ parser.add_argument("--database-username", help="Database username", default=os.
 parser.add_argument("--database-password", help="Database password", default=os.environ.get('PYWAY_DATABASE_PASSWORD', 'password'))
 
 parser.add_argument("-c", "--config", help="Config file", default=os.environ.get('PYWAY_CONFIG_FILE', '.pyway.conf'))
+parser.add_argument("-v", "--version", help="Version", action='store_true')
 parser.add_argument("--logs-dir", help="Logs directory", default=os.environ.get('PYWAY_LOGS_DIR', 'logs'))
 parser.add_argument("--log-to-file", help="Log to file", action='store_true')
-parser.add_argument("cmd", help="info|validate|migrate")
+parser.add_argument("cmd", nargs="?", help="info|validate|migrate")
 
 args = parser.parse_args()
 
@@ -31,6 +33,16 @@ args = parser.parse_args()
 SQL_MIGRATION_PREFIX = os.environ.get('PYWAY_SQL_MIGRATION_PREFIX', 'V')
 SQL_MIGRATION_SEPARATOR = os.environ.get('PYWAY_SQL_MIGRATION_SEPARATOR', '__')
 SQL_MIGRATION_SUFFIXES = os.environ.get('PYWAY_SQL_MIGRATION_SUFFIXES', '.sql')
+
+# Display version if it exists
+if args.version:
+    print(f"Version: {__version__}")
+    sys.exit(1)
+
+# If no arg is specified, show help
+if not args.cmd:
+    parser.print_help()
+    sys.exit(1)
 
 # See if there is a config file
 if os.path.exists(args.config):
