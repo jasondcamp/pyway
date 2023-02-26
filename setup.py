@@ -27,9 +27,8 @@ setup(
     download_url='https://github.com/sergiosbx/pyway/tarball/' + __version__,
     license='GPL',
     classifiers=[
-      'Development Status :: 2 - Beta',
-      'Intended Audience :: Developers',
-      'Programming Language :: Python :: 3.9+',
+      'Development Status :: 4 - Beta',
+      'Programming Language :: Python :: 3.9',
     ],
     keywords='',
     packages=find_packages(exclude=['docs', 'tests*']),
