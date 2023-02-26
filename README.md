@@ -2,18 +2,14 @@
 
 
 # Pyway Database Version Control
-===============================
-
 version number: 0.3.0
 
 
 ## Overview
-
 Pyway is a database versioning and migration tool inspired by Flyway
 
 
 ## Download and Install
-
 To install use pip:
 
     $ pip install pyway
@@ -25,7 +21,6 @@ Or clone the repo:
 
 
 ## Configuration
-
 #### Pyway environment variables and command line options
 
 | Env Variable | Command Line | Description | Default |
@@ -89,6 +84,6 @@ Validate helps you verify that the migrations applied to the database match the 
 
 
 #### Migrate
-After `VALIDATE`, it will scan the **PYWAY_DATABASE_MIGRATION_DIR** for available migrations. It will compare them to the migrations that have been applied to the database. If any new migration is found, it will migrate the database to close the gap.
+After `validate`, it will scan the **Database migration dir** for available migrations. It will compare them to the migrations that have been applied to the database. If any new migration is found, it will migrate the database to close the gap.
 
     $ pyway migrate
