@@ -44,7 +44,7 @@ CONFIGURATION
 | PYWAY_SQL_MIGRATION_SEPARATOR | Separator between version and description to the migration file | __ |
 | PYWAY_SQL_MIGRATION_SUFFIXES | Suffix extension for migration files | .sql |
 | PYWAY_TABLE | Name of schema history table | public.schema_version |
-| PYWAY_DBMS | Data Base Management System [`postgres`, `oracle`, `mysql`, `sqlserver`] | *required* |
+| PYWAY_DBMS | Data Base Management System [`postgres`, `mysql` ] | *required* |
 | PYWAY_LOGS_DIR | Folder name to logs construct | logs |
 
 
@@ -57,8 +57,6 @@ CONFIGURATION
 | DATABASE_NAME | Name of database to connect | *required* | mydatabase |
 | DATABASE_USERNAME | User to use to connect to the database | *required* | admin |
 | DATABASE_PASSWORD | Password to use to connect to the database | *required* | 123456 |
-| DATABASE_CONNECT_TIMEOUT | Timeout to connect to the database (seconds) | 30 |
-| DATABASE_MAX_CONNECTIONS | Max connections to the database | 10 |
 
 
 PYWAY FILES
@@ -82,7 +80,7 @@ Information lets you know where you are. At first glance, you will see which mig
 
 
 #### VALIDATE
-Validate helps you verify that the migrations applied to the database match the ones available locally.
+Validate helps you verify that the migrations applied to the database match the ones available locally. This compares the checksums to validate that what is in the migration on disk is what was committed into the database.
 
     $ pyway validate
 
