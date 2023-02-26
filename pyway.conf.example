@@ -1,0 +1,13 @@
+database:
+    type: postgres
+    username: postgres
+    password: 123456
+    host: localhost
+    port: 5432
+    database: postgres
+logging:
+    logsdir: logs
+    logtofile: False
+general:
+    migrationsdir: schema
+    pywaytable: public.pyway
