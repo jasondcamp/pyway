@@ -73,7 +73,7 @@ class Utils():
 
     @staticmethod
     def basepath():
-        return os.path.join(os.getcwd(), settings.DATABASE_MIGRATION_DIR)
+        return os.path.join(os.getcwd(), settings.args.database_migration_dir)
 
     @staticmethod
     def get_min_version_from_local_migrations():

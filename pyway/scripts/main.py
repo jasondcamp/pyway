@@ -1,4 +1,4 @@
-import click
+import sys
 
 from pyway import settings
 from pyway.info import Info
@@ -7,30 +7,35 @@ from pyway.migrate import Migrate
 from pyway.validate import Validate
 
 
-@click.group()
-def cli():
-    logger.info(settings.LOGO)
-
-
-@cli.command()
 def migrate():
     logger.info('Starting migration process...')
     Migrate(settings).run()
     logger.info('Migration completed.')
 
 
-@cli.command()
 def validate():
     logger.info('Starting validation process')
     Validate(settings).run()
     logger.info('Validation completed.')
 
 
-@cli.command()
 def info():
     logger.info('Gathering info...')
     Info(settings).run()
     print()
+
+def cli():
+    logger.info(settings.LOGO)
+
+    if settings.args.cmd == "info":
+        info()
+    elif settings.args.cmd == "validate":
+        validate()
+    elif settings.args.cmd == "migrate":
+        migrate()
+    else:
+        logger.error(f"Command '{settings.args.cmd}' not recognized, exiting!")
+        sys.exit(1)
 
 if __name__ == '__main__':
     cli()

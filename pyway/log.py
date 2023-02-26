@@ -20,7 +20,7 @@ class bcolors:
 class _Log():
 
     def __init__(self):
-        log_dir = settings.LOGS_DIR
+        log_dir = settings.args.logs_dir
         if log_dir:
             if not os.path.exists(log_dir):
                 os.makedirs(log_dir)

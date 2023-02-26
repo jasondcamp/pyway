@@ -1,7 +1,9 @@
 import os
+import sys
+import argparse
 
 from .log import logger
-from .settings import DATABASE_MIGRATION_DIR, LOGS_DIR
+from .settings import args
 
 
 def _dir_maker(dir_):
@@ -10,8 +12,8 @@ def _dir_maker(dir_):
         os.makedirs(dir_)
 
 
-_dir_maker(LOGS_DIR)
-_dir_maker(DATABASE_MIGRATION_DIR)
+_dir_maker(settings.args.logs_dir)
+_dir_maker(settings.args.database_migration_dir)
 
 '''
 import os

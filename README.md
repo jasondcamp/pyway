@@ -37,26 +37,26 @@ CONFIGURATION
 
 #### PYWAY
 
-| Variable | Description | Default |
-| --------------- | -------------- | :--------------: |
-| PYWAY_DATABASE_MIGRATION_DIR | Folder name to migration files | resources |
-| PYWAY_SQL_MIGRATION_PREFIX | Prefix for version in migration file | V |
-| PYWAY_SQL_MIGRATION_SEPARATOR | Separator between version and description to the migration file | __ |
-| PYWAY_SQL_MIGRATION_SUFFIXES | Suffix extension for migration files | .sql |
-| PYWAY_TABLE | Name of schema history table | public.schema_version |
-| PYWAY_DBMS | Data Base Management System [`postgres`, `mysql` ] | *required* |
-| PYWAY_LOGS_DIR | Folder name to logs construct | logs |
+| Variable | Command Line | Description | Default |
+| --------------- | -------------- | -------------- | :--------------: |
+| PYWAY_DATABASE_MIGRATION_DIR | --database-migration-dir | Folder name to migration files | resources |
+| PYWAY_SQL_MIGRATION_PREFIX | | Prefix for version in migration file | V |
+| PYWAY_SQL_MIGRATION_SEPARATOR | | Separator between version and description to the migration file | __ |
+| PYWAY_SQL_MIGRATION_SUFFIXES | | Suffix extension for migration files | .sql |
+| PYWAY_TABLE | --database-table | Name of schema history table | public.schema_version |
+| PYWAY_DBMS | --database-type | Data Base Management System [`postgres`, `mysql` ] | *required* |
+| PYWAY_LOGS_DIR | --logs-dir | Folder name to logs construct | logs |
 
 
 #### DATABASE
 
-| Variable | Description | Default | Example |
-| --------------- | -------------- | :--------------: | -------------- |
-| DATABASE_HOST | Host to connect to the database | *required* | db.mydomain.com |
-| DATABASE_PORT | Port to connect to the database | *required* | 3306 |
-| DATABASE_NAME | Name of database to connect | *required* | mydatabase |
-| DATABASE_USERNAME | User to use to connect to the database | *required* | admin |
-| DATABASE_PASSWORD | Password to use to connect to the database | *required* | 123456 |
+| Variable | Command Line | Description | Default |
+| --------------- |  -------------- | -------------- | :--------------: |
+| PYWAY_DATABASE_HOST | --database-host | Host to connect to the database | localhost |
+| PYWAY_DATABASE_PORT | --database-port | Port to connect to the database | 5432 |
+| PYWAY_DATABASE_NAME | --database-name | Name of database to connect | postgres |
+| PYWAY_DATABASE_USERNAME |--database-username | User to use to connect to the database | postgres |
+| PYWAY_DATABASE_PASSWORD | --database-password | Password to use to connect to the database | *None* |
 
 
 PYWAY FILES

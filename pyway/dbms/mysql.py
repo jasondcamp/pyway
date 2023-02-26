@@ -19,16 +19,16 @@ class Mysql():
 
     def __init__(self, config):
         self.config = config
-        self.version_table = config.TABLE
+        self.version_table = config.args.database_table
         self.create_version_table_if_not_exists()
 
     def connect(self):
         return mysql.connector.connect(
-            host=self.config.DATABASE_HOST,
-            port=self.config.DATABASE_PORT,
-            database=self.config.DATABASE_NAME,
-            user=self.config.DATABASE_USERNAME,
-            password=self.config.DATABASE_PASSWORD
+            host=self.config.args.database_host,
+            port=self.config.args.database_port,
+            database=self.config.args.database_name,
+            user=self.config.args.database_username,
+            password=self.config.args.database_password
         )
 
     def create_version_table_if_not_exists(self):

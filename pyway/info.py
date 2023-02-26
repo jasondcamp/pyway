@@ -10,9 +10,9 @@ from .errors import MIGRATIONS_NOT_FOUND
 class Info():
 
     def __init__(self, conf):
-        self._database_connection = "%s:%s/%s" % (conf.DATABASE_HOST, conf.DATABASE_PORT, conf.DATABASE_NAME)
-        self._migration_dir = conf.DATABASE_MIGRATION_DIR
-        self._db = factory(conf.DBMS)(conf)
+        self._database_connection = "%s:%s/%s" % (conf.args.database_host, conf.args.database_port, conf.args.database_name)
+        self._migration_dir = conf.args.database_migration_dir
+        self._db = factory(conf.args.database_type)(conf)
         self.headers = ["version", "extension", "name", "checksum", "apply_timestamp"]
         self.tablefmt = "psql"
 

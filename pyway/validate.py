@@ -3,13 +3,12 @@ from .helpers import Utils
 from .dbms.database import factory
 from .migration import Migration
 from .errors import OUT_OF_DATE_ERROR, DIFF_NAME_ERROR, DIFF_CHECKSUM_ERROR, VALID_NAME_ERROR, MIGRATIONS_NOT_FOUND, MIGRATIONS_NOT_STARTED
-import sys
 
 class Validate():
 
     def __init__(self, conf):
-        self._db = factory(conf.DBMS)(conf)
-        self._migration_dir = conf.DATABASE_MIGRATION_DIR
+        self._db = factory(conf.args.database_type)(conf)
+        self._migration_dir = conf.args.database_migration_dir
 
     def run(self):
         local_migrations = self._get_all_local_migrations()

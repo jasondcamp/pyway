@@ -9,8 +9,8 @@ from .errors import MIGRATIONS_NOT_FOUND
 class Migrate():
 
     def __init__(self, conf):
-        self._db = factory(conf.DBMS)(conf)
-        self._migration_dir = conf.DATABASE_MIGRATION_DIR
+        self._db = factory(conf.args.database_type)(conf)
+        self._migration_dir = conf.args.database_migration_dir
 
     def run(self):
         migrations_to_be_executed = self._get_migration_files_to_be_executed()
