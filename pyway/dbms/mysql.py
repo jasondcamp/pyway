@@ -55,8 +55,3 @@ class Mysql():
     def upgrade_version(self, migration):
         self.execute(INSERT_VERSION_MIGRATE % (self.version_table, migration.version, migration.extension, migration.name, migration.checksum))
 
-    def get_max_version(self):
-        with self.connect() as db:
-            fetched = db.select(self.version_table).fields("version").order_by(ORDER_BY_FIELD_DESC)\
-                .execute().fetchone()
-            return int(fetched.version) if fetched is not None else 0
