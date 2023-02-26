@@ -22,16 +22,17 @@ class _Log():
     def __init__(self):
         log_dir = settings.args.logs_dir
         if log_dir:
-            if not os.path.exists(log_dir):
+            if settings.args.log_to_file and not os.path.exists(log_dir):
                 os.makedirs(log_dir)
             self.logger = logging.getLogger('pyway')
 
             now = date.today()
-            filename = "%s/%s.log" % (os.path.abspath(log_dir), now.strftime("%Y_%m_%d"))
-            hdlr = logging.FileHandler(filename)
-            formatter = logging.Formatter("%(asctime)s - %(levelname)s: %(message)s")
-            hdlr.setFormatter(formatter)
-            self.logger.addHandler(hdlr)
+            if settings.args.log_to_file:
+                filename = "%s/%s.log" % (os.path.abspath(log_dir), now.strftime("%Y_%m_%d"))
+                hdlr = logging.FileHandler(filename)
+                formatter = logging.Formatter("%(asctime)s - %(levelname)s: %(message)s")
+                hdlr.setFormatter(formatter)
+                self.logger.addHandler(hdlr)
             self.logger.addHandler(logging.StreamHandler(sys.stdout))
             self.logger.setLevel(logging.DEBUG)
 
