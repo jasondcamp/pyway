@@ -8,13 +8,11 @@ version number: 0.3.0
 
 
 ## Overview
---------
 
 Pyway is a database versioning and migration tool inspired by Flyway
 
 
 ## Download and Install
---------------------
 
 To install use pip:
 
@@ -27,7 +25,6 @@ Or clone the repo:
 
 
 ## Configuration
--------
 
 #### Pyway environment variables and command line options
 
@@ -68,7 +65,6 @@ general:
 
 
 ## Pyway Files
--------
 Files are raw SQL files that are named like the following:
 
 V{major}\_{minor}\_\_{description}.sql
@@ -79,7 +75,6 @@ Note that the description needs to match the word regexp [A-Za-z0-9_]
 
 
 ## Usage
--------
 
 #### Info
 Information lets you know where you are. At first glance, you will see which migrations have already been applied, which others are still pending, and whether there is a discrepancy between the checksum of the local file and the database schema table.
