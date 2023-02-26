@@ -4,13 +4,13 @@
 Pyway Database Version Control
 ===============================
 
-version number: 0.2.0
+version number: 0.3.0
 
 
 Overview
 --------
 
-Pyway is a database versioning and migration tool inspired on Flyway
+Pyway is a database versioning and migration tool inspired by Flyway
 
 
 Download and Install
@@ -20,15 +20,9 @@ To install use pip:
 
     $ pip install pyway
 
-
-Or on requirements:
-
-    git+git://github.com/sergiosbx/pyway@{version}
-
-
 Or clone the repo:
 
-    $ git clone https://github.com/sergiosbx/pyway.git
+    $ git clone https://github.com/jasondcamp/pyway.git
     $ python setup.py install
 
 
@@ -65,7 +59,7 @@ Files are raw SQL files that are named like the following:
 
 V{major}_{minor}_{description}.sql
 
-Example: V01_01_initial_schema.sql
+Example: V01__01____initial__schema.sql
 
 Note that the description needs to match the word regexp [A-Za-z0-9_]
 
