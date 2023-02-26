@@ -28,7 +28,7 @@ class _Log():
 
             now = date.today()
             if settings.args.log_to_file:
-                filename = "%s/%s.log" % (os.path.abspath(log_dir), now.strftime("%Y_%m_%d"))
+                filename = f'{os.path.abspath(log_dir)}/{now.strftime("%Y_%m_%d")}.log'
                 hdlr = logging.FileHandler(filename)
                 formatter = logging.Formatter("%(asctime)s - %(levelname)s: %(message)s")
                 hdlr.setFormatter(formatter)
@@ -53,7 +53,7 @@ class _Log():
             self.logger.warn(self._colored(msg, bcolors.WARNING))
 
     def _colored(self, msg, color):
-        return "%s%s%s" % (color, msg, bcolors.ENDC)
+        return f"{color}{msg}{bcolors.ENDC}"
 
     def success(self, msg):
         if self.logger:

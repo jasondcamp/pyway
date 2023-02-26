@@ -1,5 +1,4 @@
 import os
-import sys
 import argparse
 import yaml
 
@@ -9,8 +8,10 @@ from .version import __version__
 LOGO = f"PyWay {__version__}"
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--database-migration-dir", help="Database migration directory", default=os.environ.get('PYWAY_DATABASE_MIGRATION_DIR', 'resources'))
-parser.add_argument("--database-table", help="Database table that stores pyway metadata", default=os.environ.get('PYWAY_TABLE', 'public.pyway'))
+parser.add_argument("--database-migration-dir", help="Database migration directory",
+        default=os.environ.get('PYWAY_DATABASE_MIGRATION_DIR', 'resources'))
+parser.add_argument("--database-table", help="Database table that stores pyway metadata",
+        default=os.environ.get('PYWAY_TABLE', 'public.pyway'))
 parser.add_argument("--database-type", help="Database type [postgres|mysql]", default=os.environ.get('PYWAY_TYPE', 'postgres'))
 
 parser.add_argument("--database-host", help="Database host", default=os.environ.get('PYWAY_DATABASE_HOST', 'localhost'))
@@ -33,7 +34,7 @@ SQL_MIGRATION_SUFFIXES = os.environ.get('PYWAY_SQL_MIGRATION_SUFFIXES', '.sql')
 
 # See if there is a config file
 if os.path.exists(args.config):
-    with open(args.config, "r") as ymlfile:
+    with open(args.config, "r", encoding='utf-8') as ymlfile:
         cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
 
     # Merge config together with args
@@ -62,4 +63,3 @@ if os.path.exists(args.config):
             args.database_migration_dir = cfg['general']['migrationsdir']
         if 'pywaytable' in cfg['general']:
             args.database_table = cfg['general']['pywaytable']
-

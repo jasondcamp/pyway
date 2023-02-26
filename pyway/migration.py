@@ -1,8 +1,6 @@
-from .helpers import Utils
-
+from pyway.helpers import Utils
 
 class Migration():
-
     def __init__(self, version, extension, name, checksum, apply_timestamp):
         self.version = version
         self.extension = extension
@@ -25,7 +23,3 @@ class Migration():
     @classmethod
     def from_list_names(cls, list_):
         return [cls.from_name(m.name) for m in list_]
-
-    def __repr__(self):
-        return 'Migration(version=%s, extension=%s, name=%s, checksum=%s, apply_timestamp=%s)' % \
-            (self.version, self.extension, self.name, self.checksum, self.apply_timestamp)

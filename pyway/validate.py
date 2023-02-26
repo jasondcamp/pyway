@@ -1,11 +1,12 @@
-from .log import logger
-from .helpers import Utils
-from .dbms.database import factory
-from .migration import Migration
-from .errors import OUT_OF_DATE_ERROR, DIFF_NAME_ERROR, DIFF_CHECKSUM_ERROR, VALID_NAME_ERROR, MIGRATIONS_NOT_FOUND, MIGRATIONS_NOT_STARTED
+import sys
+
+from pyway.log import logger
+from pyway.helpers import Utils
+from pyway.dbms.database import factory
+from pyway.migration import Migration
+from pyway.errors import OUT_OF_DATE_ERROR, DIFF_NAME_ERROR, DIFF_CHECKSUM_ERROR, VALID_NAME_ERROR, MIGRATIONS_NOT_FOUND, MIGRATIONS_NOT_STARTED
 
 class Validate():
-
     def __init__(self, conf):
         self._db = factory(conf.args.database_type)(conf)
         self._migration_dir = conf.args.database_migration_dir
@@ -25,21 +26,21 @@ class Validate():
             local_migrations_map = Utils.create_map_from_list("version", local_migrations)
 
             for db_migration in db_migrations:
-                logger.info("Validating --> %s" % db_migration.name)
+                logger.info(f"Validating --> {db_migration.name}")
                 local_migration = local_migrations_map.get(db_migration.version)
 
-                if not self._out_of_date(local_migration, db_migration):
+                if not self._out_of_date(local_migration):
                     logger.error(OUT_OF_DATE_ERROR % db_migration.name)
                 elif not self._name_format(local_migration.name):
-                    logger.error(VALID_NAME_ERROR % (name, Utils.expected_pattern()))
+                    logger.error(VALID_NAME_ERROR % (local_migration.name, Utils.expected_pattern()))
                 elif not self._diff_names(local_migration, db_migration):
                     logger.error(DIFF_NAME_ERROR % (local_migration.name, db_migration.name))
                 elif not self._diff_checksum(local_migration, db_migration):
                     logger.error(DIFF_CHECKSUM_ERROR % (local_migration.name, local_migration.checksum, db_migration.checksum))
                 else:
-                    logger.success("%s VALID" % db_migration.name)
+                    logger.success(f"{db_migration.name} VALID")
 
-    def _out_of_date(self, local_migration, db_migration):
+    def _out_of_date(self, local_migration):
         return bool(local_migration is not None)
 
     def _diff_names(self, local_migration, db_migration):

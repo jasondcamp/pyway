@@ -1,6 +1,5 @@
-import mysql.connector
-from pyway.log import logger
 from pyway.migration import Migration
+import mysql.connector
 
 CREATE_VERSION_MIGRATIONS = "create table if not exists %s ("\
     "installed_rank serial PRIMARY KEY,"\
@@ -36,7 +35,7 @@ class Mysql():
 
     def execute(self, script):
         cnx = self.connect()
-        for r in cnx.cmd_query_iter(script):
+        for _ in cnx.cmd_query_iter(script):
             pass
         cnx.commit()
         cnx.close()
@@ -53,5 +52,5 @@ class Mysql():
         return migrations
 
     def upgrade_version(self, migration):
-        self.execute(INSERT_VERSION_MIGRATE % (self.version_table, migration.version, migration.extension, migration.name, migration.checksum))
-
+        self.execute(INSERT_VERSION_MIGRATE % (self.version_table, migration.version,
+            migration.extension, migration.name, migration.checksum))

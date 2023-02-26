@@ -1,5 +1,4 @@
 import psycopg2
-from pyway.log import logger
 from pyway.migration import Migration
 
 CREATE_VERSION_MIGRATIONS = "create table if not exists %s ("\
@@ -47,5 +46,5 @@ class Postgres():
         return migrations
 
     def upgrade_version(self, migration):
-        self.execute(INSERT_VERSION_MIGRATE % (self.version_table, migration.version, migration.extension, migration.name, migration.checksum))
-
+        self.execute(INSERT_VERSION_MIGRATE % (self.version_table, migration.version,
+            migration.extension, migration.name, migration.checksum))

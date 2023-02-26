@@ -4,7 +4,7 @@ import zlib
 
 from . import settings
 from .log import logger
-from .errors import VALID_NAME_ERROR, DIRECTORY_NOT_FOUND, MIGRATIONS_NOT_FOUND, OUT_OF_DATE_ERROR
+from .errors import VALID_NAME_ERROR, DIRECTORY_NOT_FOUND, OUT_OF_DATE_ERROR
 
 
 class Utils():
@@ -22,8 +22,8 @@ class Utils():
 
     @staticmethod
     def expected_pattern():
-        return "%s{major}_{minor}%s{description}%s" % \
-            (settings.SQL_MIGRATION_PREFIX, settings.SQL_MIGRATION_SEPARATOR, settings.SQL_MIGRATION_SUFFIXES)
+        return f'{settings.SQL_MIGRATION_PREFIX}{{major}}_{{minor}}{settings.SQL_MIGRATION_SEPARATOR}' \
+                '{{description}}{settings.SQL_MIGRATION_SUFFIXES}'
 
     @staticmethod
     def is_file_name_valid(name):
@@ -40,8 +40,9 @@ class Utils():
     @staticmethod
     def flatten_migrations(migrations):
         migration_list = []
-        for m in migrations:
-            migration_list.append({ 'version': m.version, 'extension': m.extension, 'name': m.name, 'checksum': m.checksum, 'apply_timestamp': m.apply_timestamp })
+        for migration in migrations:
+            migration_list.append({ 'version': migration.version, 'extension': migration.extension, 'name': migration.name,
+                'checksum': migration.checksum, 'apply_timestamp': migration.apply_timestamp })
         return migration_list
 
 
@@ -51,6 +52,7 @@ class Utils():
             return re.findall(r"\d+_\d{2}", name)[0].replace('_', '.')
         except IndexError:
             logger.error(VALID_NAME_ERROR % (name, Utils.expected_pattern()))
+            return None
 
     @staticmethod
     def get_extension_from_name(name):
@@ -66,6 +68,7 @@ class Utils():
             return "%X" % (prev & 0xFFFFFFFF)
         except FileNotFoundError:
             logger.error(OUT_OF_DATE_ERROR % fullname.split("/")[-1])
+            return None
 
     @staticmethod
     def fullname(name):
