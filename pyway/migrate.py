@@ -1,6 +1,5 @@
 from .log import logger
 from .helpers import Utils
-from .validate import Validate
 from .migration import Migration
 from .dbms.database import factory
 from .errors import MIGRATIONS_NOT_FOUND
@@ -9,9 +8,8 @@ from .errors import MIGRATIONS_NOT_FOUND
 class Migrate():
 
     def __init__(self, conf):
-        Validate(conf).run()
-        self._db = factory(conf.DBMS)(conf)
-        self._migration_dir = conf.DATABASE_MIGRATION_DIR
+        self._db = factory(conf.args.database_type)(conf)
+        self._migration_dir = conf.args.database_migration_dir
 
     def run(self):
         migrations_to_be_executed = self._get_migration_files_to_be_executed()
@@ -20,12 +18,12 @@ class Migrate():
             return
 
         for migration in migrations_to_be_executed:
-            logger.info("Migrating --> %s" % migration.name)
+            logger.info(f"Migrating --> {migration.name}")
             try:
-                with open(Utils.fullname(migration.name), "r") as sqlfile:
+                with open(Utils.fullname(migration.name), "r", encoding='utf-8') as sqlfile:
                     self._db.execute(sqlfile.read())
                 self._db.upgrade_version(migration)
-                logger.success("%s SUCCESS" % migration.name)
+                logger.success(f"{migration.name} SUCCESS")
             except Exception as error:
                 logger.error(error)
 

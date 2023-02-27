@@ -4,7 +4,7 @@ import zlib
 
 from . import settings
 from .log import logger
-from .errors import VALID_NAME_ERROR, DIRECTORY_NOT_FOUND, MIGRATIONS_NOT_FOUND, OUT_OF_DATE_ERROR
+from .errors import VALID_NAME_ERROR, DIRECTORY_NOT_FOUND, OUT_OF_DATE_ERROR
 
 
 class Utils():
@@ -15,12 +15,15 @@ class Utils():
         if list_a and list_b:
             checksum_list_b = [b.checksum for b in list_b]
             result = [a for a in list_a if a.checksum not in checksum_list_b]
+        elif list_a and not list_b:
+            # List B is empty (usually from a new install)
+            return list_a
         return result
 
     @staticmethod
     def expected_pattern():
-        return "%s{major}_{minor}%s{description}%s" % \
-            (settings.SQL_MIGRATION_PREFIX, settings.SQL_MIGRATION_SEPARATOR, settings.SQL_MIGRATION_SUFFIXES)
+        return f'{settings.SQL_MIGRATION_PREFIX}{{major}}_{{minor}}{settings.SQL_MIGRATION_SEPARATOR}' \
+                '{{description}}{settings.SQL_MIGRATION_SUFFIXES}'
 
     @staticmethod
     def is_file_name_valid(name):
@@ -33,12 +36,23 @@ class Utils():
         return sorted(migrations, key=lambda x: [x.get("version"), x.get("name")] if isinstance(x, dict) else
                                                 [x.version, x.name], reverse=False)
 
+
+    @staticmethod
+    def flatten_migrations(migrations):
+        migration_list = []
+        for migration in migrations:
+            migration_list.append({ 'version': migration.version, 'extension': migration.extension, 'name': migration.name,
+                'checksum': migration.checksum, 'apply_timestamp': migration.apply_timestamp })
+        return migration_list
+
+
     @staticmethod
     def get_version_from_name(name):
         try:
             return re.findall(r"\d+_\d{2}", name)[0].replace('_', '.')
         except IndexError:
             logger.error(VALID_NAME_ERROR % (name, Utils.expected_pattern()))
+            return None
 
     @staticmethod
     def get_extension_from_name(name):
@@ -54,6 +68,7 @@ class Utils():
             return "%X" % (prev & 0xFFFFFFFF)
         except FileNotFoundError:
             logger.error(OUT_OF_DATE_ERROR % fullname.split("/")[-1])
+            return None
 
     @staticmethod
     def fullname(name):
@@ -61,7 +76,7 @@ class Utils():
 
     @staticmethod
     def basepath():
-        return os.path.join(os.getcwd(), settings.DATABASE_MIGRATION_DIR)
+        return os.path.join(os.getcwd(), settings.args.database_migration_dir)
 
     @staticmethod
     def get_min_version_from_local_migrations():

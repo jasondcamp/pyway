@@ -20,18 +20,19 @@ class bcolors:
 class _Log():
 
     def __init__(self):
-        log_dir = settings.LOGS_DIR
+        log_dir = settings.args.logs_dir
         if log_dir:
-            if not os.path.exists(log_dir):
+            if settings.args.log_to_file and not os.path.exists(log_dir):
                 os.makedirs(log_dir)
             self.logger = logging.getLogger('pyway')
 
             now = date.today()
-            filename = "%s/%s.log" % (os.path.abspath(log_dir), now.strftime("%Y_%m_%d"))
-            hdlr = logging.FileHandler(filename)
-            formatter = logging.Formatter("%(asctime)s - %(levelname)s: %(message)s")
-            hdlr.setFormatter(formatter)
-            self.logger.addHandler(hdlr)
+            if settings.args.log_to_file:
+                filename = f'{os.path.abspath(log_dir)}/{now.strftime("%Y_%m_%d")}.log'
+                hdlr = logging.FileHandler(filename)
+                formatter = logging.Formatter("%(asctime)s - %(levelname)s: %(message)s")
+                hdlr.setFormatter(formatter)
+                self.logger.addHandler(hdlr)
             self.logger.addHandler(logging.StreamHandler(sys.stdout))
             self.logger.setLevel(logging.DEBUG)
 
@@ -46,14 +47,13 @@ class _Log():
     def error(self, msg):
         if self.logger:
             self.logger.error(self._colored(msg, bcolors.FAIL))
-        raise Exception(msg)
 
     def warn(self, msg):
         if self.logger:
             self.logger.warn(self._colored(msg, bcolors.WARNING))
 
     def _colored(self, msg, color):
-        return "%s%s%s" % (color, msg, bcolors.ENDC)
+        return f"{color}{msg}{bcolors.ENDC}"
 
     def success(self, msg):
         if self.logger:

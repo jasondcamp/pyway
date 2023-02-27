@@ -20,23 +20,22 @@ install_requires = [x.strip() for x in all_reqs if 'git+' not in x]
 setup(
     name='pyway',
     version=__version__,
-    description='Pyway is a database versioning and migration tool inspired on Flyway',
+    description='Pyway is a database versioning and migration tool inspired by Flyway',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/sergiosbx/pyway',
     download_url='https://github.com/sergiosbx/pyway/tarball/' + __version__,
     license='GPL',
     classifiers=[
-      'Development Status :: 3 - Alpha',
-      'Intended Audience :: Developers',
-      'Programming Language :: Python :: 3',
+      'Development Status :: 4 - Beta',
+      'Programming Language :: Python :: 3.9',
     ],
     keywords='',
     packages=find_packages(exclude=['docs', 'tests*']),
     include_package_data=True,
-    author='Sérgio Ferreira Filho',
+    author='Jason Camp',
     install_requires=install_requires,
-    author_email='sergio.ferreira.filho@gmail.com',
+    author_email='me@jasoncamp.com',
     py_modules=['pyway'],
     entry_points={
         'console_scripts': ['pyway=pyway.scripts.main:cli']
