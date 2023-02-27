@@ -3,10 +3,8 @@
 # Pyway Database Version Control
 version number: 0.3.3
 
-
 ## Overview
 Pyway is a database versioning and migration tool inspired by Flyway
-
 
 ## Download and Install
 To install use pip:
