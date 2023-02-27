@@ -39,9 +39,5 @@ setup(
     include_package_data=True,
     author='Jason Camp',
     install_requires=install_requires,
-    author_email='me@jasoncamp.com',
-    py_modules=['pyway'],
-    entry_points={
-        'console_scripts': ['pyway=pyway.scripts.main:cli']
-    }
+    author_email='me@jasoncamp.com'
 )
