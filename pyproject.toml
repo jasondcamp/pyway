@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyway"
-version = "0.3.5"
+version = "0.3.6"
 authors = [{name = "Jason Camp", email = "me@jason.camp"}]
 license = {text = "GPL"}
 description = "Pyway is a database versioning and migration tool inspired by Flyway"
@@ -25,4 +25,7 @@ Homepage = "https://github.com/jasondcamp/pyway"
 
 [project.optional-dependencies]
 widechars = ["wcwidth"]
+
+[project.scripts]
+pyway = "pyway.scripts.main:cli"
 
