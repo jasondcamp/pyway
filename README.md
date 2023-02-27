@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/sergiosbx/pyway.svg?branch=master)](https://travis-ci.org/sergiosbx/pyway)
-
+[![](https://github.com/jasondcamp/pyway/actions/workflows/pyway-build.yml/badge.svg)](https://github.com/jasondcamp/pyway/actions/workflows/pyway-build.yml)
 
 # Pyway Database Version Control
 version number: 0.3.0
