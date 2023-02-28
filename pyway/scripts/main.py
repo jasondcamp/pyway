@@ -5,7 +5,7 @@ from pyway.info import Info
 from pyway.log import logger
 from pyway.migrate import Migrate
 from pyway.validate import Validate
-
+from pyway.import_ import Import
 
 def migrate():
     logger.info('Starting migration process...')
@@ -24,6 +24,10 @@ def info():
     Info(settings).run()
     print()
 
+def import_():
+    logger.info("Importing schema...")
+    Import(settings).run()
+
 def cli():
     logger.info(settings.LOGO)
 
@@ -33,6 +37,8 @@ def cli():
         validate()
     elif settings.args.cmd == "migrate":
         migrate()
+    elif settings.args.cmd == "import":
+        import_();
     else:
         logger.error(f"Command '{settings.args.cmd}' not recognized, exiting!")
         sys.exit(1)
