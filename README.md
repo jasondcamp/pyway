@@ -1,7 +1,7 @@
 [![](https://github.com/jasondcamp/pyway/actions/workflows/pyway-build.yml/badge.svg)](https://github.com/jasondcamp/pyway/actions/workflows/pyway-build.yml)
 
 # Pyway Database Version Control
-version number: 0.3.7
+version number: 0.3.8
 
 ## Overview
 Pyway is a database versioning and migration tool inspired by Flyway
