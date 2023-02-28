@@ -83,3 +83,9 @@ Validate helps you verify that the migrations applied to the database match the 
 After `validate`, it will scan the **Database migration dir** for available migrations. It will compare them to the migrations that have been applied to the database. If any new migration is found, it will migrate the database to close the gap.
 
     $ pyway migrate
+
+#### Import
+This allows the user to import a schema file into the migration, for example if the base schema has already been applied, then the user can import that file in so they can then apply subsequent migrations.
+
+    $ pyway import --schema-file V01_01__initial_schema.sql
+
