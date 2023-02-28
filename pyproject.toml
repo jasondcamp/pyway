@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyway"
-version = "0.3.6"
+version = "0.3.7"
 authors = [{name = "Jason Camp", email = "me@jason.camp"}]
 license = {text = "GPL"}
 description = "Pyway is a database versioning and migration tool inspired by Flyway"

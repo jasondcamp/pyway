@@ -4,7 +4,6 @@ from .migration import Migration
 from .dbms.database import factory
 from .errors import MIGRATIONS_NOT_FOUND
 
-
 class Migrate():
 
     def __init__(self, conf):
@@ -30,6 +29,7 @@ class Migrate():
     def _get_migration_files_to_be_executed(self):
         all_local_migrations = self._get_all_local_migrations()
         all_db_migrations = Migration.from_list(self._db.get_all_schema_migrations())
+
         if all_db_migrations and not all_local_migrations:
             logger.error(MIGRATIONS_NOT_FOUND % self._migration_dir)
         return Utils.subtract(all_local_migrations, all_db_migrations)

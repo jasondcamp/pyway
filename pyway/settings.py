@@ -14,18 +14,18 @@ parser.add_argument("--database-migration-dir", help="Database migration directo
 parser.add_argument("--database-table", help="Database table that stores pyway metadata",
         default=os.environ.get('PYWAY_TABLE', 'public.pyway'))
 parser.add_argument("--database-type", help="Database type [postgres|mysql]", default=os.environ.get('PYWAY_TYPE', 'postgres'))
-
 parser.add_argument("--database-host", help="Database host", default=os.environ.get('PYWAY_DATABASE_HOST', 'localhost'))
 parser.add_argument("--database-port", help="Database port", default=os.environ.get('PYWAY_DATABASE_PORT', '5432'))
 parser.add_argument("--database-name", help="Database name", default=os.environ.get('PYWAY_DATABASE_NAME', 'postgres'))
 parser.add_argument("--database-username", help="Database username", default=os.environ.get('PYWAY_DATABASE_USERNAME', 'postgres'))
 parser.add_argument("--database-password", help="Database password", default=os.environ.get('PYWAY_DATABASE_PASSWORD', 'password'))
 
+parser.add_argument("--schema-file", help="Schema file for import", default="")
 parser.add_argument("-c", "--config", help="Config file", default=os.environ.get('PYWAY_CONFIG_FILE', '.pyway.conf'))
 parser.add_argument("-v", "--version", help="Version", action='store_true')
 parser.add_argument("--logs-dir", help="Logs directory", default=os.environ.get('PYWAY_LOGS_DIR', 'logs'))
 parser.add_argument("--log-to-file", help="Log to file", action='store_true')
-parser.add_argument("cmd", nargs="?", help="info|validate|migrate")
+parser.add_argument("cmd", nargs="?", help="info|validate|migrate|import")
 
 args = parser.parse_args()
 
