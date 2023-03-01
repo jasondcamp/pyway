@@ -17,13 +17,13 @@ INSERT_VERSION_MIGRATE = "insert into %s (version, extension, name, checksum) va
 
 class Postgres():
 
-    def __init__(self, config):
-        self.config = config
-        self.version_table = config.args.database_table
+    def __init__(self, args):
+        self.args = args
+        self.version_table = args.database_table
         self.create_version_table_if_not_exists()
 
     def connect(self):
-        return psycopg2.connect(f"dbname={self.config.args.database_name} user={self.config.args.database_username} host={self.config.args.database_host} password={self.config.args.database_password} port={self.config.args.database_port}")
+        return psycopg2.connect(f"dbname={self.args.database_name} user={self.args.database_username} host={self.args.database_host} password={self.args.database_password} port={self.args.database_port}")
 
     def create_version_table_if_not_exists(self):
         self.execute(CREATE_VERSION_MIGRATIONS % self.version_table)

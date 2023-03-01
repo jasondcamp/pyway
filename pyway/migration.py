@@ -9,10 +9,10 @@ class Migration():
         self.apply_timestamp = apply_timestamp
 
     @classmethod
-    def from_name(cls, name, **kwargs):
+    def from_name(cls, name, path, **kwargs):
         version = kwargs.get('version', Utils.get_version_from_name(name))
         extension = kwargs.get('extension', Utils.get_extension_from_name(name))
-        checksum = kwargs.get('checksum', Utils.load_checksum_from_name(name))
+        checksum = kwargs.get('checksum', Utils.load_checksum_from_name(name, path))
         apply_timestamp = kwargs.get('apply_timestamp')
         return cls(version, extension, name, checksum, apply_timestamp)
 
