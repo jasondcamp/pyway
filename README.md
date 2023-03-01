@@ -35,6 +35,7 @@ Or clone the repo:
 | PYWAY_LOGS_DIR | --logs-dir | Folder name to logs construct | logs |
 | | --log-to-file | Log to external file | False |
 | PYWAY_CONFIG_FILE | -c, --config | Configuration file | .pyway.conf |
+| | --schema-file | Used when importing a schema file | |
 
 #### Configuration file
 Pyway supports a configuration file with the default file as `.pyway.conf`. A sample config file is below:
