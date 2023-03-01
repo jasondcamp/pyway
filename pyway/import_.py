@@ -2,30 +2,34 @@ import os
 import sys
 from tabulate import tabulate
 
-from .helpers import Utils
-from .log import logger, bcolors
-from .migration import Migration
-from .dbms.database import factory
-from .errors import MIGRATIONS_NOT_FOUND
-
+from pyway.log import logger
+from pyway.migration import Migration
+from pyway.dbms.database import factory
+from pyway.helpers import Utils
+from pyway.errors import VALID_NAME_ERROR
 
 class Import():
 
-    def __init__(self, conf):
-        self._migration_dir = conf.args.database_migration_dir
-        self._db = factory(conf.args.database_type)(conf)
-        self.schema_file = conf.args.schema_file
+    def __init__(self, args):
+        self._db = factory(args.database_type)(args)
+        self.migration_dir = args.database_migration_dir
+        self.schema_file = args.schema_file
+        self.args = args
 
     def run(self):
         if not self.schema_file:
            logger.error("Error, must specify --schema-file with import")
            sys.exit(1)
 
-        if not os.path.exists("/".join([self._migration_dir, self.schema_file])):
-           logger.error(f"Error, schema file '{self._migration_dir}/{self.schema_file}' does not exist!")
+        if not os.path.exists(os.path.join(os.getcwd(), self.migration_dir, self.schema_file)):
+           logger.error(f"Error, schema file '{self.migration_dir}/{self.schema_file}' does not exist!")
            sys.exit(1)
 
+        if not Utils.is_file_name_valid(self.schema_file):
+            logger.error(VALID_NAME_ERROR % (self.schema_file, Utils.expected_pattern()))
+            sys.exit(1)
+
         # File exists, import it
-        migration = Migration.from_name(self.schema_file)
+        migration = Migration.from_name(self.schema_file, self.migration_dir)
         self._db.upgrade_version(migration)
-        logger.info(f"{migration.name} Imported") 
+        logger.info(f"{migration.name} Imported")

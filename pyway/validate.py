@@ -7,9 +7,10 @@ from pyway.migration import Migration
 from pyway.errors import OUT_OF_DATE_ERROR, DIFF_NAME_ERROR, DIFF_CHECKSUM_ERROR, VALID_NAME_ERROR, MIGRATIONS_NOT_FOUND, MIGRATIONS_NOT_STARTED
 
 class Validate():
-    def __init__(self, conf):
-        self._db = factory(conf.args.database_type)(conf)
-        self._migration_dir = conf.args.database_migration_dir
+    def __init__(self, args):
+        self._db = factory(args.database_type)(args)
+        self.migration_dir = args.database_migration_dir
+        self.args = args
 
     def run(self):
         local_migrations = self._get_all_local_migrations()
@@ -20,7 +21,7 @@ class Validate():
             sys.exit(1)
 
         if db_migrations and not local_migrations:
-            logger.error(MIGRATIONS_NOT_FOUND % self._migration_dir)
+            logger.error(MIGRATIONS_NOT_FOUND % self.migration_dir)
 
         if local_migrations:
             local_migrations_map = Utils.create_map_from_list("version", local_migrations)
@@ -53,8 +54,8 @@ class Validate():
         return bool(Utils.is_file_name_valid(name))
 
     def _get_all_local_migrations(self):
-        local_files = Utils.get_local_files()
+        local_files = Utils.get_local_files(self.migration_dir)
         if not local_files:
             return []
-        migrations = [Migration.from_name(local_file) for local_file in local_files]
+        migrations = [Migration.from_name(local_file, self.migration_dir) for local_file in local_files]
         return Utils.sort_migrations_list(migrations)

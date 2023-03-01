@@ -2,9 +2,9 @@ import os
 import re
 import zlib
 
-from . import settings
-from .log import logger
-from .errors import VALID_NAME_ERROR, DIRECTORY_NOT_FOUND, OUT_OF_DATE_ERROR
+from pyway import settings
+from pyway.log import logger
+from pyway.errors import VALID_NAME_ERROR, DIRECTORY_NOT_FOUND, OUT_OF_DATE_ERROR
 
 
 class Utils():
@@ -59,8 +59,9 @@ class Utils():
         return name.split('.')[1].upper()
 
     @staticmethod
-    def load_checksum_from_name(name):
-        fullname = Utils.fullname(name)
+    def load_checksum_from_name(name, path):
+        print(name)
+        fullname = os.path.join(os.getcwd(), path, name)
         prev = 0
         try:
             for line in open(fullname, "rb"):
@@ -71,20 +72,16 @@ class Utils():
             return None
 
     @staticmethod
-    def fullname(name):
-        return os.path.join(Utils.basepath(), name)
-
-    @staticmethod
-    def basepath():
-        return os.path.join(os.getcwd(), settings.args.database_migration_dir)
+    def basepath(d):
+        return os.path.join(os.getcwd(), d)
 
     @staticmethod
     def get_min_version_from_local_migrations():
         return min([int(Utils.get_version_from_name(file.name)) for file in os.listdir(Utils.basepath())])
 
     @staticmethod
-    def get_local_files():
-        path = Utils.basepath()
+    def get_local_files(d):
+        path = Utils.basepath(d)
         dir_list = None
         try:
             dir_list = os.listdir(path)
