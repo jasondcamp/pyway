@@ -1,6 +1,9 @@
 name: Pyway coverage
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -34,7 +37,7 @@ jobs:
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v3.2.0
         env:
-          CC_TEST_REPORTER_ID: 90ded96e27566817edc16a33b8713e4116b43568294edeb913ae736987452582
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
           coverageCommand: coverage xml
             #          coverageLocations: ${{github.workspace}}/report.txt:coverage
