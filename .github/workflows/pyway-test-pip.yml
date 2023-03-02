@@ -1,4 +1,4 @@
-name: Pyway test of pip install
+name: Pyway test of pip
 
 on:
   push:
@@ -24,6 +24,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Get version
+        run: |
+          cat pyway/version.py
+
       - name: Install with pip
         run: |
           pip3 install pyway
