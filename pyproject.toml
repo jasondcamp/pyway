@@ -39,9 +39,6 @@ tests = [
 [project.urls]
 Homepage = "https://github.com/jasondcamp/pyway"
 
-[project.optional-dependencies]
-widechars = ["wcwidth"]
-
 [project.scripts]
 pyway = "pyway.scripts.main:cli"
 
