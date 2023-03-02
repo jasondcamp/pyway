@@ -1,4 +1,4 @@
-[![](https://github.com/jasondcamp/pyway/actions/workflows/pyway-build.yml/badge.svg)](https://github.com/jasondcamp/pyway/actions/workflows/pyway-build.yml) ![](https://img.shields.io/badge/status-beta-yellow) ![](https://api.codeclimate.com/v1/badges/6ad7c702ffb0b1b96c1a/maintainability)
+[![](https://github.com/jasondcamp/pyway/actions/workflows/pyway-test.yml/badge.svg)](https://github.com/jasondcamp/pyway/actions/workflows/pyway-test.yml) ![](https://img.shields.io/badge/status-beta-yellow) ![](https://api.codeclimate.com/v1/badges/6ad7c702ffb0b1b96c1a/maintainability) ![](https://api.codeclimate.com/v1/badges/6ad7c702ffb0b1b96c1a/test_coverage)
 
 # Pyway Database Version Control
 version number: 0.3.10
