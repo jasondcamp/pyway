@@ -1,5 +1,5 @@
 # Pyway Database Version Control
-![](https://img.shields.io/pypi/v/pyway.svg) ![](https://img.shields.io/badge/status-beta-yellow) ![](https://github.com/jasondcamp/pyway/actions/workflows/pyway-test.yml/badge.svg)  ![](https://img.shields.io/pypi/pyversions/pyway.svg)
+![](https://img.shields.io/pypi/v/pyway.svg) ![](https://img.shields.io/badge/status-beta-yellow) ![](https://github.com/jasondcamp/pyway/actions/workflows/pyway-test.yml/badge.svg)  ![](https://img.shields.io/pypi/pyversions/pyway.svg) ![](https://img.shields.io/badge/license-GPL-lightgrey)
 
 ![](https://api.codeclimate.com/v1/badges/6ad7c702ffb0b1b96c1a/maintainability) ![](https://api.codeclimate.com/v1/badges/6ad7c702ffb0b1b96c1a/test_coverage)
 
