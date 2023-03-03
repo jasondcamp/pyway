@@ -1,4 +1,4 @@
-name: Pyway test
+name: pyway Testing
 
 on: [push]
 
