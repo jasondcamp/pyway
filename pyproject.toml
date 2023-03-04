@@ -4,11 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyway"
-version = "0.3.10"
+dynamic = ["version", "readme"]
 authors = [{name = "Jason Camp", email = "me@jason.camp"}]
 license = {text = "GPL"}
 description = "Pyway is a database versioning and migration tool inspired by Flyway"
-readme = "README.md"
 classifiers = [
     "Development Status :: 4 - Beta",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
@@ -43,3 +42,6 @@ Homepage = "https://github.com/jasondcamp/pyway"
 [project.scripts]
 pyway = "pyway.scripts.main:cli"
 
+[tool.setuptools.dynamic]
+readme = {file = ["README.md"], content-type = "text/markdown"}
+version = {attr = "pyway.version.__version__"}
