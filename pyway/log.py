@@ -20,26 +20,10 @@ class bcolors:
 
 
 class _Log():
-
     def __init__(self):
-#        log_dir = settings.args.logs_dir
-        log_dir = LOG_DIR
-        if log_dir:
-#            if settings.args.log_to_file and not os.path.exists(log_dir):
-            if LOG_TO_FILE and not os.path.exists(log_dir):
-                os.makedirs(log_dir)
-            self.logger = logging.getLogger('pyway')
-
-            now = date.today()
-#            if settings.args.log_to_file:
-            if LOG_TO_FILE:
-                filename = f'{os.path.abspath(log_dir)}/{now.strftime("%Y_%m_%d")}.log'
-                hdlr = logging.FileHandler(filename)
-                formatter = logging.Formatter("%(asctime)s - %(levelname)s: %(message)s")
-                hdlr.setFormatter(formatter)
-                self.logger.addHandler(hdlr)
-            self.logger.addHandler(logging.StreamHandler(sys.stdout))
-            self.logger.setLevel(logging.DEBUG)
+        logging.debug("magic")
+        self.logger = logging.getLogger('pyway')
+        self.logger.setLevel(logging.INFO)
 
     def debug(self, msg):
         if self.logger:
