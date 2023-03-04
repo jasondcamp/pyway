@@ -32,8 +32,6 @@ Or clone the repo:
 | PYWAY_DATABASE_NAME | --database-name | Name of database to connect | postgres |
 | PYWAY_DATABASE_USERNAME |--database-username | User to use to connect to the database | postgres |
 | PYWAY_DATABASE_PASSWORD | --database-password | Password to use to connect to the database | *None* |
-| PYWAY_LOGS_DIR | --logs-dir | Folder name to logs construct | logs |
-| | --log-to-file | Log to external file | False |
 | PYWAY_CONFIG_FILE | -c, --config | Configuration file | .pyway.conf |
 | | --schema-file | Used when importing a schema file | |
 
@@ -47,9 +45,6 @@ database:
     host: localhost
     port: 5432
     database: postgres
-logging:
-    logsdir: logs
-    logtofile: False
 general:
     migrationsdir: schema
     pywaytable: public.pyway

@@ -13,8 +13,7 @@ class Settings():
     def __init__(self, args):
         self.args = args
 
-
-    def parse_arguments(self):
+    def parse_arguments():
         parser = argparse.ArgumentParser()
         parser.add_argument("--database-migration-dir", help="Database migration directory",
                 default=os.environ.get('PYWAY_DATABASE_MIGRATION_DIR', 'resources'))
@@ -30,8 +29,6 @@ class Settings():
         parser.add_argument("--schema-file", help="Schema file for import", default="")
         parser.add_argument("-c", "--config", help="Config file", default=os.environ.get('PYWAY_CONFIG_FILE', '.pyway.conf'))
         parser.add_argument("-v", "--version", help="Version", action='store_true')
-        parser.add_argument("--logs-dir", help="Logs directory", default=os.environ.get('PYWAY_LOGS_DIR', 'logs'))
-        parser.add_argument("--log-to-file", help="Log to file", action='store_true')
         parser.add_argument("cmd", nargs="?", help="info|validate|migrate|import")
 
         args = parser.parse_args()
