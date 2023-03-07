@@ -7,4 +7,5 @@ coverage==7.2.1
 psycopg2-binary==2.9.5
 mysql-connector-python==8.0.32
 pyyaml==5.4.1
-testing.mysqld==1.4.0
+strip_ansi==0.1.1
+mysqld-integration-test==0.0.18

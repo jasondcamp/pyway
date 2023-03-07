@@ -23,6 +23,7 @@ dependencies = [
     "psycopg2-binary == 2.9.5",
     "mysql-connector-python == 8.0.32",
     "pyyaml == 5.4.1",
+    "strip_ansi == 0.1.1"
 ]
 
 requires-python = ">=3.7"
@@ -33,7 +34,7 @@ tests = [
   "pytest-env == 0.8.1",
   "pytest-cov == 4.0.0",
   "coverage == 7.2.1",
-  "testing.mysqld == 1.4.0"
+  "mysqld-integration-test == 0.0.17"
 ]
 
 [project.urls]

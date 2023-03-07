@@ -1,23 +1,22 @@
 from tabulate import tabulate
 
 from pyway.helpers import Utils
-from pyway.log import logger, bcolors
+from pyway.log import bcolors
 from pyway.migration import Migration
 from pyway.dbms.database import factory
-from pyway.errors import MIGRATIONS_NOT_FOUND
 
 
 class Info():
 
-    def __init__(self, args):
-        self.migration_dir = args.database_migration_dir
-        self._db = factory(args.database_type)(args)
+    def __init__(self, config):
+        self.migration_dir = config.database_migration_dir
+        self._db = factory(config.database_type)(config)
         self.headers = ["version", "extension", "name", "checksum", "apply_timestamp"]
         self.tablefmt = "psql"
-        self.args = args
+        self.config = config
 
     def run(self):
-        logger.info(tabulate(Utils.flatten_migrations(self.get_table_info()), headers="keys", tablefmt=self.tablefmt))
+        return tabulate(Utils.flatten_migrations(self.get_table_info()), headers="keys", tablefmt=self.tablefmt)
 
     def get_table_info(self):
         db_migrations = self._db.get_all_schema_migrations()

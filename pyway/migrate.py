@@ -1,10 +1,10 @@
 import os
-
 from pyway.log import logger
 from pyway.helpers import Utils
 from pyway.migration import Migration
 from pyway.dbms.database import factory
 from pyway.errors import MIGRATIONS_NOT_FOUND
+
 
 class Migrate():
 
@@ -22,7 +22,8 @@ class Migrate():
         for migration in migrations_to_be_executed:
             logger.info(f"Migrating --> {migration.name}")
             try:
-                with open(os.path.join(os.getcwd(), self.migration_dir, migration.name), "r", encoding='utf-8') as sqlfile:
+                with open(os.path.join(os.getcwd(),
+                          self.migration_dir, migration.name), "r", encoding='utf-8') as sqlfile:
                     self._db.execute(sqlfile.read())
                 self._db.upgrade_version(migration)
                 logger.success(f"{migration.name} SUCCESS")

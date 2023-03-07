@@ -36,15 +36,14 @@ class Utils():
         return sorted(migrations, key=lambda x: [x.get("version"), x.get("name")] if isinstance(x, dict) else
                                                 [x.version, x.name], reverse=False)
 
-
     @staticmethod
     def flatten_migrations(migrations):
         migration_list = []
         for migration in migrations:
-            migration_list.append({ 'version': migration.version, 'extension': migration.extension, 'name': migration.name,
-                'checksum': migration.checksum, 'apply_timestamp': migration.apply_timestamp })
+            migration_list.append({'version': migration.version, 'extension': migration.extension,
+                                   'name': migration.name, 'checksum': migration.checksum,
+                                   'apply_timestamp': migration.apply_timestamp})
         return migration_list
-
 
     @staticmethod
     def get_version_from_name(name):
@@ -60,7 +59,6 @@ class Utils():
 
     @staticmethod
     def load_checksum_from_name(name, path):
-        print(name)
         fullname = os.path.join(os.getcwd(), path, name)
         prev = 0
         try:
@@ -91,4 +89,4 @@ class Utils():
 
     @staticmethod
     def create_map_from_list(key, list_):
-        return {l.__dict__[key]: l for l in list_}
+        return {lst.__dict__[key]: lst for lst in list_}
