@@ -4,6 +4,7 @@ from pyway.helpers import Utils
 from pyway.log import bcolors
 from pyway.migration import Migration
 from pyway.dbms.database import factory
+# test
 
 
 class Info():
