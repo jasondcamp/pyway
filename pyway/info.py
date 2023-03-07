@@ -1,10 +1,9 @@
 from tabulate import tabulate
 
 from pyway.helpers import Utils
-from pyway.log import logger, bcolors
+from pyway.log import bcolors
 from pyway.migration import Migration
 from pyway.dbms.database import factory
-from pyway.errors import MIGRATIONS_NOT_FOUND
 
 
 class Info():

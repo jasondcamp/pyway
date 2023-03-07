@@ -1,12 +1,6 @@
-import os
 import sys
 import logging
-from datetime import date
 
-from pyway import settings
-
-LOG_TO_FILE=False
-LOG_DIR="logs"
 
 class bcolors:
     HEADER = '\033[95m'
@@ -21,8 +15,8 @@ class bcolors:
 
 class _Log():
     def __init__(self):
-        logging.debug("magic")
         self.logger = logging.getLogger('pyway')
+        self.logger.addHandler(logging.StreamHandler(sys.stdout))
         self.logger.setLevel(logging.INFO)
 
     def debug(self, msg):

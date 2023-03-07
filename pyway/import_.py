@@ -1,12 +1,12 @@
 import os
 import sys
-from tabulate import tabulate
 
 from pyway.log import logger
 from pyway.migration import Migration
 from pyway.dbms.database import factory
 from pyway.helpers import Utils
 from pyway.errors import VALID_NAME_ERROR
+
 
 class Import():
 
@@ -18,12 +18,12 @@ class Import():
 
     def run(self):
         if not self.schema_file:
-           logger.error("Error, must specify --schema-file with import")
-           sys.exit(1)
+            logger.error("Error, must specify --schema-file with import")
+            sys.exit(1)
 
         if not os.path.exists(os.path.join(os.getcwd(), self.migration_dir, self.schema_file)):
-           logger.error(f"Error, schema file '{self.migration_dir}/{self.schema_file}' does not exist!")
-           sys.exit(1)
+            logger.error(f"Error, schema file '{self.migration_dir}/{self.schema_file}' does not exist!")
+            sys.exit(1)
 
         if not Utils.is_file_name_valid(self.schema_file):
             logger.error(VALID_NAME_ERROR % (self.schema_file, Utils.expected_pattern()))

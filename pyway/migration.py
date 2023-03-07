@@ -1,5 +1,6 @@
 from pyway.helpers import Utils
 
+
 class Migration():
     def __init__(self, version, extension, name, checksum, apply_timestamp):
         self.version = version

@@ -1,12 +1,22 @@
 import os
 import argparse
 import yaml
-import sys
 
 # Pyway consts
 SQL_MIGRATION_PREFIX = os.environ.get('PYWAY_SQL_MIGRATION_PREFIX', 'V')
 SQL_MIGRATION_SEPARATOR = os.environ.get('PYWAY_SQL_MIGRATION_SEPARATOR', '__')
 SQL_MIGRATION_SUFFIXES = os.environ.get('PYWAY_SQL_MIGRATION_SUFFIXES', '.sql')
+ARGS = ['database_migration_dir', 'database_table', 'database_type', 'database_host',
+        'database_port', 'database_name', 'database_username', 'database_password',
+        'schema_file', 'config', 'version', 'cmd']
+
+
+def parse_args(config, args):
+    for arg in ARGS:
+        if getattr(args, arg):
+            setattr(config, arg, getattr(args, arg))
+    return config
+
 
 class Settings():
 
@@ -29,40 +39,8 @@ class Settings():
         parser.add_argument("-v", "--version", help="Version", action='store_true')
         parser.add_argument("cmd", nargs="?", help="info|validate|migrate|import")
 
-        args = parser.parse_args()
-
-        if args.database_migration_dir:
-            config.database_migration_dir = args.database_migration_dir
-        if args.database_table:
-            config.database_table = args.database_table
-        if args.database_type:
-            config.database_type = args.database_type
-        if args.database_host:
-            config.database_host = args.database_host
-        if args.database_port:
-            config.database_port = args.database_port
-        if args.database_name:
-            config.database_name = args.database_name
-        if args.database_username:
-            config.database_username = args.database_username
-        if args.database_password:
-            config.database_password = args.database_password
-        if args.schema_file:
-            config.schema_file = args.schema_file
-        if args.config:
-            config.config = args.config
-        if args.version:
-            config.version = args.version
-        if args.cmd:
-            config.cmd = args.cmd
-
-        # Display version if it exists
-        if args.version:
-            print(f"Version: {__version__}")
-            sys.exit(1)
-
+        config = parse_args(config, parser.parse_args())
         return config
-
 
     def parse_config_file(config):
         # See if there is a config file
@@ -76,18 +54,18 @@ class Settings():
 
         return config
 
+
 class ConfigFile():
     def __init__(self):
         self.database_migration_dir = os.environ.get('PYWAY_DATABASE_MIGRATION_DIR', 'resources')
         self.database_table = os.environ.get('PYWAY_TABLE', 'public.pyway')
-        self.database_type = default=os.environ.get('PYWAY_TYPE', 'postgres')
-        self.database_host = default=os.environ.get('PYWAY_DATABASE_HOST', 'localhost')
-        self.database_port = default=os.environ.get('PYWAY_DATABASE_PORT', '5432')
-        self.database_name = default=os.environ.get('PYWAY_DATABASE_NAME', 'postgres')
+        self.database_type = os.environ.get('PYWAY_TYPE', 'postgres')
+        self.database_host = os.environ.get('PYWAY_DATABASE_HOST', 'localhost')
+        self.database_port = os.environ.get('PYWAY_DATABASE_PORT', '5432')
+        self.database_name = os.environ.get('PYWAY_DATABASE_NAME', 'postgres')
         self.database_username = os.environ.get('PYWAY_DATABASE_USERNAME', 'postgres')
         self.database_password = os.environ.get('PYWAY_DATABASE_PASSWORD', 'password')
         self.schema_file = None
         self.config = os.environ.get('PYWAY_CONFIG_FILE', '.pyway.conf')
         self.version = False
         self.cmd = None
-

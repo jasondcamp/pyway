@@ -1,10 +1,11 @@
 import sys
-
 from pyway.log import logger
 from pyway.helpers import Utils
 from pyway.dbms.database import factory
 from pyway.migration import Migration
-from pyway.errors import OUT_OF_DATE_ERROR, DIFF_NAME_ERROR, DIFF_CHECKSUM_ERROR, VALID_NAME_ERROR, MIGRATIONS_NOT_FOUND, MIGRATIONS_NOT_STARTED
+from pyway.errors import (OUT_OF_DATE_ERROR, DIFF_NAME_ERROR, DIFF_CHECKSUM_ERROR,
+                          VALID_NAME_ERROR, MIGRATIONS_NOT_FOUND, MIGRATIONS_NOT_STARTED)
+
 
 class Validate():
     def __init__(self, args):
@@ -37,7 +38,9 @@ class Validate():
                 elif not self._diff_names(local_migration, db_migration):
                     logger.error(DIFF_NAME_ERROR % (local_migration.name, db_migration.name))
                 elif not self._diff_checksum(local_migration, db_migration):
-                    logger.error(DIFF_CHECKSUM_ERROR % (local_migration.name, local_migration.checksum, db_migration.checksum))
+                    logger.error(DIFF_CHECKSUM_ERROR % (local_migration.name,
+                                                        local_migration.checksum,
+                                                        db_migration.checksum))
                 else:
                     logger.success(f"{db_migration.name} VALID")
 

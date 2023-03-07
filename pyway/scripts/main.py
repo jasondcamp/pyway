@@ -25,12 +25,14 @@ def validate(config):
 def info(config):
     logger.info('Gathering info...')
     tbl = Info(config).run()
-    print(tbl)
+    logger.info(tbl)
     print()
+
 
 def import_(config):
     logger.info("Importing schema...")
     Import(config).run()
+
 
 def cli():
     logger.info(f"PyWay {__version__}")
@@ -41,13 +43,13 @@ def cli():
 
     # Display version if it exists
     # TODO: FIX
-#    if config.version:
-#        print(f"Version: {__version__}")
-#        sys.exit(1)
+    if config.version:
+        print(f"Version: {__version__}")
+        sys.exit(1)
 
     # If no arg is specified, show help
 #    if not config.cmd:
-        # TODO: figure out how to print help
+#        # TODO: figure out how to print help
 #        print(config)
 #        sys.exit(1)
 
@@ -62,6 +64,7 @@ def cli():
     else:
         logger.error(f"Command '{config.cmd}' not recognized, exiting!")
         sys.exit(1)
+
 
 if __name__ == '__main__':
     cli()

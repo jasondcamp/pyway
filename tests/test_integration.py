@@ -1,12 +1,22 @@
 import pytest
+import os
+from strip_ansi import strip_ansi
 from pyway.info import Info
-from pyway.migrate import Migrate
-from pyway.validate import Validate
-from pyway.import_ import Import
-from pyway.settings import Settings
+# from pyway.migrate import Migrate
+# from pyway.validate import Validate
+# from pyway.import_ import Import
+# from pyway.settings import Settings
 from pyway.settings import ConfigFile
 from mysqld_integration_test import Mysqld
 import mysql.connector
+
+INFO_TABLE = """+-----------+-------------+-------------------+------------+-------------------+
+|   version | extension   | name              | checksum   | apply_timestamp   |
+|-----------+-------------+-------------------+------------+-------------------|
+|      1.01 | SQL         | V01_01__test1.sql | new        | new               |
+|      1.02 | SQL         | V01_02__test2.sql | new        | new               |
+|      1.03 | SQL         | V01_03__test3.sql | new        | new               |
++-----------+-------------+-------------------+------------+-------------------+"""
 
 
 def execute_query(mysqld, query):
@@ -52,15 +62,7 @@ def test_pyway_table_creation(mysqld_connect):
     config.database_port = mysqld_connect.port
     config.database_name = 'test'
     config.database_table = 'pyway'
-    config.database_migration_dir = "data"
+    config.database_migration_dir = os.path.join('tests', 'data')
     tbl = Info(config).run()
 
-    print(tbl)
-    
-
-
-    assert True
-
-
-#@pytest.mark.integration_test
-#def 
+    assert strip_ansi(tbl) == INFO_TABLE

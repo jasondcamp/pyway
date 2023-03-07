@@ -9,10 +9,11 @@ CREATE_VERSION_MIGRATIONS = "create table if not exists %s ("\
     "checksum varchar(25) NOT NULL,"\
     "apply_timestamp timestamp DEFAULT NOW()"\
     ");"
-SELECT_FIELDS = ("version", "extension", "name", "checksum","apply_timestamp")
+SELECT_FIELDS = ("version", "extension", "name", "checksum", "apply_timestamp")
 ORDER_BY_FIELD_ASC = "installed_rank"
 ORDER_BY_FIELD_DESC = "installed_rank desc"
 INSERT_VERSION_MIGRATE = "insert into %s (version, extension, name, checksum) values ('%s', '%s', '%s', '%s');"
+
 
 class Mysql():
 
@@ -54,4 +55,5 @@ class Mysql():
 
     def upgrade_version(self, migration):
         self.execute(INSERT_VERSION_MIGRATE % (self.version_table, migration.version,
-            migration.extension, migration.name, migration.checksum))
+                                               migration.extension, migration.name,
+                                               migration.checksum))

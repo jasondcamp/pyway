@@ -1,6 +1,7 @@
 import psycopg2
 from pyway.migration import Migration
 
+
 CREATE_VERSION_MIGRATIONS = "create table if not exists %s ("\
     "installed_rank serial PRIMARY KEY,"\
     "version varchar(20) NOT NULL,"\
@@ -9,7 +10,7 @@ CREATE_VERSION_MIGRATIONS = "create table if not exists %s ("\
     "checksum varchar(25) NOT NULL,"\
     "apply_timestamp timestamp DEFAULT NOW()"\
     ");"
-SELECT_FIELDS = ("version", "extension", "name", "checksum","apply_timestamp")
+SELECT_FIELDS = ("version", "extension", "name", "checksum", "apply_timestamp")
 ORDER_BY_FIELD_ASC = "installed_rank"
 ORDER_BY_FIELD_DESC = "installed_rank desc"
 INSERT_VERSION_MIGRATE = "insert into %s (version, extension, name, checksum) values ('%s', '%s', '%s', '%s');"
@@ -23,7 +24,7 @@ class Postgres():
         self.create_version_table_if_not_exists()
 
     def connect(self):
-        return psycopg2.connect(f"dbname={self.args.database_name} user={self.args.database_username} host={self.args.database_host} password={self.args.database_password} port={self.args.database_port}")
+        return psycopg2.connect(f"dbname={self.args.database_name} user={self.args.database_username} host={self.args.database_host} password={self.args.database_password} port={self.args.database_port}")  # noqa: E501
 
     def create_version_table_if_not_exists(self):
         self.execute(CREATE_VERSION_MIGRATIONS % self.version_table)
@@ -47,4 +48,5 @@ class Postgres():
 
     def upgrade_version(self, migration):
         self.execute(INSERT_VERSION_MIGRATE % (self.version_table, migration.version,
-            migration.extension, migration.name, migration.checksum))
+                                               migration.extension, migration.name,
+                                               migration.checksum))
