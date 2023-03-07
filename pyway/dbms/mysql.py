@@ -16,18 +16,19 @@ INSERT_VERSION_MIGRATE = "insert into %s (version, extension, name, checksum) va
 
 class Mysql():
 
-    def __init__(self, args):
-        self.args = args
-        self.version_table = args.database_table
+    def __init__(self, config):
+        self.config = config
+        self.version_table = config.database_table
         self.create_version_table_if_not_exists()
 
     def connect(self):
         return mysql.connector.connect(
-            host=self.args.database_host,
-            port=self.args.database_port,
-            database=self.args.database_name,
-            user=self.args.database_username,
-            password=self.args.database_password
+            host=self.config.database_host,
+            port=self.config.database_port,
+            database=self.config.database_name,
+            user=self.config.database_username,
+            password=self.config.database_password,
+            use_pure=True
         )
 
     def create_version_table_if_not_exists(self):

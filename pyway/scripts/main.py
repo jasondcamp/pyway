@@ -1,6 +1,7 @@
 import sys
 
 from pyway.settings import Settings
+from pyway.settings import ConfigFile
 from pyway.info import Info
 from pyway.log import logger
 from pyway.migrate import Migrate
@@ -8,43 +9,58 @@ from pyway.validate import Validate
 from pyway.import_ import Import
 from pyway.version import __version__
 
-def migrate(args):
+
+def migrate(config):
     logger.info('Starting migration process...')
-    Migrate(args).run()
+    Migrate(config).run()
     logger.info('Migration completed.')
 
 
-def validate(args):
+def validate(config):
     logger.info('Starting validation process')
-    Validate(args).run()
+    Validate(config).run()
     logger.info('Validation completed.')
 
 
-def info(args):
+def info(config):
     logger.info('Gathering info...')
-    Info(args).run()
+    tbl = Info(config).run()
+    print(tbl)
     print()
 
-def import_(args):
+def import_(config):
     logger.info("Importing schema...")
-    Import(args).run()
+    Import(config).run()
 
 def cli():
     logger.info(f"PyWay {__version__}")
 
-    args = Settings.parse_arguments()
-    args = Settings.parse_config_file(args)
+    config = ConfigFile()
+    config = Settings.parse_arguments(config)
+    config = Settings.parse_config_file(config)
 
-    if args.cmd == "info":
-        info(args)
-    elif args.cmd == "validate":
-        validate(args)
-    elif args.cmd == "migrate":
-        migrate(args)
-    elif args.cmd == "import":
-        import_(args)
+    # Display version if it exists
+    # TODO: FIX
+#    if config.version:
+#        print(f"Version: {__version__}")
+#        sys.exit(1)
+
+    # If no arg is specified, show help
+#    if not config.cmd:
+        # TODO: figure out how to print help
+#        print(config)
+#        sys.exit(1)
+
+    if config.cmd == "info":
+        info(config)
+    elif config.cmd == "validate":
+        validate(config)
+    elif config.cmd == "migrate":
+        migrate(config)
+    elif config.cmd == "import":
+        import_(config)
     else:
-        logger.error(f"Command '{settings.args.cmd}' not recognized, exiting!")
+        logger.error(f"Command '{config.cmd}' not recognized, exiting!")
         sys.exit(1)
 
 if __name__ == '__main__':
