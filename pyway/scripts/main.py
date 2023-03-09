@@ -38,8 +38,8 @@ def cli():
     logger.info(f"PyWay {__version__}")
 
     config = ConfigFile()
-    config = Settings.parse_arguments(config)
     config = Settings.parse_config_file(config)
+    (config, parser) = Settings.parse_arguments(config)
 
     # Display version if it exists
     # TODO: FIX
@@ -48,10 +48,10 @@ def cli():
         sys.exit(1)
 
     # If no arg is specified, show help
-#    if not config.cmd:
-#        # TODO: figure out how to print help
-#        print(config)
-#        sys.exit(1)
+    if not config.cmd:
+        # TODO: figure out how to print help
+        parser.print_help()
+        sys.exit(1)
 
     if config.cmd == "info":
         info(config)

@@ -40,7 +40,7 @@ class Settings():
         parser.add_argument("cmd", nargs="?", help="info|validate|migrate|import")
 
         config = parse_args(config, parser.parse_args())
-        return config
+        return (config, parser)
 
     def parse_config_file(config):
         # See if there is a config file

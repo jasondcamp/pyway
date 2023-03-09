@@ -19,6 +19,8 @@ Or clone the repo:
 ## Configuration
 #### Pyway environment variables and command line options
 
+Priority is `env variables` -> `config file` -> `command args`
+
 | Env Variable | Command Line | Description | Default |
 | --------------- | -------------- | -------------- | :--------------: |
 | PYWAY_DATABASE_MIGRATION_DIR | --database-migration-dir | Folder name to migration files | resources |
@@ -38,16 +40,15 @@ Or clone the repo:
 #### Configuration file
 Pyway supports a configuration file with the default file as `.pyway.conf`. A sample config file is below:
 ```
-database:
-    type: postgres
-    username: postgres
-    password: 123456
-    host: localhost
-    port: 5432
-    database: postgres
+database_type: postgres
+database_username: postgres
+database_password: 123456
+database_host: localhost
+database_port: 5432
+database_database: postgres
 general:
-    migrationsdir: schema
-    pywaytable: public.pyway
+database_migration_dir: schema
+datbase_table: public.pyway
 ```
 
 
