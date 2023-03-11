@@ -1,16 +1,8 @@
 import sys
 import logging
-
-
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+from pyway.helpers import Utils
+from pyway.helpers import bcolors
+from pyway.exceptions import InvalidLogLevel
 
 
 class _Log():
@@ -25,22 +17,25 @@ class _Log():
 
     def info(self, msg):
         if self.logger:
-            self.logger.info(self._colored(msg, bcolors.OKBLUE))
+            self.logger.info(Utils.color(msg, bcolors.OKBLUE))
 
     def error(self, msg):
         if self.logger:
-            self.logger.error(self._colored(msg, bcolors.FAIL))
-
-    def warn(self, msg):
-        if self.logger:
-            self.logger.warn(self._colored(msg, bcolors.WARNING))
-
-    def _colored(self, msg, color):
-        return f"{color}{msg}{bcolors.ENDC}"
+            self.logger.error(Utils.color(msg, bcolors.FAIL))
 
     def success(self, msg):
-        if self.logger:
-            self.logger.info(self._colored(msg, bcolors.OKGREEN))
+        self.logger.info(Utils.color(msg, bcolors.OKGREEN))
 
+    def setlevel(self, log_level):
+        if log_level == "INFO":
+            self.logger.setLevel(logging.INFO)
+        elif log_level == "DEBUG":
+            self.logger.setLevel(logging.DEBUG)
+        elif log_level == 'ERROR':
+            self.logger.setLevel(logging.ERROR)
+        elif log_level == 'WARN':
+            self.logger.setLevel(logging.WARN)
+        else:
+            raise InvalidLogLevel
 
 logger = _Log()

@@ -18,7 +18,8 @@ def migrate(config):
 
 def validate(config):
     logger.info('Starting validation process')
-    Validate(config).run()
+    output = Validate(config).run()
+    logger.info(output)
     logger.info('Validation completed.')
 
 

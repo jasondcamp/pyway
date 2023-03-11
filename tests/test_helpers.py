@@ -29,13 +29,36 @@ def test_subtract_result():
 
 
 @pytest.mark.helpers_test
-def test_subtrace_noresult():
+def test_subtract_noresult():
     a = [Migration.from_name('V01_01__test1.sql', os.path.join('tests', 'data', 'schema'))]
     b = [Migration.from_name('V01_01__test1.sql', os.path.join('tests', 'data', 'schema'))]
 
     c = Utils.subtract(a, b)
 
     assert c == []
+
+
+@pytest.mark.helpers_test
+def test_subtract_onlyonearray():
+    a = [Migration.from_name('V01_01__test1.sql', os.path.join('tests', 'data', 'schema'))]
+    b = []
+
+    c = Utils.subtract(a, b)
+
+    assert c == a
+
+
+#@pytest.mark.helpers_test
+#def test_expected_pattern():
+#    pattern = Utils.expected_pattern()
+#    assert pattern == "V{major}_{minor}__{description}.sql"
+
+
+@pytest.mark.helpers_test
+def test_get_version_from_name():
+    with pytest.raises(Exception):
+        _ = Utils.get_version_from_name("test1.sql")
+    assert True
 
 
 @pytest.mark.helpers_test
