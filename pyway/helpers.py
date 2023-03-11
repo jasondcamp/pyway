@@ -66,7 +66,7 @@ class Utils():
                 prev = zlib.crc32(line, prev)
             return "%X" % (prev & 0xFFFFFFFF)
         except FileNotFoundError:
-            logger.error(OUT_OF_DATE_ERROR % fullname.split("/")[-1])
+            raise FileNotFoundError(OUT_OF_DATE_ERROR % fullname.split("/")[-1])
             return None
 
     @staticmethod
@@ -84,7 +84,7 @@ class Utils():
         try:
             dir_list = os.listdir(path)
         except OSError:
-            logger.error(DIRECTORY_NOT_FOUND % path)
+            raise FileNotFoundError(DIRECTORY_NOT_FOUND % path)
         return dir_list
 
     @staticmethod
