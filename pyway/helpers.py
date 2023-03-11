@@ -3,9 +3,17 @@ import re
 import zlib
 
 from pyway import settings
-from pyway.log import logger
 from pyway.errors import VALID_NAME_ERROR, DIRECTORY_NOT_FOUND, OUT_OF_DATE_ERROR
 
+class bcolors():
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 class Utils():
 
@@ -23,7 +31,7 @@ class Utils():
     @staticmethod
     def expected_pattern():
         return f'{settings.SQL_MIGRATION_PREFIX}{{major}}_{{minor}}{settings.SQL_MIGRATION_SEPARATOR}' \
-                '{{description}}{settings.SQL_MIGRATION_SUFFIXES}'
+                f'{{description}}{settings.SQL_MIGRATION_SUFFIXES}'
 
     @staticmethod
     def is_file_name_valid(name):
@@ -50,8 +58,7 @@ class Utils():
         try:
             return re.findall(r"\d+_\d{2}", name)[0].replace('_', '.')
         except IndexError:
-            logger.error(VALID_NAME_ERROR % (name, Utils.expected_pattern()))
-            return None
+            raise ValueError(VALID_NAME_ERROR % (name, Utils.expected_pattern()))
 
     @staticmethod
     def get_extension_from_name(name):
@@ -67,7 +74,6 @@ class Utils():
             return "%X" % (prev & 0xFFFFFFFF)
         except FileNotFoundError:
             raise FileNotFoundError(OUT_OF_DATE_ERROR % fullname.split("/")[-1])
-            return None
 
     @staticmethod
     def basepath(d):
@@ -90,3 +96,7 @@ class Utils():
     @staticmethod
     def create_map_from_list(key, list_):
         return {lst.__dict__[key]: lst for lst in list_}
+
+    @staticmethod
+    def color(msg, color):
+        return f"{color}{msg}{bcolors.ENDC}"

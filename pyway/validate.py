@@ -1,5 +1,6 @@
 import sys
 from pyway.log import logger
+from pyway.helpers import bcolors
 from pyway.helpers import Utils
 from pyway.dbms.database import factory
 from pyway.migration import Migration
@@ -16,10 +17,10 @@ class Validate():
     def run(self):
         local_migrations = self._get_all_local_migrations()
         db_migrations = self._db.get_all_schema_migrations()
+        output = ""
 
         if not db_migrations:
-            logger.error(MIGRATIONS_NOT_STARTED)
-            sys.exit(1)
+            raise RuntimeError(MIGRATIONS_NOT_STARTED)
 
         if db_migrations and not local_migrations:
             logger.error(MIGRATIONS_NOT_FOUND % self.migration_dir)
@@ -28,21 +29,23 @@ class Validate():
             local_migrations_map = Utils.create_map_from_list("version", local_migrations)
 
             for db_migration in db_migrations:
-                logger.info(f"Validating --> {db_migration.name}")
+                output += Utils.color(f"Validating --> {db_migration.name}\n", bcolors.OKBLUE)
                 local_migration = local_migrations_map.get(db_migration.version)
 
                 if not self._out_of_date(local_migration):
-                    logger.error(OUT_OF_DATE_ERROR % db_migration.name)
+                    output += (OUT_OF_DATE_ERROR + "\n" % db_migration.name)
                 elif not self._name_format(local_migration.name):
-                    logger.error(VALID_NAME_ERROR % (local_migration.name, Utils.expected_pattern()))
+                    output += (VALID_NAME_ERROR + "\n" % (local_migration.name, Utils.expected_pattern()))
                 elif not self._diff_names(local_migration, db_migration):
-                    logger.error(DIFF_NAME_ERROR % (local_migration.name, db_migration.name))
+                    output += (DIFF_NAME_ERROR + "\n" % (local_migration.name, db_migration.name))
                 elif not self._diff_checksum(local_migration, db_migration):
-                    logger.error(DIFF_CHECKSUM_ERROR % (local_migration.name,
+                    output += (DIFF_CHECKSUM_ERROR + "\n" % (local_migration.name,
                                                         local_migration.checksum,
                                                         db_migration.checksum))
                 else:
-                    logger.success(f"{db_migration.name} VALID")
+                    output += Utils.color(f"{db_migration.name} VALID\n", bcolors.OKGREEN)
+
+        return output
 
     def _out_of_date(self, local_migration):
         return bool(local_migration is not None)
