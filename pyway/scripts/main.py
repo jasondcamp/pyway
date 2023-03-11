@@ -31,7 +31,8 @@ def info(config):
 
 def import_(config):
     logger.info("Importing schema...")
-    Import(config).run()
+    migration_name = Import(config).run()
+    logger.info(f"{migration_name} Imported")
 
 
 def cli():

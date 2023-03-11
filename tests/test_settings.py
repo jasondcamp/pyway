@@ -1,5 +1,6 @@
 import pytest
 from pyway.settings import ConfigFile
+from pyway.settings import Settings
 
 
 # Make sure config options exists and check some defaults
@@ -73,3 +74,11 @@ def test_settings_version():
 def test_settings_cmd():
     config = ConfigFile()
     assert config.cmd is None
+
+
+@pytest.mark.settings_test
+def test_parse_config_file():
+    config = ConfigFile()
+    config.config = 'tests/data/pyway.conf'
+    config = Settings.parse_config_file(config)
+    assert config.database_username == "unittest"

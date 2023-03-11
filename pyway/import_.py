@@ -1,7 +1,5 @@
 import os
-import sys
 
-from pyway.log import logger
 from pyway.migration import Migration
 from pyway.dbms.database import factory
 from pyway.helpers import Utils
@@ -18,18 +16,15 @@ class Import():
 
     def run(self):
         if not self.schema_file:
-            logger.error("Error, must specify --schema-file with import")
-            sys.exit(1)
+            raise AttributeError("Error, must specify --schema-file with import")
 
         if not os.path.exists(os.path.join(os.getcwd(), self.migration_dir, self.schema_file)):
-            logger.error(f"Error, schema file '{self.migration_dir}/{self.schema_file}' does not exist!")
-            sys.exit(1)
+            raise FileNotFoundError(f"Error, schema file '{self.migration_dir}/{self.schema_file}' does not exist!")
 
         if not Utils.is_file_name_valid(self.schema_file):
-            logger.error(VALID_NAME_ERROR % (self.schema_file, Utils.expected_pattern()))
-            sys.exit(1)
+            raise ValueError(VALID_NAME_ERROR % (self.schema_file, Utils.expected_pattern()))
 
         # File exists, import it
         migration = Migration.from_name(self.schema_file, self.migration_dir)
         self._db.upgrade_version(migration)
-        logger.info(f"{migration.name} Imported")
+        return(migration.name)
