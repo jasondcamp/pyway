@@ -12,7 +12,8 @@ from pyway.version import __version__
 
 def migrate(config):
     logger.info('Starting migration process...')
-    Migrate(config).run()
+    output = Migrate(config).run()
+    logger.info(output)
     logger.info('Migration completed.')
 
 
@@ -44,7 +45,6 @@ def cli():
     (config, parser) = Settings.parse_arguments(config)
 
     # Display version if it exists
-    # TODO: FIX
     if config.version:
         print(f"Version: {__version__}")
         sys.exit(1)
