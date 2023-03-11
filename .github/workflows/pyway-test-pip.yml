@@ -3,7 +3,7 @@ name: Pyway test of pip
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:

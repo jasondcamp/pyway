@@ -3,7 +3,7 @@ name: Pyway coverage
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
