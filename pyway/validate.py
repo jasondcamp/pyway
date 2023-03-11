@@ -23,7 +23,7 @@ class Validate():
             raise RuntimeError(MIGRATIONS_NOT_STARTED)
 
         if db_migrations and not local_migrations:
-            logger.error(MIGRATIONS_NOT_FOUND % self.migration_dir)
+            raise RuntimeError(MIGRATIONS_NOT_FOUND % self.migration_dir)
 
         if local_migrations:
             local_migrations_map = Utils.create_map_from_list("version", local_migrations)
@@ -33,15 +33,15 @@ class Validate():
                 local_migration = local_migrations_map.get(db_migration.version)
 
                 if not self._out_of_date(local_migration):
-                    output += (OUT_OF_DATE_ERROR + "\n" % db_migration.name)
+                    raise RuntimeError(OUT_OF_DATE_ERROR % db_migration.name)
                 elif not self._name_format(local_migration.name):
-                    output += (VALID_NAME_ERROR + "\n" % (local_migration.name, Utils.expected_pattern()))
+                    raise RuntimeError(VALID_NAME_ERROR % (local_migration.name, Utils.expected_pattern()))
                 elif not self._diff_names(local_migration, db_migration):
-                    output += (DIFF_NAME_ERROR + "\n" % (local_migration.name, db_migration.name))
+                    raise RuntimeError(DIFF_NAME_ERROR % (local_migration.name, db_migration.name))
                 elif not self._diff_checksum(local_migration, db_migration):
-                    output += (DIFF_CHECKSUM_ERROR + "\n" % (local_migration.name,
-                                                        local_migration.checksum,
-                                                        db_migration.checksum))
+                    raise RuntimeError(DIFF_CHECKSUM_ERROR % (local_migration.name,
+                                                              local_migration.checksum,
+                                                              db_migration.checksum))
                 else:
                     output += Utils.color(f"{db_migration.name} VALID\n", bcolors.OKGREEN)
 

@@ -4,6 +4,7 @@ from pyway.helpers import Utils
 from pyway.migration import Migration
 from pyway.dbms.database import factory
 from pyway.errors import MIGRATIONS_NOT_FOUND
+from pyway.helpers import bcolors
 
 
 class Migrate():
@@ -14,28 +15,30 @@ class Migrate():
         self.args = args
 
     def run(self):
+        output = ''
         migrations_to_be_executed = self._get_migration_files_to_be_executed()
         if not migrations_to_be_executed:
-            logger.info("Nothing to do")
-            return
+            output += Utils.color("Nothing to do\n", bcolors.FAIL) 
+            return output
 
         for migration in migrations_to_be_executed:
-            logger.info(f"Migrating --> {migration.name}")
+            output += Utils.color(f"Migrating --> {migration.name}\n", bcolors.OKBLUE)
             try:
                 with open(os.path.join(os.getcwd(),
                           self.migration_dir, migration.name), "r", encoding='utf-8') as sqlfile:
                     self._db.execute(sqlfile.read())
                 self._db.upgrade_version(migration)
-                logger.success(f"{migration.name} SUCCESS")
+                output += Utils.color(f"{migration.name} SUCCESS\n", bcolors.OKBLUE)
             except Exception as error:
-                logger.error(error)
+                raise RuntimeError(error)
+        return output
 
     def _get_migration_files_to_be_executed(self):
         all_local_migrations = self._get_all_local_migrations()
         all_db_migrations = Migration.from_list(self._db.get_all_schema_migrations())
 
         if all_db_migrations and not all_local_migrations:
-            logger.error(MIGRATIONS_NOT_FOUND % self.migration_dir)
+            raise RuntimeError(MIGRATIONS_NOT_FOUND % self.migration_dir)
         return Utils.subtract(all_local_migrations, all_db_migrations)
 
     def _get_all_local_migrations(self):

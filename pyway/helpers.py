@@ -80,15 +80,14 @@ class Utils():
         return os.path.join(os.getcwd(), d)
 
     @staticmethod
-    def get_min_version_from_local_migrations():
-        return min([int(Utils.get_version_from_name(file.name)) for file in os.listdir(Utils.basepath())])
-
-    @staticmethod
     def get_local_files(d):
         path = Utils.basepath(d)
-        dir_list = None
+        dir_list = []
         try:
-            dir_list = os.listdir(path)
+            # Skip any hidden files
+            for f in os.listdir(path):
+                if not f.startswith('.'):
+                    dir_list.append(f)
         except OSError:
             raise FileNotFoundError(DIRECTORY_NOT_FOUND % path)
         return dir_list
