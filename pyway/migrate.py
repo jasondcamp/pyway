@@ -26,7 +26,7 @@ class Migrate():
         if self.args.run_migration_on_default_schema and self.args.default_schema:
             schema_list.append(self.args.default_schema)
 
-        if self.args.run_migration_on_all_schemas_in_db:
+        if self.args.run_migration_on_all_schemas_in_db_with_ms_env_prefix:
             schema_list.extend(self._db.get_all_schemas())
         elif self.args.schemas:
             schema_list.extend(self.args.schemas.split(','))
