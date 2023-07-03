@@ -5,4 +5,11 @@ database_host: localhost
 database_port: 5432
 database_name: postgres
 database_migration_dir: schema
-database_table: public.pyway
+database_table: pyway
+default_schema: public
+create_schema: 1
+run_migration_on_default_schema: 0
+fail_migration_on_at_least_one_schema_failure: 0
+schemas: schema_1, schema_2
+run_migration_on_all_schemas_in_db: 1
+MS_ENV: dev

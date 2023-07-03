@@ -18,11 +18,12 @@ def parse_args(config, args):
     return config
 
 
-class Settings():
+class Settings:
 
     def __init__(self, args):
         self.args = args
 
+    @staticmethod
     def parse_arguments(config):
         parser = argparse.ArgumentParser()
         parser.add_argument("--database-migration-dir", help="Database migration directory")
@@ -33,15 +34,27 @@ class Settings():
         parser.add_argument("--database-name", help="Database name")
         parser.add_argument("--database-username", help="Database username")
         parser.add_argument("--database-password", help="Database password")
-
+        parser.add_argument("--schemas", help="Comma separated list of schemas")
+        parser.add_argument("--run-migration-on-default-schema", help="Boolean flag to check and run migration on"
+                                                                      "default schema specified", default=True)
+        parser.add_argument("--fail-migration-on-at-least-one-schema-failure",
+                            help="Boolean flag to check and update the migration status on failures of "
+                                 "multiple schemas", default=False)
+        parser.add_argument("--create-schema", help="Boolean flag when set creates the schema if not exists",
+                            default=False)
+        parser.add_argument("--default-schema", help="Default schema in which migration history will be maintained")
+        parser.add_argument("--run-migration-on-all-schemas-in-db", help="Boolean flag to check and run migration on "
+                                                                         "all schemas prefixed with ms_env variable")
+        parser.add_argument("--ms-env", help="Environment variable to check for schema prefix")
         parser.add_argument("--schema-file", help="Schema file for import")
         parser.add_argument("-c", "--config", help="Config file")
         parser.add_argument("-v", "--version", help="Version", action='store_true')
         parser.add_argument("cmd", nargs="?", help="info|validate|migrate|import")
 
-        config = parse_args(config, parser.parse_args())
-        return (config, parser)
+        parse_args(config, parser.parse_args())
+        return config, parser
 
+    @staticmethod
     def parse_config_file(config):
         # See if there is a config file
         if os.path.exists(config.config):
@@ -55,11 +68,11 @@ class Settings():
         return config
 
 
-class ConfigFile():
+class ConfigFile:
     def __init__(self):
         self.database_migration_dir = os.environ.get('PYWAY_DATABASE_MIGRATION_DIR', 'resources')
-        self.database_table = os.environ.get('PYWAY_TABLE', 'public.pyway')
-        self.database_type = os.environ.get('PYWAY_TYPE', 'postgres')
+        self.database_table = os.environ.get('PYWAY_DATABASE_TABLE', 'pyway_migration_history')
+        self.database_type = os.environ.get('PYWAY_DATABASE_TYPE', 'postgres')
         self.database_host = os.environ.get('PYWAY_DATABASE_HOST', 'localhost')
         self.database_port = os.environ.get('PYWAY_DATABASE_PORT', '5432')
         self.database_name = os.environ.get('PYWAY_DATABASE_NAME', 'postgres')
@@ -69,3 +82,11 @@ class ConfigFile():
         self.config = os.environ.get('PYWAY_CONFIG_FILE', '.pyway.conf')
         self.version = False
         self.cmd = None
+        self.run_migration_on_default_schema = os.environ.get('PYWAY_RUN_MIGRATION_ON_DEFAULT_SCHEMA', True)
+        self.create_schema = os.environ.get('PYWAY_CREATE_SCHEMA', False)
+        self.schemas = os.environ.get('PYWAY_SCHEMAS', "")
+        self.fail_migration_on_at_least_one_schema_failure = os.environ.get(
+            'PYWAY_FAIL_MIGRATION_ON_AT_LEAST_ONE_SCHEMA_FAILURE', False)
+        self.default_schema = os.environ.get('PYWAY_DEFAULT_SCHEMA', "public")
+        self.run_migration_on_all_schemas_in_db = os.environ.get('PYWAY_RUN_MIGRATION_ON_ALL_SCHEMAS_IN_DB', False)
+        self.ms_env = os.environ.get('PYWAY_MS_ENV', "dev")

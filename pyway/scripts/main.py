@@ -41,8 +41,8 @@ def cli():
     logger.info(f"PyWay {__version__}")
 
     config = ConfigFile()
-    config = Settings.parse_config_file(config)
     (config, parser) = Settings.parse_arguments(config)
+    config = Settings.parse_config_file(config)
 
     # Display version if it exists
     if config.version:
