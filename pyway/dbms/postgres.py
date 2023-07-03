@@ -3,16 +3,16 @@ from pyway.migration import Migration
 
 
 CREATE_VERSION_MIGRATIONS = "create table if not exists %s ("\
-    "installed_rank serial PRIMARY KEY,"\
+    "id serial PRIMARY KEY,"\
     "version varchar(20) NOT NULL,"\
     "extension varchar(20) NOT NULL,"\
     "name varchar(125) NOT NULL,"\
     "checksum varchar(25) NOT NULL,"\
-    "apply_timestamp timestamp DEFAULT NOW()"\
+    "date_applied_utc timestamp DEFAULT CURRENT_TIMESTAMP"\
     ");"
-SELECT_FIELDS = ("version", "extension", "name", "checksum", "apply_timestamp")
-ORDER_BY_FIELD_ASC = "installed_rank"
-ORDER_BY_FIELD_DESC = "installed_rank desc"
+SELECT_FIELDS = ("version", "extension", "name", "checksum", "date_applied_utc")
+ORDER_BY_FIELD_ASC = "id"
+ORDER_BY_FIELD_DESC = "id desc"
 INSERT_VERSION_MIGRATE = "insert into %s (version, extension, name, checksum) values ('%s', '%s', '%s', '%s');"
 
 CREATE_SCHEMA_TEMPLATE = "create schema if not exists %s"
