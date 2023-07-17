@@ -82,12 +82,12 @@ class ConfigFile:
         self.config = os.environ.get('PYWAY_CONFIG_FILE', '.pyway.conf')
         self.version = False
         self.cmd = None
-        self.run_migration_on_default_schema = os.environ.get('PYWAY_RUN_MIGRATION_ON_DEFAULT_SCHEMA', True)
-        self.create_schema = os.environ.get('PYWAY_CREATE_SCHEMA', True)
+        self.run_migration_on_default_schema = bool(os.environ.get('PYWAY_RUN_MIGRATION_ON_DEFAULT_SCHEMA', 1))
+        self.create_schema = bool(os.environ.get('PYWAY_CREATE_SCHEMA', 1))
         self.schemas = os.environ.get('PYWAY_SCHEMAS', "")
-        self.fail_migration_on_at_least_one_schema_failure = os.environ.get(
-            'PYWAY_FAIL_MIGRATION_ON_AT_LEAST_ONE_SCHEMA_FAILURE', False)
+        self.fail_migration_on_at_least_one_schema_failure = bool(os.environ.get(
+            'PYWAY_FAIL_MIGRATION_ON_AT_LEAST_ONE_SCHEMA_FAILURE', 0))
         self.default_schema = os.environ.get('PYWAY_DEFAULT_SCHEMA', "public")
-        self.run_migration_on_all_schemas_in_db_with_ms_env_prefix = os.environ.get(
-            'PYWAY_RUN_MIGRATION_ON_ALL_SCHEMAS_IN_DB_WITH_MS_ENV_PREFIX', False)
+        self.run_migration_on_all_schemas_in_db_with_ms_env_prefix = bool(os.environ.get(
+            'PYWAY_RUN_MIGRATION_ON_ALL_SCHEMAS_IN_DB_WITH_MS_ENV_PREFIX', 0))
         self.ms_env = os.environ.get('MS_ENV', "dev")

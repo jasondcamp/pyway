@@ -60,8 +60,8 @@ class Migrate():
                             if self.args.fail_migration_on_at_least_one_schema_failure:
                                 raise RuntimeError(ex)
                 if len(schema_list) == len(failed_schema_list):
-                    message = f"Current migration {migration.name} failed on all the schemas, hence failing the"
-                    f" migration without proceeding further."
+                    message = f"Current migration {migration.name} failed on all the schemas, hence failing the " \
+                              f" migration without proceeding further."
                     logger.error(message)
                     raise RuntimeError(message)
                 self._db.upgrade_version(migration)
