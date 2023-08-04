@@ -8,4 +8,4 @@ psycopg2-binary==2.9.5
 mysql-connector-python==8.0.32
 pyyaml==6.0.1
 strip_ansi==0.1.1
-mysqld-integration-test==0.0.18
+mysqld-integration-test==0.0.19
