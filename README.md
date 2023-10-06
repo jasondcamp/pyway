@@ -45,10 +45,10 @@ database_username: postgres
 database_password: 123456
 database_host: localhost
 database_port: 5432
-database_database: postgres
+database_name: postgres
 general:
 database_migration_dir: schema
-datbase_table: public.pyway
+database_table: public.pyway
 ```
 
 
