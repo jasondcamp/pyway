@@ -36,7 +36,7 @@ Priority is `env variables` -> `config file` -> `command args`
 | PYWAY_DATABASE_PASSWORD | --database-password | Password to use to connect to the database | *None* |
 | PYWAY_CONFIG_FILE | -c, --config | Configuration file | .pyway.conf |
 | | --schema-file | Used when importing a schema file | |
-| | --checksum | Used when updating a checksum - *advanced use*! | |
+| | --checksum-file | Used when updating a checksum - *advanced use*! | |
 
 #### Configuration file
 Pyway supports a configuration file with the default file as `.pyway.conf`. A sample config file is below:
