@@ -41,6 +41,23 @@ def test_pyway_table_import(mysqld_connect):
 
 
 @pytest.mark.import_test
+def test_pyway_table_import_fullfilepath(mysqld_connect):
+    """ Schema file is specified with path """
+    config = ConfigFile()
+    config.database_type = "mysql"
+    config.database_host = mysqld_connect.host
+    config.database_username = mysqld_connect.username
+    config.database_password = mysqld_connect.password
+    config.database_port = mysqld_connect.port
+    config.database_name = 'test'
+    config.database_table = 'pyway'
+    config.database_migration_dir = os.path.join('tests', 'data', 'schema')
+    config.schema_file = f"{config.database_migration_dir}/V01_01__test1.sql"
+    output = Import(config).run()
+    assert output == "V01_01__test1.sql"
+
+
+@pytest.mark.import_test
 def test_pyway_table_import_noschema(mysqld_connect):
     """ schema_file is missing from arguments """
     config = ConfigFile()

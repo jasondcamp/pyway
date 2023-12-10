@@ -18,6 +18,11 @@ class Import():
         if not self.schema_file:
             raise AttributeError("Error, must specify --schema-file with import")
 
+        # If a path is specified, strip that off - all files should
+        # be in the migration_dir directory
+        if os.path.isabs(self.schema_file) or os.sep in self.schema_file:
+            self.schema_file = os.path.basename(self.schema_file)
+
         if not os.path.exists(os.path.join(os.getcwd(), self.migration_dir, self.schema_file)):
             raise FileNotFoundError(f"Error, schema file '{self.migration_dir}/{self.schema_file}' does not exist!")
 

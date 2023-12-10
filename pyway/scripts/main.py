@@ -7,10 +7,14 @@ from pyway.log import logger
 from pyway.migrate import Migrate
 from pyway.validate import Validate
 from pyway.import_ import Import
+from pyway.checksum import Checksum
 from pyway.version import __version__
 
 
 def migrate(config):
+    # Validate first
+    validate(config)
+
     logger.info('Starting migration process...')
     output = Migrate(config).run()
     logger.info(output)
@@ -35,6 +39,12 @@ def import_(config):
     logger.info("Importing schema...")
     migration_name = Import(config).run()
     logger.info(f"{migration_name} Imported")
+
+
+def checksum(config):
+    logger.info("Updating checksum...")
+    name, checksum = Checksum(config).run()
+    logger.info(f"{name} checksum updated to {checksum}")
 
 
 def cli():
@@ -63,6 +73,8 @@ def cli():
         migrate(config)
     elif config.cmd == "import":
         import_(config)
+    elif config.cmd == "checksum":
+        checksum(config)
     else:
         logger.error(f"Command '{config.cmd}' not recognized, exiting!")
         sys.exit(1)
