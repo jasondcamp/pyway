@@ -12,6 +12,9 @@ from pyway.version import __version__
 
 
 def migrate(config):
+    # Validate first
+    validate(config)
+
     logger.info('Starting migration process...')
     output = Migrate(config).run()
     logger.info(output)
