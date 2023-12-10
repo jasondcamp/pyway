@@ -16,7 +16,7 @@ class Info():
         self.config = config
 
     def run(self):
-        return tabulate(Utils.flatten_migrations(self.get_table_info()), headers="keys", tablefmt=self.tablefmt)
+        return tabulate(Utils.flatten_migrations(self.get_table_info()), headers="keys", tablefmt=self.tablefmt, floatfmt=".2f")
 
     def get_table_info(self):
         db_migrations = self._db.get_all_schema_migrations()
