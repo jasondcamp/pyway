@@ -1,4 +1,4 @@
-g# Dev/Deployment
+# Dev/Deployment
 tabulate==0.9.0
 pytest==7.2.1
 pytest-env==0.8.1
