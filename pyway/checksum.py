@@ -4,7 +4,7 @@ from pyway.log import logger
 from pyway.helpers import Utils
 from pyway.migration import Migration
 from pyway.dbms.database import factory
-from pyway.errors import MIGRATIONS_NOT_FOUND
+from pyway.errors import MIGRATIONS_NOT_FOUND, VALID_NAME_ERROR
 from pyway.helpers import bcolors
 
 
