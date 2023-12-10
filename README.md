@@ -36,6 +36,7 @@ Priority is `env variables` -> `config file` -> `command args`
 | PYWAY_DATABASE_PASSWORD | --database-password | Password to use to connect to the database | *None* |
 | PYWAY_CONFIG_FILE | -c, --config | Configuration file | .pyway.conf |
 | | --schema-file | Used when importing a schema file | |
+| | --checksum | Used when updating a checksum - *advanced use*! | |
 
 #### Configuration file
 Pyway supports a configuration file with the default file as `.pyway.conf`. A sample config file is below:
@@ -98,3 +99,7 @@ This allows the user to import a schema file into the migration, for example if 
 
     $ pyway import --schema-file V01_01__initial_schema.sql
 
+#### Checksum
+Updates a checksum in the database. This is for advanced use only, as it could put the pyway database out of sync with reality.  This is mainly to be used for development, where your pyway file may change because of manual applies or formatting changes. It is meant to get the database in sync with what you believe to be the current state of your system. It should NEVER be used in production, only initial development. If you require schema changes in production, create a new schema and apply that.
+
+    $ pyway checksum --checksum-file V01_01__initial_schema.sql

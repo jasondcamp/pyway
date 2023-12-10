@@ -8,7 +8,7 @@ SQL_MIGRATION_SEPARATOR = os.environ.get('PYWAY_SQL_MIGRATION_SEPARATOR', '__')
 SQL_MIGRATION_SUFFIXES = os.environ.get('PYWAY_SQL_MIGRATION_SUFFIXES', '.sql')
 ARGS = ['database_migration_dir', 'database_table', 'database_type', 'database_host',
         'database_port', 'database_name', 'database_username', 'database_password',
-        'schema_file', 'config', 'version', 'cmd']
+        'schema_file', 'checksum_file', 'config', 'version', 'cmd']
 
 
 def parse_args(config, args):
@@ -35,9 +35,10 @@ class Settings():
         parser.add_argument("--database-password", help="Database password")
 
         parser.add_argument("--schema-file", help="Schema file for import")
+        parser.add_argument("--checksum-file", help="Checksum to update")
         parser.add_argument("-c", "--config", help="Config file")
         parser.add_argument("-v", "--version", help="Version", action='store_true')
-        parser.add_argument("cmd", nargs="?", help="info|validate|migrate|import")
+        parser.add_argument("cmd", nargs="?", help="info|validate|migrate|import|checksum")
 
         config = parse_args(config, parser.parse_args())
         return (config, parser)
@@ -66,6 +67,7 @@ class ConfigFile():
         self.database_username = os.environ.get('PYWAY_DATABASE_USERNAME', 'postgres')
         self.database_password = os.environ.get('PYWAY_DATABASE_PASSWORD', 'password')
         self.schema_file = None
+        self.checksum_file = None
         self.config = os.environ.get('PYWAY_CONFIG_FILE', '.pyway.conf')
         self.version = False
         self.cmd = None

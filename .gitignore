@@ -144,3 +144,4 @@ dmypy.json
 .pyre/
 
 *.swp
+.pyway.conf
