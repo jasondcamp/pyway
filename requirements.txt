@@ -1,11 +1,11 @@
 # Dev/Deployment
 tabulate==0.9.0
-pytest==7.2.1
+pytest>=7.2.1
 pytest-env==0.8.1
 pytest-cov==4.0.0
-coverage==7.2.1
+coverage>=7.2.1
 psycopg2-binary>=2.9.5
 mysql-connector-python>=8.0.32
-pyyaml==6.0.1
-strip_ansi==0.1.1
-mysqld-integration-test==0.0.20
+pyyaml>=6.0.1
+strip_ansi>=0.1.1
+mysqld-integration-test>=0.0.20
