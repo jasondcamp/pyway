@@ -11,19 +11,21 @@ ARGS = ['database_migration_dir', 'database_table', 'database_type', 'database_h
         'schema_file', 'checksum_file', 'config', 'version', 'cmd']
 
 
-def parse_args(config, args):
-    for arg in ARGS:
-        if getattr(args, arg):
-            setattr(config, arg, getattr(args, arg))
-    return config
-
-
 class Settings():
 
     def __init__(self, args):
         self.args = args
 
-    def parse_arguments(config):
+
+    @staticmethod
+    def parse_args(config, args):
+        for arg in ARGS:
+            if getattr(args, arg):
+                setattr(config, arg, getattr(args, arg))
+        return config
+
+    @classmethod
+    def parse_arguments(self, config):
         parser = argparse.ArgumentParser()
         parser.add_argument("--database-migration-dir", help="Database migration directory")
         parser.add_argument("--database-table", help="Database table that stores pyway metadata")
@@ -40,10 +42,11 @@ class Settings():
         parser.add_argument("-v", "--version", help="Version", action='store_true')
         parser.add_argument("cmd", nargs="?", help="info|validate|migrate|import|checksum")
 
-        config = parse_args(config, parser.parse_args())
+        config = self.parse_args(config, parser.parse_args())
         return (config, parser)
 
-    def parse_config_file(config):
+    @classmethod
+    def parse_config_file(self, config):
         # See if there is a config file
         if os.path.exists(config.config):
             with open(config.config, "r", encoding='utf-8') as ymlfile:
