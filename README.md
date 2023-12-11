@@ -14,7 +14,7 @@ To install use pip:
 Or clone the repo:
 
     $ git clone https://github.com/jasondcamp/pyway.git
-    $ python setup.py install
+    $ python -m build
 
 ## Configuration
 #### Pyway environment variables and command line options

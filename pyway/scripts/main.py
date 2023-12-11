@@ -13,7 +13,7 @@ from pyway.version import __version__
 
 def migrate(config):
     # Validate first
-    validate(config)
+    validate(config, skip_errors=True)
 
     logger.info('Starting migration process...')
     output = Migrate(config).run()
@@ -21,9 +21,9 @@ def migrate(config):
     logger.info('Migration completed.')
 
 
-def validate(config):
+def validate(config, skip_errors=False):
     logger.info('Starting validation process')
-    output = Validate(config).run()
+    output = Validate(config).run(skip_initial_check=True)
     logger.info(output)
     logger.info('Validation completed.')
 

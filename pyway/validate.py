@@ -1,3 +1,4 @@
+import os
 import sys
 from pyway.log import logger
 from pyway.helpers import bcolors
@@ -5,7 +6,8 @@ from pyway.helpers import Utils
 from pyway.dbms.database import factory
 from pyway.migration import Migration
 from pyway.errors import (OUT_OF_DATE_ERROR, DIFF_NAME_ERROR, DIFF_CHECKSUM_ERROR,
-                          VALID_NAME_ERROR, MIGRATIONS_NOT_FOUND, MIGRATIONS_NOT_STARTED)
+                          VALID_NAME_ERROR, MIGRATIONS_NOT_FOUND, MIGRATIONS_NOT_STARTED,
+                          DIFF_CHECKSUM_ERROR_DOS)
 
 
 class Validate():
@@ -14,16 +16,18 @@ class Validate():
         self.migration_dir = args.database_migration_dir
         self.args = args
 
-    def run(self):
+    def run(self, skip_initial_check=False):
         local_migrations = self._get_all_local_migrations()
         db_migrations = self._db.get_all_schema_migrations()
         output = ""
 
         if not db_migrations:
-            raise RuntimeError(MIGRATIONS_NOT_STARTED)
+            if not skip_initial_check:
+                raise RuntimeError(MIGRATIONS_NOT_STARTED)
 
         if db_migrations and not local_migrations:
-            raise RuntimeError(MIGRATIONS_NOT_FOUND % self.migration_dir)
+            if not skip_initial_check:
+                raise RuntimeError(MIGRATIONS_NOT_FOUND % self.migration_dir)
 
         if local_migrations:
             local_migrations_map = Utils.create_map_from_list("version", local_migrations)
@@ -39,9 +43,14 @@ class Validate():
                 elif not self._diff_names(local_migration, db_migration):
                     raise RuntimeError(DIFF_NAME_ERROR % (local_migration.name, db_migration.name))
                 elif not self._diff_checksum(local_migration, db_migration):
-                    raise RuntimeError(DIFF_CHECKSUM_ERROR % (local_migration.name,
-                                                              local_migration.checksum,
-                                                              db_migration.checksum))
+                    if self._has_dos_line_endings(os.path.join(os.getcwd(), self.migration_dir, local_migration.name)):
+                        raise RuntimeError(DIFF_CHECKSUM_ERROR_DOS % (local_migration.name,
+                                                                      local_migration.checksum,
+                                                                      db_migration.checksum))
+                    else:
+                        raise RuntimeError(DIFF_CHECKSUM_ERROR % (local_migration.name,
+                                                                  local_migration.checksum,
+                                                                  db_migration.checksum))
                 else:
                     output += Utils.color(f"{db_migration.name} VALID\n", bcolors.OKGREEN)
 
@@ -65,3 +74,11 @@ class Validate():
             return []
         migrations = [Migration.from_name(local_file, self.migration_dir) for local_file in local_files]
         return Utils.sort_migrations_list(migrations)
+
+    def _has_dos_line_endings(self, file_path):
+        with open(file_path, 'rb') as file:
+            for line in file:
+                if b'\r\n' in line:
+                    return True
+        return False
+
