@@ -28,9 +28,6 @@ class Checksum():
         if not os.path.exists(os.path.join(os.getcwd(), self.migration_dir, self.checksum_file)):
             raise FileNotFoundError(f"Error, schema file '{self.migration_dir}/{self.checksum_file}' does not exist!")
 
-        if not Utils.is_file_name_valid(self.checksum_file):
-            raise ValueError(VALID_NAME_ERROR % (self.checksum_file, Utils.expected_pattern()))
-
         # Generate new checksum
         version =  Utils.get_version_from_name(self.checksum_file)
         migration = self._db.get_schema_migration(version)

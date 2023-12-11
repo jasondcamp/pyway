@@ -103,8 +103,8 @@ def test_pyway_table_import_invalidfilename(mysqld_connect):
     config.database_port = mysqld_connect.port
     config.database_name = 'test'
     config.database_table = 'pyway'
-    config.database_migration_dir = os.path.join('tests', 'data', 'schema_invalid_filename')
-    config.schema_file = "test1notfound.sql"
+    config.database_migration_dir = os.path.join('tests', 'data', 'schema_invalid_file')
+    config.schema_file = "invalidfilename.sql"
     with pytest.raises(ValueError):
         _ = Import(config).run()
     assert True

@@ -31,15 +31,11 @@ class Validate():
 
         if local_migrations:
             local_migrations_map = Utils.create_map_from_list("version", local_migrations)
-
             for db_migration in db_migrations:
                 output += Utils.color(f"Validating --> {db_migration.name}\n", bcolors.OKBLUE)
                 local_migration = local_migrations_map.get(db_migration.version)
-
-                if not self._out_of_date(local_migration):
+                if self._out_of_date(local_migration):
                     raise RuntimeError(OUT_OF_DATE_ERROR % db_migration.name)
-                elif not self._name_format(local_migration.name):
-                    raise RuntimeError(VALID_NAME_ERROR % (local_migration.name, Utils.expected_pattern()))
                 elif not self._diff_names(local_migration, db_migration):
                     raise RuntimeError(DIFF_NAME_ERROR % (local_migration.name, db_migration.name))
                 elif not self._diff_checksum(local_migration, db_migration):
@@ -57,16 +53,13 @@ class Validate():
         return output
 
     def _out_of_date(self, local_migration):
-        return bool(local_migration is not None)
+        return bool(local_migration is None)
 
     def _diff_names(self, local_migration, db_migration):
         return bool(local_migration.name == db_migration.name)
 
     def _diff_checksum(self, local_migration, db_migration):
         return bool(local_migration.checksum == db_migration.checksum)
-
-    def _name_format(self, name):
-        return bool(Utils.is_file_name_valid(name))
 
     def _get_all_local_migrations(self):
         local_files = Utils.get_local_files(self.migration_dir)

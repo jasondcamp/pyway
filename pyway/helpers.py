@@ -53,12 +53,15 @@ class Utils():
                                    'apply_timestamp': migration.apply_timestamp})
         return migration_list
 
+
     @staticmethod
     def get_version_from_name(name):
-        try:
-            return re.findall(r"\d+_\d{2}", name)[0].replace('_', '.')
-        except IndexError:
-            raise ValueError(VALID_NAME_ERROR % (name, Utils.expected_pattern()))
+        ver = re.findall(r"\d+_\d{2}", name)
+        if not ver:
+          raise ValueError(VALID_NAME_ERROR % (name, Utils.expected_pattern()))
+
+        return ver[0].replace('_', '.')
+
 
     @staticmethod
     def get_extension_from_name(name):
