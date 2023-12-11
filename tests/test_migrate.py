@@ -62,3 +62,28 @@ def test_pyway_migrate_nothingtodo(mysqld_connect):
     output = Migrate(config).run()
 
     assert strip_ansi(output) == MIGRATE_OUTPUT_NOTHING
+
+@pytest.mark.migrate_test
+def test_pyway_migrate_no_local_files(mysqld_connect):
+    config = ConfigFile()
+    config.database_type = "mysql"
+    config.database_host = mysqld_connect.host
+    config.database_username = mysqld_connect.username
+    config.database_password = mysqld_connect.password
+    config.database_port = mysqld_connect.port
+    config.database_name = 'test'
+    config.database_table = 'pyway'
+    config.database_migration_dir = os.path.join('tests', 'data', 'schema')
+    config.schema_file = "V01_01__test1.sql"
+
+    output = Migrate(config).run()
+
+    config.database_migration_dir = os.path.join('tests', 'data', 'empty')
+
+    # Double migration to validate nothing
+    with pytest.raises(RuntimeError) as e:
+        output = Migrate(config).run()
+
+    assert bool("no local migration files found" in str(e.value))
+
+
