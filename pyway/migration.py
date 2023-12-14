@@ -20,3 +20,7 @@ class Migration():
     @classmethod
     def from_list(cls, list_):
         return [cls(m.version, m.extension, m.name, m.checksum, m.apply_timestamp) for m in list_]
+
+    def __str__(self):
+        return f"version={self.version}, extension={self.extension}, checksum={self.checksum}, apply_timestamp={self.apply_timestamp}"
+
