@@ -35,7 +35,7 @@ class Utils():
 
     @staticmethod
     def is_file_name_valid(name):
-        _pattern = r"^%s\d+_\d{2}%s\w+%s$" % \
+        _pattern = r"%s\d+[._]\d+|\d+[._]\d{2}__%s\.%s$" % \
             (settings.SQL_MIGRATION_PREFIX, settings.SQL_MIGRATION_SEPARATOR, settings.SQL_MIGRATION_SUFFIXES)
         return re.match(_pattern, name, re.IGNORECASE) is not None
 
@@ -56,16 +56,22 @@ class Utils():
 
     @staticmethod
     def get_version_from_name(name):
-        ver = re.findall(r"\d+_\d{2}", name)
+        ver = re.findall(r"(\d+[._]\d+|\d+)[._](\d{2})__", name)
         if not ver:
           raise ValueError(VALID_NAME_ERROR % (name, Utils.expected_pattern()))
 
-        return ver[0].replace('_', '.')
+        if isinstance(ver[0], tuple):
+            version = ".".join(ver[0])
+            version = version.replace("_", ".")
+        else:
+            version = ver[0].replace("_", ".")
+
+        return version
 
 
     @staticmethod
     def get_extension_from_name(name):
-        return name.split('.')[1].upper()
+        return name.split('.')[-1].upper()
 
     @staticmethod
     def load_checksum_from_name(name, path):

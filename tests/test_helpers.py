@@ -32,7 +32,6 @@ def test_subtract_result():
 def test_subtract_noresult():
     a = [Migration.from_name('V01_01__test1.sql', os.path.join('tests', 'data', 'schema'))]
     b = [Migration.from_name('V01_01__test1.sql', os.path.join('tests', 'data', 'schema'))]
-
     c = Utils.subtract(a, b)
 
     assert c == []
@@ -42,16 +41,15 @@ def test_subtract_noresult():
 def test_subtract_onlyonearray():
     a = [Migration.from_name('V01_01__test1.sql', os.path.join('tests', 'data', 'schema'))]
     b = []
-
     c = Utils.subtract(a, b)
 
     assert c == a
 
 
-#@pytest.mark.helpers_test
-#def test_expected_pattern():
-#    pattern = Utils.expected_pattern()
-#    assert pattern == "V{major}_{minor}__{description}.sql"
+@pytest.mark.helpers_test
+def test_expected_pattern():
+    pattern = Utils.expected_pattern()
+    assert pattern == "V{major}_{minor}__{description}.sql"
 
 
 @pytest.mark.helpers_test
@@ -66,3 +64,30 @@ def test_load_checksum_from_name_failed():
     with pytest.raises(Exception):
         _ = Utils.load_checksum_from_name('test', 'test')
     assert True
+
+@pytest.mark.helpers_test
+def test_version_name():
+  assert Utils.is_file_name_valid('V1_1__test1.sql')
+
+
+@pytest.mark.helpers_test
+def test_semantic_version_name():
+  assert Utils.is_file_name_valid('V1_0_1__test1.sql')
+
+
+@pytest.mark.helpers_test
+def test_semantic_version_name_major_period():
+  assert Utils.is_file_name_valid('V1.0_1__test1.sql')
+
+
+@pytest.mark.helpers_test
+def test_semantic_version_name_minor_period():
+  assert Utils.is_file_name_valid('V1_0.1__test1.sql')
+
+
+@pytest.mark.helpers_test
+def test_semantic_version_name_major_minor_period():
+  assert Utils.is_file_name_valid('V1.0.1__test1.sql')
+
+
+
