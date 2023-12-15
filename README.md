@@ -66,11 +66,13 @@ database_table: pyway
 
 
 ## Pyway Files
-Files are raw SQL files that are named like the following:
+Files are raw SQL files that are named like the following. Major/minor versioning and semantic versioning is supported.
 
-V{major}\_{minor}\_\_{description}.sql
+V{major}\_{minor}\_({patch})\_\_{description}.sql
 
 Example: V01_01__initial_schema.sql
+
+Example: V01_01_01__initial_schema.sql
 
 Note that the description needs to match the word regexp [A-Za-z0-9_]
 
