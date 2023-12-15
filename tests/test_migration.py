@@ -16,3 +16,12 @@ def test_from_list():
 def test_from_name():
     migration = Migration.from_name('V01_01__test1.sql', os.path.join('tests', 'data', 'schema'))
     assert migration.name == 'V01_01__test1.sql'
+    assert migration.version == "01.01"
+
+
+@pytest.mark.migration_test
+def test_semantic_version_from_name():
+    migration = Migration.from_name('V01_01_01__test1.sql', os.path.join('tests', 'data', 'schemasemver'))
+    assert migration.name == 'V01_01_01__test1.sql'
+    assert migration.version == "01.01.01"
+
