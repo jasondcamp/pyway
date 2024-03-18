@@ -14,7 +14,7 @@ SELECT_FIELDS = ("version", "extension", "name", "checksum", "apply_timestamp")
 ORDER_BY_FIELD_ASC = "installed_rank"
 ORDER_BY_FIELD_DESC = "installed_rank desc"
 INSERT_VERSION_MIGRATE = "insert into %s (version, extension, name, checksum) values ('%s', '%s', '%s', '%s');"
-UPDATE_CHECKSUM = "update %s set checksum=%s where version=%s;"
+UPDATE_CHECKSUM = "update %s set checksum='%s' where version='%s';"
 
 
 class Postgres():
