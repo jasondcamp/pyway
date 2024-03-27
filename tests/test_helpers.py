@@ -90,4 +90,8 @@ def test_semantic_version_name_major_minor_period():
   assert Utils.is_file_name_valid('V1.0.1__test1.sql')
 
 
+@pytest.mark.helpers_test
+def test_semantic_version_name_minor_over_2digits():
+  assert Utils.is_file_name_valid('V1_0_100__test1.sql')
+
 
