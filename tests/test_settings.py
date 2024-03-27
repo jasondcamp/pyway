@@ -1,4 +1,5 @@
 import pytest
+import os
 import sys
 from pyway.settings import ConfigFile
 from pyway.settings import Settings
@@ -139,3 +140,13 @@ def test_parse_arguments():
     assert config.database_table == 'pyway_meta'
     assert config.database_type == 'postgres'
     assert config.database_host == 'localhost'
+
+@pytest.mark.settings_test
+def test_env_var_interpolation():
+    # Set an env var
+    os.environ['TEST_VAR'] = 'sometest'
+
+    config = ConfigFile()
+    config.config = 'tests/data/pyway_variable.conf'
+    config = Settings.parse_config_file(config)
+    assert config.database_username == "unittest_sometest"
