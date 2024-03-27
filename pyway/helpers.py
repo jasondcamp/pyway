@@ -35,7 +35,7 @@ class Utils():
 
     @staticmethod
     def is_file_name_valid(name):
-        _pattern = r"%s\d+[._]\d+|\d+[._]\d{2}__%s\.%s$" % \
+        _pattern = r"%s\d+[._]\d+|\d+[._]\d+__%s\.%s$" % \
             (settings.SQL_MIGRATION_PREFIX, settings.SQL_MIGRATION_SEPARATOR, settings.SQL_MIGRATION_SUFFIXES)
         return re.match(_pattern, name, re.IGNORECASE) is not None
 
