@@ -54,6 +54,9 @@ class Settings():
 
             # Merge config together with args
             for c in cfg:
+                if isinstance(cfg[c], str):
+                    # Interpolate env vars
+                    cfg[c] = os.path.expandvars(cfg[c])
                 setattr(config, c, cfg[c])
 
         return config
