@@ -23,13 +23,13 @@ MIGRATE_OUTPUT_NOTHING = f"""Nothing to do
 """
 
 @pytest.fixture
-def mysqld_connect(autouse=True):
+def mysqld_connect(autouse: bool = True) -> Mysqld:
     mysqld = Mysqld()
     return mysqld.run()
 
 
 @pytest.mark.migrate_test
-def test_pyway_migrate(mysqld_connect):
+def test_pyway_migrate(mysqld_connect: Mysqld) -> None:
     config = ConfigFile()
     config.database_type = "mysql"
     config.database_host = mysqld_connect.host
@@ -46,7 +46,7 @@ def test_pyway_migrate(mysqld_connect):
 
 
 @pytest.mark.migrate_test
-def test_pyway_migrate_nothingtodo(mysqld_connect):
+def test_pyway_migrate_nothingtodo(mysqld_connect: Mysqld) -> None:
     config = ConfigFile()
     config.database_type = "mysql"
     config.database_host = mysqld_connect.host
@@ -64,7 +64,7 @@ def test_pyway_migrate_nothingtodo(mysqld_connect):
     assert strip_ansi(output) == MIGRATE_OUTPUT_NOTHING
 
 @pytest.mark.migrate_test
-def test_pyway_migrate_no_local_files(mysqld_connect):
+def test_pyway_migrate_no_local_files(mysqld_connect: Mysqld) -> None:
     config = ConfigFile()
     config.database_type = "mysql"
     config.database_host = mysqld_connect.host

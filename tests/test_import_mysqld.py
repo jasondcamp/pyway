@@ -20,12 +20,13 @@ V01_01__test1.sql VALID
 """
 
 @pytest.fixture
-def mysqld_connect(autouse=True):
+def mysqld_connect(autouse: bool = True) -> Mysqld:
     mysqld = Mysqld()
     return mysqld.run()
 
 
-def test_pyway_table_import(mysqld_connect):
+@pytest.mark.import_test
+def test_pyway_table_import(mysqld_connect: Mysqld) -> None:
     config = ConfigFile()
     config.database_type = "mysql"
     config.database_host = mysqld_connect.host
@@ -41,7 +42,7 @@ def test_pyway_table_import(mysqld_connect):
 
 
 @pytest.mark.import_test
-def test_pyway_table_import_fullfilepath(mysqld_connect):
+def test_pyway_table_import_fullfilepath(mysqld_connect: Mysqld) -> None:
     """ Schema file is specified with path """
     config = ConfigFile()
     config.database_type = "mysql"
@@ -58,7 +59,7 @@ def test_pyway_table_import_fullfilepath(mysqld_connect):
 
 
 @pytest.mark.import_test
-def test_pyway_table_import_noschema(mysqld_connect):
+def test_pyway_table_import_noschema(mysqld_connect: Mysqld) -> None:
     """ schema_file is missing from arguments """
     config = ConfigFile()
     config.database_type = "mysql"
@@ -75,7 +76,7 @@ def test_pyway_table_import_noschema(mysqld_connect):
 
 
 @pytest.mark.import_test
-def test_pyway_table_import_filenotfound(mysqld_connect):
+def test_pyway_table_import_filenotfound(mysqld_connect: Mysqld) -> None:
     """ Schema file specified does not exist in migration_dir """
     config = ConfigFile()
     config.database_type = "mysql"
@@ -93,7 +94,7 @@ def test_pyway_table_import_filenotfound(mysqld_connect):
 
 
 @pytest.mark.import_test
-def test_pyway_table_import_invalidfilename(mysqld_connect):
+def test_pyway_table_import_invalidfilename(mysqld_connect: Mysqld) -> None:
     """ Schema file exists but is not named properly """
     config = ConfigFile()
     config.database_type = "mysql"

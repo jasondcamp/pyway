@@ -9,13 +9,13 @@ from mysqld_integration_test import Mysqld
 
 
 @pytest.fixture
-def mysqld_connect(autouse=True):
+def mysqld_connect(autouse: bool = True) -> Mysqld:
     mysqld = Mysqld()
     return mysqld.run()
 
 
 @pytest.mark.checksum_test
-def test_pyway_table_checksum(mysqld_connect):
+def test_pyway_table_checksum(mysqld_connect: Mysqld) -> None:
     config = ConfigFile()
     config.database_type = "mysql"
     config.database_host = mysqld_connect.host
@@ -37,7 +37,7 @@ def test_pyway_table_checksum(mysqld_connect):
 
 
 @pytest.mark.checksum_test
-def test_pyway_table_checksum_fileinvalid(mysqld_connect):
+def test_pyway_table_checksum_fileinvalid(mysqld_connect: Mysqld) -> None:
     config = ConfigFile()
     config.database_type = "mysql"
     config.database_host = mysqld_connect.host
@@ -59,7 +59,7 @@ def test_pyway_table_checksum_fileinvalid(mysqld_connect):
 
 
 @pytest.mark.checksum_test
-def test_pyway_table_checksum_fullpath(mysqld_connect):
+def test_pyway_table_checksum_fullpath(mysqld_connect: Mysqld) -> None:
     config = ConfigFile()
     config.database_type = "mysql"
     config.database_host = mysqld_connect.host
@@ -82,7 +82,7 @@ def test_pyway_table_checksum_fullpath(mysqld_connect):
 
 
 @pytest.mark.checksum_test
-def test_pyway_table_checksum_invalid_filename(mysqld_connect):
+def test_pyway_table_checksum_invalid_filename(mysqld_connect: Mysqld) -> None:
     config = ConfigFile()
     config.database_type = "mysql"
     config.database_host = mysqld_connect.host
