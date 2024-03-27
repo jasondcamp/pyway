@@ -56,7 +56,6 @@ class Settings():
             for c in cfg:
                 if isinstance(cfg[c], str):
                     # Interpolate env vars
-                    print(f"CFG: {cfg[c]}")
                     cfg[c] = os.path.expandvars(cfg[c])
                 setattr(config, c, cfg[c])
 
