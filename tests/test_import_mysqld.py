@@ -1,6 +1,5 @@
 import pytest
 import os
-from strip_ansi import strip_ansi
 from pyway.import_ import Import
 from pyway.settings import ConfigFile
 # from pyway.migration import Migration
@@ -18,6 +17,7 @@ INFO_OUTPUT = """+-----------+-------------+-------------------+------------+---
 VALIDATE_OUTPUT = """Validating --> V01_01__test1.sql
 V01_01__test1.sql VALID
 """
+
 
 @pytest.fixture
 def mysqld_connect(autouse: bool = True) -> Mysqld:

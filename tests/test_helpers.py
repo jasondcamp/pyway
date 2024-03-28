@@ -65,33 +65,32 @@ def test_load_checksum_from_name_failed() -> None:
         _ = Utils.load_checksum_from_name('test', 'test')
     assert True
 
+
 @pytest.mark.helpers_test
 def test_version_name() -> None:
-  assert Utils.is_file_name_valid('V1_1__test1.sql')
+    assert Utils.is_file_name_valid('V1_1__test1.sql')
 
 
 @pytest.mark.helpers_test
 def test_semantic_version_name() -> None:
-  assert Utils.is_file_name_valid('V1_0_1__test1.sql')
+    assert Utils.is_file_name_valid('V1_0_1__test1.sql')
 
 
 @pytest.mark.helpers_test
 def test_semantic_version_name_major_period() -> None:
-  assert Utils.is_file_name_valid('V1.0_1__test1.sql')
+    assert Utils.is_file_name_valid('V1.0_1__test1.sql')
 
 
 @pytest.mark.helpers_test
 def test_semantic_version_name_minor_period() -> None:
-  assert Utils.is_file_name_valid('V1_0.1__test1.sql')
+    assert Utils.is_file_name_valid('V1_0.1__test1.sql')
 
 
 @pytest.mark.helpers_test
 def test_semantic_version_name_major_minor_period() -> None:
-  assert Utils.is_file_name_valid('V1.0.1__test1.sql')
+    assert Utils.is_file_name_valid('V1.0.1__test1.sql')
 
 
 @pytest.mark.helpers_test
 def test_semantic_version_name_minor_over_2digits() -> None:
-  assert Utils.is_file_name_valid('V1_0_100__test1.sql')
-
-
+    assert Utils.is_file_name_valid('V1_0_100__test1.sql')

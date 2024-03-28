@@ -11,6 +11,7 @@ VALIDATE_OUTPUT = """Validating --> V01_01__test1.sql
 V01_01__test1.sql VALID
 """
 
+
 @pytest.fixture
 def mysqld_connect(autouse: bool = True) -> Mysqld:
     mysqld = Mysqld()
@@ -51,7 +52,7 @@ def test_pyway_table_validate_noschemasfound(mysqld_connect: Mysqld) -> None:
     config.database_migration_dir = os.path.join('tests', 'data', 'empty')
 
     with pytest.raises(RuntimeError):
-        output = Validate(config).run()
+        _ = Validate(config).run()
 
     assert True
 
@@ -87,13 +88,13 @@ def test_pyway_table_validate_nofilesfound(mysqld_connect: Mysqld) -> None:
     config.database_migration_dir = os.path.join('tests', 'data', 'schema')
     config.schema_file = "V01_01__test1.sql"
 
-    output = Import(config).run()
+    _ = Import(config).run()
 
     # Change to an empty directory for local files
     config.database_migration_dir = os.path.join('tests', 'data', 'empty')
 
     with pytest.raises(RuntimeError):
-        output = Validate(config).run()
+        _ = Validate(config).run()
 
     assert True
 
@@ -113,13 +114,13 @@ def test_pyway_table_validate_diffname(mysqld_connect: Mysqld) -> None:
     config.schema_file = "V01_01__test1.sql"
 
     # Import file
-    output = Import(config).run()
+    _ = Import(config).run()
 
     # Change the filename
-    config.database_migration_dir = os.path.join('tests', 'data', 'schema_validate_diffname')   
+    config.database_migration_dir = os.path.join('tests', 'data', 'schema_validate_diffname')
 
     with pytest.raises(RuntimeError) as e:
-        output = Validate(config).run()
+        _ = Validate(config).run()
 
     assert bool("with diff name of the database" in str(e.value))
 
@@ -139,13 +140,13 @@ def test_pyway_table_validate_diffchecksum(mysqld_connect: Mysqld) -> None:
     config.schema_file = "V01_01__test1.sql"
 
     # Import file
-    output = Import(config).run()
+    _ = Import(config).run()
 
     # Change the filename
     config.database_migration_dir = os.path.join('tests', 'data', 'schema_validate_diffchecksum')
 
     with pytest.raises(RuntimeError) as e:
-        output = Validate(config).run()
+        _ = Validate(config).run()
 
     assert bool("with diff script" in str(e.value))
 
@@ -165,13 +166,13 @@ def test_pyway_table_validate_diffchecksum_dos(mysqld_connect: Mysqld) -> None:
     config.schema_file = "V01_01__test1.sql"
 
     # Import file
-    output = Import(config).run()
+    _ = Import(config).run()
 
     # Change the filename
     config.database_migration_dir = os.path.join('tests', 'data', 'schema_validate_diffchecksum_dos')
 
     with pytest.raises(RuntimeError) as e:
-        output = Validate(config).run()
+        _ = Validate(config).run()
 
     assert bool("DOS" in str(e.value))
 
@@ -191,16 +192,16 @@ def test_pyway_table_validate_outofdate(mysqld_connect: Mysqld) -> None:
     config.schema_file = "V01_01__test1.sql"
 
     # Import file
-    output = Import(config).run()
+    _ = Import(config).run()
 
     # Import second file
     config.schema_file = "V01_02__test2.sql"
-    output = Import(config).run()
+    _ = Import(config).run()
 
     # Change to empty dir
     config.database_migration_dir = os.path.join('tests', 'data', 'schema_validate_outofdate')
 
     with pytest.raises(RuntimeError) as e:
-       output = Validate(config).run()
+        _ = Validate(config).run()
 
     assert bool("Out of date" in str(e.value))

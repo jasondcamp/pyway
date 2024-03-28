@@ -24,4 +24,3 @@ def test_semantic_version_from_name() -> None:
     migration = Migration.from_name('V01_01_01__test1.sql', os.path.join('tests', 'data', 'schemasemver'))
     assert migration.name == 'V01_01_01__test1.sql'
     assert migration.version == "01.01.01"
-

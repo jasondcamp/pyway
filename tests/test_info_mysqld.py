@@ -2,9 +2,6 @@ import pytest
 import os
 from strip_ansi import strip_ansi
 from pyway.info import Info
-from pyway.migrate import Migrate
-from pyway.validate import Validate
-from pyway.import_ import Import
 from pyway.settings import ConfigFile
 
 from mysqld_integration_test import Mysqld
@@ -36,7 +33,7 @@ def test_pyway_info(mysqld_connect: Mysqld) -> None:
     config.database_table = 'pyway'
     config.database_migration_dir = os.path.join('tests', 'data', 'schema')
     tbl = Info(config).run()
-    assert strip_ansi(tbl): == INFO_OUTPUT
+    assert strip_ansi(tbl) == INFO_OUTPUT
 
 
 @pytest.mark.info_test
@@ -53,4 +50,3 @@ def test_pyway_info_nofiles(mysqld_connect: Mysqld) -> None:
 
     files = Info(config).get_new_local_migrations([], config.database_migration_dir)
     assert files == []
-

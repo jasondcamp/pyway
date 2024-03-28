@@ -5,11 +5,14 @@ from pyway.settings import ConfigFile
 from pyway.settings import Settings
 from pyway.settings import ARGS
 
+
 class MockConfig:
     pass
 
+
 class MockArgs:
     pass
+
 
 # Make sure config options exists and check some defaults
 @pytest.mark.settings_test
@@ -127,9 +130,8 @@ def test_parse_arguments() -> None:
         '--database-host', 'localhost'
     ]
 
-    original_argv = sys.argv
+    _ = sys.argv
     sys.argv = test_args
-
 
     Settings.parse_arguments(config)
 
@@ -137,6 +139,7 @@ def test_parse_arguments() -> None:
     assert config.database_table == 'pyway_meta'
     assert config.database_type == 'postgres'
     assert config.database_host == 'localhost'
+
 
 @pytest.mark.settings_test
 def test_env_var_interpolation() -> None:
