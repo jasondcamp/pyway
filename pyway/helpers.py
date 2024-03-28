@@ -58,7 +58,7 @@ class Utils():
 
     @staticmethod
     def get_version_from_name(name: str) -> str:
-        ver = re.findall(r"(\d+[._]\d+|\d+)[._](\d{2})__", name)
+        ver = re.findall(r"(\d+[._]\d+|\d+)[._](\d+)__", name)
         if not ver:
             raise ValueError(VALID_NAME_ERROR % (name, Utils.expected_pattern()))
 
