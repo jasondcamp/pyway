@@ -6,9 +6,9 @@ pytest-env==0.8.1
 pytest-cov==4.0.0
 coverage>=7.2.1
 psycopg2-binary>=2.9.5
-types-psycopg2>=2.9.21.20240311
+types-psycopg2>=2.9.21
 mysql-connector-python>=8.0.32
 pyyaml>=6.0.1
-types-PyYAML>=6.0.12.20240311
+types-PyYAML>=6.0.12
 strip_ansi>=0.1.1
 mysqld-integration-test>=0.0.20
