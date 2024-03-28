@@ -30,8 +30,7 @@ class Mysql():
         self.version_table = config.database_table
         self.create_version_table_if_not_exists()
 
-#    def connect(self) -> Union[PooledMySQLConnection | MySQLConnection | CMySQLConnection]:
-    def connect(self):
+    def connect(self) -> Union[PooledMySQLConnection, MySQLConnection, CMySQLConnection]:
         return mysql.connector.connect(
             host=self.config.database_host,
             port=self.config.database_port,
