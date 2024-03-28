@@ -1,12 +1,11 @@
 import os
 import re
 import zlib
-from typing import List, Optional
+from typing import Any, Dict, List, Iterable
 
 from pyway import settings
 from pyway.errors import VALID_NAME_ERROR, DIRECTORY_NOT_FOUND, OUT_OF_DATE_ERROR
 
-from typing import Any, Dict, List, Iterable
 
 class bcolors():
     HEADER = '\033[95m'
@@ -17,6 +16,7 @@ class bcolors():
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+
 
 class Utils():
 
@@ -56,21 +56,19 @@ class Utils():
                                    'apply_timestamp': migration.apply_timestamp})
         return migration_list
 
-
     @staticmethod
     def get_version_from_name(name: str) -> str:
         ver = re.findall(r"(\d+[._]\d+|\d+)[._](\d{2})__", name)
         if not ver:
-          raise ValueError(VALID_NAME_ERROR % (name, Utils.expected_pattern()))
+            raise ValueError(VALID_NAME_ERROR % (name, Utils.expected_pattern()))
 
         if isinstance(ver[0], tuple):
-            version: str  = ".".join(ver[0])
+            version: str = ".".join(ver[0])
             version = version.replace("_", ".")
         else:
             version = ver[0].replace("_", ".")
 
         return version
-
 
     @staticmethod
     def get_extension_from_name(name: str) -> str:

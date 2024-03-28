@@ -1,12 +1,9 @@
 import os
-from typing import Any, Tuple
+from typing import Tuple
 
-from pyway.log import logger
 from pyway.helpers import Utils
 from pyway.migration import Migration
 from pyway.dbms.database import factory
-from pyway.errors import MIGRATIONS_NOT_FOUND, VALID_NAME_ERROR
-from pyway.helpers import bcolors
 from pyway.configfile import ConfigFile
 
 
@@ -30,11 +27,10 @@ class Checksum():
             raise FileNotFoundError(f"Error, schema file '{self.migration_dir}/{self.checksum_file}' does not exist!")
 
         # Generate new checksum
-        version: str =  Utils.get_version_from_name(self.checksum_file)
+        version: str = Utils.get_version_from_name(self.checksum_file)
         migration: Migration = self._db.get_schema_migration(version)
         migration.checksum = Utils.load_checksum_from_name(self.checksum_file, self.migration_dir)
 
         self._db.update_checksum(migration)
 
         return self.checksum_file, migration.checksum
-

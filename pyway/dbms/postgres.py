@@ -27,21 +27,17 @@ class Postgres():
         self.version_table = args.database_table
         self.create_version_table_if_not_exists()
 
-
     def connect(self) -> psycopg2.extensions.connection:
         return psycopg2.connect(f"dbname={self.args.database_name} user={self.args.database_username} host={self.args.database_host} password={self.args.database_password} port={self.args.database_port}")  # noqa: E501
 
-
     def create_version_table_if_not_exists(self) -> None:
         self.execute(CREATE_VERSION_MIGRATIONS % self.version_table)
-
 
     def execute(self, script: str) -> None:
         conn = self.connect()
         cur = conn.cursor()
         cur.execute(script)
         conn.commit()
-
 
     def get_all_schema_migrations(self) -> List[Migration]:
         cnx = self.connect()
@@ -54,7 +50,6 @@ class Postgres():
         cnx.close()
         return migrations
 
-
     def get_schema_migration(self, version: str) -> Migration:
         cnx = self.connect()
         cursor = cnx.cursor()
@@ -65,12 +60,10 @@ class Postgres():
         cnx.close()
         return migration
 
-
     def upgrade_version(self, migration: Migration) -> None:
         self.execute(INSERT_VERSION_MIGRATE % (self.version_table, migration.version,
                                                migration.extension, migration.name,
                                                migration.checksum))
-
 
     def update_checksum(self, migration: Migration) -> None:
         self.execute(UPDATE_CHECKSUM % (self.version_table, migration.checksum, migration.version))

@@ -1,17 +1,14 @@
 import os
-import sys
-from typing import List, Dict, Any, Union
+from typing import List, Any, Union
 
-from pyway.log import logger
 from pyway.helpers import bcolors
 from pyway.helpers import Utils
 from pyway.dbms.database import factory
 from pyway.migration import Migration
 from pyway.errors import (OUT_OF_DATE_ERROR, DIFF_NAME_ERROR, DIFF_CHECKSUM_ERROR,
-                          VALID_NAME_ERROR, MIGRATIONS_NOT_FOUND, MIGRATIONS_NOT_STARTED,
+                          MIGRATIONS_NOT_FOUND, MIGRATIONS_NOT_STARTED,
                           DIFF_CHECKSUM_ERROR_DOS)
 from pyway.configfile import ConfigFile
-from pyway.migration import Migration
 
 
 class Validate():
@@ -37,7 +34,7 @@ class Validate():
             local_migrations_map = Utils.create_map_from_list("version", local_migrations)
             for db_migration in db_migrations:
                 output += Utils.color(f"Validating --> {db_migration.name}\n", bcolors.OKBLUE)
-                local_migration: Union[Migration|Any] = local_migrations_map.get(db_migration.version)
+                local_migration: Union[Migration | Any] = local_migrations_map.get(db_migration.version)
                 if self._out_of_date(local_migration):
                     raise RuntimeError(OUT_OF_DATE_ERROR % db_migration.name)
                 elif not self._diff_names(local_migration, db_migration):
@@ -78,4 +75,3 @@ class Validate():
                 if b'\r\n' in line:
                     return True
         return False
-

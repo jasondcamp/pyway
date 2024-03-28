@@ -1,5 +1,6 @@
 import os
 
+
 class ConfigFile():
     def __init__(self) -> None:
         self.database_migration_dir = os.environ.get('PYWAY_DATABASE_MIGRATION_DIR', 'resources')

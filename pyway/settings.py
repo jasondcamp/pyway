@@ -1,7 +1,7 @@
 import os
 import argparse
 import yaml
-from typing import Any, Tuple, Dict
+from typing import Tuple, Dict
 
 from pyway.configfile import ConfigFile
 
@@ -58,4 +58,3 @@ class Settings():
                 setattr(config, c, cfg[c])
 
         return config
-

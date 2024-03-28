@@ -22,13 +22,13 @@ ORDER_BY_FIELD_DESC = "installed_rank desc"
 INSERT_VERSION_MIGRATE = "insert into %s (version, extension, name, checksum) values ('%s', '%s', '%s', '%s');"
 UPDATE_CHECKSUM = "update %s set checksum='%s' where version='%s';"
 
+
 class Mysql():
 
     def __init__(self, config: ConfigFile) -> None:
         self.config = config
         self.version_table = config.database_table
         self.create_version_table_if_not_exists()
-
 
     def connect(self) -> Union[PooledMySQLConnection | MySQLConnection | CMySQLConnection]:
         return mysql.connector.connect(
@@ -40,10 +40,8 @@ class Mysql():
             use_pure=True
         )
 
-
     def create_version_table_if_not_exists(self) -> None:
         self.execute(CREATE_VERSION_MIGRATIONS % self.version_table)
-
 
     def execute(self, script: str) -> None:
         cnx = self.connect()
@@ -51,7 +49,6 @@ class Mysql():
             pass
         cnx.commit()
         cnx.close()
-
 
     def get_all_schema_migrations(self) -> List[Migration]:
         cnx = self.connect()
@@ -64,7 +61,6 @@ class Mysql():
         cnx.close()
         return migrations
 
-
     def get_schema_migration(self, version: str) -> Migration:
         cnx = self.connect()
         cursor = cnx.cursor()
@@ -75,7 +71,6 @@ class Mysql():
         cnx.close()
         return migration
 
-
     def upgrade_version(self, migration: Migration) -> None:
         self.execute(INSERT_VERSION_MIGRATE % (self.version_table, migration.version,
                                                migration.extension, migration.name,
@@ -83,4 +78,3 @@ class Mysql():
 
     def update_checksum(self, migration: Migration) -> None:
         self.execute(UPDATE_CHECKSUM % (self.version_table, migration.checksum, migration.version))
-

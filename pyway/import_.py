@@ -6,6 +6,7 @@ from pyway.helpers import Utils
 from pyway.errors import VALID_NAME_ERROR
 from pyway.configfile import ConfigFile
 
+
 class Import():
 
     def __init__(self, args: ConfigFile) -> None:
@@ -32,4 +33,4 @@ class Import():
         # File exists, import it
         migration = Migration.from_name(self.schema_file, self.migration_dir)
         self._db.upgrade_version(migration)
-        return(migration.name)
+        return (migration.name)

@@ -38,4 +38,5 @@ class _Log():
         else:
             raise InvalidLogLevel
 
+
 logger = _Log()

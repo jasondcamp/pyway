@@ -1,7 +1,6 @@
 import os
 from typing import List
 
-from pyway.log import logger
 from pyway.helpers import Utils
 from pyway.migration import Migration
 from pyway.dbms.database import factory
@@ -21,7 +20,7 @@ class Migrate():
         output = ''
         migrations_to_be_executed = self._get_migration_files_to_be_executed()
         if not migrations_to_be_executed:
-            output += Utils.color("Nothing to do\n", bcolors.FAIL) 
+            output += Utils.color("Nothing to do\n", bcolors.FAIL)
             return output
 
         for migration in migrations_to_be_executed:
