@@ -4,17 +4,18 @@ from pyway.migration import Migration
 from pyway.dbms.database import factory
 from pyway.helpers import Utils
 from pyway.errors import VALID_NAME_ERROR
+from pyway.configfile import ConfigFile
 
 
 class Import():
 
-    def __init__(self, args):
+    def __init__(self, args: ConfigFile) -> None:
         self._db = factory(args.database_type)(args)
         self.migration_dir = args.database_migration_dir
         self.schema_file = args.schema_file
         self.args = args
 
-    def run(self):
+    def run(self) -> str:
         if not self.schema_file:
             raise AttributeError("Error, must specify --schema-file with import")
 
@@ -32,4 +33,4 @@ class Import():
         # File exists, import it
         migration = Migration.from_name(self.schema_file, self.migration_dir)
         self._db.upgrade_version(migration)
-        return(migration.name)
+        return (migration.name)

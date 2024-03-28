@@ -5,87 +5,90 @@ from pyway.settings import ConfigFile
 from pyway.settings import Settings
 from pyway.settings import ARGS
 
+
 class MockConfig:
     pass
+
 
 class MockArgs:
     pass
 
+
 # Make sure config options exists and check some defaults
 @pytest.mark.settings_test
-def test_settings_database_migration_dir():
+def test_settings_database_migration_dir() -> None:
     config = ConfigFile()
     assert config.database_migration_dir == 'resources'
 
 
 @pytest.mark.settings_test
-def test_settings_database_table():
+def test_settings_database_table() -> None:
     config = ConfigFile()
     assert config.database_table == 'public.pyway'
 
 
 @pytest.mark.settings_test
-def test_settings_database_type():
+def test_settings_database_type() -> None:
     config = ConfigFile()
     assert config.database_type == 'postgres'
 
 
 @pytest.mark.settings_test
-def test_settings_database_host():
+def test_settings_database_host() -> None:
     config = ConfigFile()
     assert config.database_host == 'localhost'
 
 
 @pytest.mark.settings_test
-def test_settings_database_port():
+def test_settings_database_port() -> None:
     config = ConfigFile()
     assert config.database_port == '5432'
 
 
 @pytest.mark.settings_test
-def test_settings_database_name():
+def test_settings_database_name() -> None:
     config = ConfigFile()
     assert config.database_name == 'postgres'
 
 
 @pytest.mark.settings_test
-def test_settings_database_username():
+def test_settings_database_username() -> None:
     config = ConfigFile()
     assert config.database_username == 'postgres'
 
 
 @pytest.mark.settings_test
-def test_settings_database_password():
+def test_settings_database_password() -> None:
     config = ConfigFile()
     assert config.database_password == 'password'
 
 
 @pytest.mark.settings_test
-def test_settings_schema_file():
+def test_settings_schema_file() -> None:
     config = ConfigFile()
     assert config.schema_file is None
 
 
 @pytest.mark.settings_test
-def test_settings_config():
+def test_settings_config() -> None:
     config = ConfigFile()
     assert config.config == '.pyway.conf'
 
 
 @pytest.mark.settings_test
-def test_settings_version():
+def test_settings_version() -> None:
     config = ConfigFile()
     assert config.version is False
 
 
 @pytest.mark.settings_test
-def test_settings_cmd():
+def test_settings_cmd() -> None:
     config = ConfigFile()
     assert config.cmd is None
 
 
 @pytest.mark.settings_test
-def test_parse_config_file():
+def test_parse_config_file() -> None:
     config = ConfigFile()
     config.config = 'tests/data/pyway.conf'
     config = Settings.parse_config_file(config)
@@ -93,7 +96,7 @@ def test_parse_config_file():
 
 
 @pytest.mark.settings_test
-def test_parse_args():
+def test_parse_args() -> None:
 
     # Setup mock config and args
     config = MockConfig()
@@ -112,15 +115,12 @@ def test_parse_args():
 
 
 @pytest.mark.settings_test
-def test_parse_arguments():
+def test_parse_arguments() -> None:
     class MockConfig:
         pass
 
     # Create a mock config object
     config = MockConfig()
-
-#    config = ConfigFile()
-#    (config, parser) = Settings.parse_arguments(config)
 
     test_args = [
         'script_name',
@@ -130,9 +130,8 @@ def test_parse_arguments():
         '--database-host', 'localhost'
     ]
 
-    original_argv = sys.argv
+    _ = sys.argv
     sys.argv = test_args
-
 
     Settings.parse_arguments(config)
 
@@ -141,8 +140,9 @@ def test_parse_arguments():
     assert config.database_type == 'postgres'
     assert config.database_host == 'localhost'
 
+
 @pytest.mark.settings_test
-def test_env_var_interpolation():
+def test_env_var_interpolation() -> None:
     # Set an env var
     os.environ['TEST_VAR'] = 'sometest'
 
