@@ -1,5 +1,8 @@
 import psycopg2
+from typing import List
+
 from pyway.migration import Migration
+from pyway.configfile import ConfigFile
 
 
 CREATE_VERSION_MIGRATIONS = "create table if not exists %s ("\
@@ -19,28 +22,28 @@ UPDATE_CHECKSUM = "update %s set checksum='%s' where version='%s';"
 
 class Postgres():
 
-    def __init__(self, args):
+    def __init__(self, args: ConfigFile) -> None:
         self.args = args
         self.version_table = args.database_table
         self.create_version_table_if_not_exists()
 
 
-    def connect(self):
+    def connect(self) -> psycopg2.extensions.connection:
         return psycopg2.connect(f"dbname={self.args.database_name} user={self.args.database_username} host={self.args.database_host} password={self.args.database_password} port={self.args.database_port}")  # noqa: E501
 
 
-    def create_version_table_if_not_exists(self):
+    def create_version_table_if_not_exists(self) -> None:
         self.execute(CREATE_VERSION_MIGRATIONS % self.version_table)
 
 
-    def execute(self, script):
+    def execute(self, script: str) -> None:
         conn = self.connect()
         cur = conn.cursor()
         cur.execute(script)
         conn.commit()
 
 
-    def get_all_schema_migrations(self):
+    def get_all_schema_migrations(self) -> List[Migration]:
         cnx = self.connect()
         cursor = cnx.cursor()
         cursor.execute(f"SELECT {','.join(SELECT_FIELDS)} FROM {self.version_table} ORDER BY {ORDER_BY_FIELD_ASC}")
@@ -52,7 +55,7 @@ class Postgres():
         return migrations
 
 
-    def get_schema_migration(self, version):
+    def get_schema_migration(self, version: str) -> Migration:
         cnx = self.connect()
         cursor = cnx.cursor()
         cursor.execute(f"SELECT {','.join(SELECT_FIELDS)} FROM {self.version_table} WHERE version=%s", [version])
@@ -63,11 +66,11 @@ class Postgres():
         return migration
 
 
-    def upgrade_version(self, migration):
+    def upgrade_version(self, migration: Migration) -> None:
         self.execute(INSERT_VERSION_MIGRATE % (self.version_table, migration.version,
                                                migration.extension, migration.name,
                                                migration.checksum))
 
 
-    def update_checksum(self, migration):
+    def update_checksum(self, migration: Migration) -> None:
         self.execute(UPDATE_CHECKSUM % (self.version_table, migration.checksum, migration.version))

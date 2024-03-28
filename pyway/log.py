@@ -6,27 +6,27 @@ from pyway.exceptions import InvalidLogLevel
 
 
 class _Log():
-    def __init__(self):
+    def __init__(self) -> None:
         self.logger = logging.getLogger('pyway')
         self.logger.addHandler(logging.StreamHandler(sys.stdout))
         self.logger.setLevel(logging.INFO)
 
-    def debug(self, msg):
+    def debug(self, msg: str) -> None:
         if self.logger:
             self.logger.debug(msg)
 
-    def info(self, msg):
+    def info(self, msg: str) -> None:
         if self.logger:
             self.logger.info(Utils.color(msg, bcolors.OKBLUE))
 
-    def error(self, msg):
+    def error(self, msg: str) -> None:
         if self.logger:
             self.logger.error(Utils.color(msg, bcolors.FAIL))
 
-    def success(self, msg):
+    def success(self, msg: str) -> None:
         self.logger.info(Utils.color(msg, bcolors.OKGREEN))
 
-    def setlevel(self, log_level):
+    def setlevel(self, log_level: str) -> None:
         if log_level == "INFO":
             self.logger.setLevel(logging.INFO)
         elif log_level == "DEBUG":

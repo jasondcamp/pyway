@@ -36,7 +36,7 @@ def test_pyway_info(mysqld_connect: Mysqld) -> None:
     config.database_table = 'pyway'
     config.database_migration_dir = os.path.join('tests', 'data', 'schema')
     tbl = Info(config).run()
-    assert strip_ansi(tbl) == INFO_OUTPUT
+    assert strip_ansi(tbl): == INFO_OUTPUT
 
 
 @pytest.mark.info_test

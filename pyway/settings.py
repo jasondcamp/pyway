@@ -1,6 +1,9 @@
 import os
 import argparse
 import yaml
+from typing import Any, Tuple, Dict
+
+from pyway.configfile import ConfigFile
 
 # Pyway consts
 SQL_MIGRATION_PREFIX = os.environ.get('PYWAY_SQL_MIGRATION_PREFIX', 'V')
@@ -12,21 +15,16 @@ ARGS = ['database_migration_dir', 'database_table', 'database_type', 'database_h
 
 
 class Settings():
-
-    def __init__(self, args):
-        self.args = args
-
-
     @staticmethod
-    def parse_args(config, args):
+    def parse_args(config: ConfigFile, args: argparse.Namespace) -> ConfigFile:
         for arg in ARGS:
             if getattr(args, arg):
                 setattr(config, arg, getattr(args, arg))
         return config
 
     @classmethod
-    def parse_arguments(self, config):
-        parser = argparse.ArgumentParser()
+    def parse_arguments(self, config: ConfigFile) -> Tuple[ConfigFile, argparse.ArgumentParser]:
+        parser: argparse.ArgumentParser = argparse.ArgumentParser()
         parser.add_argument("--database-migration-dir", help="Database migration directory")
         parser.add_argument("--database-table", help="Database table that stores pyway metadata")
         parser.add_argument("--database-type", help="Database type [postgres|mysql]")
@@ -42,15 +40,15 @@ class Settings():
         parser.add_argument("-v", "--version", help="Version", action='store_true')
         parser.add_argument("cmd", nargs="?", help="info|validate|migrate|import|checksum")
 
-        config = self.parse_args(config, parser.parse_args())
-        return (config, parser)
+        new_config: ConfigFile = self.parse_args(config, parser.parse_args())
+        return (new_config, parser)
 
     @classmethod
-    def parse_config_file(self, config):
+    def parse_config_file(self, config: ConfigFile) -> ConfigFile:
         # See if there is a config file
         if os.path.exists(config.config):
             with open(config.config, "r", encoding='utf-8') as ymlfile:
-                cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
+                cfg: Dict = yaml.load(ymlfile, Loader=yaml.FullLoader)
 
             # Merge config together with args
             for c in cfg:
@@ -61,19 +59,3 @@ class Settings():
 
         return config
 
-
-class ConfigFile():
-    def __init__(self):
-        self.database_migration_dir = os.environ.get('PYWAY_DATABASE_MIGRATION_DIR', 'resources')
-        self.database_table = os.environ.get('PYWAY_TABLE', 'public.pyway')
-        self.database_type = os.environ.get('PYWAY_TYPE', 'postgres')
-        self.database_host = os.environ.get('PYWAY_DATABASE_HOST', 'localhost')
-        self.database_port = os.environ.get('PYWAY_DATABASE_PORT', '5432')
-        self.database_name = os.environ.get('PYWAY_DATABASE_NAME', 'postgres')
-        self.database_username = os.environ.get('PYWAY_DATABASE_USERNAME', 'postgres')
-        self.database_password = os.environ.get('PYWAY_DATABASE_PASSWORD', 'password')
-        self.schema_file = None
-        self.checksum_file = None
-        self.config = os.environ.get('PYWAY_CONFIG_FILE', '.pyway.conf')
-        self.version = False
-        self.cmd = None

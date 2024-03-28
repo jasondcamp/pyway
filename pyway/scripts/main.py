@@ -11,7 +11,7 @@ from pyway.checksum import Checksum
 from pyway.version import __version__
 
 
-def migrate(config):
+def migrate(config: ConfigFile) -> None:
     # Validate first
     validate(config, skip_errors=True)
 
@@ -21,33 +21,33 @@ def migrate(config):
     logger.info('Migration completed.')
 
 
-def validate(config, skip_errors=False):
+def validate(config: ConfigFile, skip_errors: bool = False) -> None:
     logger.info('Starting validation process')
     output = Validate(config).run(skip_initial_check=True)
     logger.info(output)
     logger.info('Validation completed.')
 
 
-def info(config):
+def info(config: ConfigFile) -> None:
     logger.info('Gathering info...')
     tbl = Info(config).run()
     logger.info(tbl)
     print()
 
 
-def import_(config):
+def import_(config: ConfigFile) -> None:
     logger.info("Importing schema...")
     migration_name = Import(config).run()
     logger.info(f"{migration_name} Imported")
 
 
-def checksum(config):
+def checksum(config: ConfigFile) -> None:
     logger.info("Updating checksum...")
     name, checksum = Checksum(config).run()
     logger.info(f"{name} checksum updated to {checksum}")
 
 
-def cli():
+def cli() -> None:
     logger.info(f"PyWay {__version__}")
 
     config = ConfigFile()
