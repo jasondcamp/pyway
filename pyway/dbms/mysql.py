@@ -1,5 +1,6 @@
 import mysql.connector
 from mysql.connector.connection import MySQLConnection
+from mysql.connector.connection import MySQLConnectionAbstract
 from mysql.connector.connection_cext import CMySQLConnection
 from mysql.connector.pooling import PooledMySQLConnection
 from typing import List, Union
