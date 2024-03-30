@@ -26,5 +26,6 @@ jobs:
       run: |
         mypy pyway/*.py
         mypy pyway/scripts/*.py
-#        mypy pyway/dbms/*.py
+#        mypy pyway/dbms/*.py # Commented out because of errors
+#        mypy pyway/tests/*.py # Commented out because of errors
 
