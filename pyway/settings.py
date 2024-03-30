@@ -4,7 +4,6 @@ import yaml
 from typing import Tuple, Dict, Union
 
 from pyway.configfile import ConfigFile
-from pyway.configfile import MockConfig
 from pyway.configfile import MockArgs
 
 # Pyway consts

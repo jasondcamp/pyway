@@ -1,6 +1,7 @@
 import os
 from typing import Union
 
+
 class ConfigFile():
     def __init__(self) -> None:
         self.database_migration_dir = os.environ.get('PYWAY_DATABASE_MIGRATION_DIR', 'resources')
@@ -16,6 +17,7 @@ class ConfigFile():
         self.config = os.environ.get('PYWAY_CONFIG_FILE', '.pyway.conf')
         self.version = False
         self.cmd = None
+
 
 class MockConfig():
     pass
