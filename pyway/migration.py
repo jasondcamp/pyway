@@ -3,8 +3,8 @@ from typing import List, Any, Optional, Type
 
 
 class Migration():
-    def __init__(self, version: str, extension: str, name: str,
-                 checksum: str, apply_timestamp: Optional[Any]) -> None:
+    def __init__(self, version: Any, extension: Any, name: Any,
+                 checksum: Any, apply_timestamp: Optional[Any]) -> None:
         self.version: str = version
         self.extension: str = extension
         self.name: str = name

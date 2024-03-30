@@ -55,7 +55,8 @@ class Postgres():
         cursor = cnx.cursor()
         cursor.execute(f"SELECT {','.join(SELECT_FIELDS)} FROM {self.version_table} WHERE version=%s", [version])
         row = cursor.fetchone()
-        migration = Migration(row[0], row[1], row[2], row[3], row[4])
+        if row is not None:
+            migration = Migration(row[0], row[1], row[2], row[3], row[4])
         cursor.close()
         cnx.close()
         return migration

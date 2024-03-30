@@ -4,14 +4,8 @@ import sys
 from pyway.settings import ConfigFile
 from pyway.settings import Settings
 from pyway.settings import ARGS
-
-
-class MockConfig:
-    pass
-
-
-class MockArgs:
-    pass
+from pyway.configfile import MockConfig
+from pyway.configfile import MockArgs
 
 
 # Make sure config options exists and check some defaults

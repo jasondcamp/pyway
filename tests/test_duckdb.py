@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from __future__ import annotations
+import pytest
 
 from pyway.configfile import ConfigFile
 from pyway.dbms.database import factory
@@ -8,12 +9,13 @@ from pyway.dbms import duckdb
 from pyway.migration import Migration
 
 
-def test_factory():
+@pytest.mark.duckdb_test
+def test_factory() -> None:
     args = ConfigFile()
-    args.database_type="duckdb"
-    args.database_name="./unittest.duckdb"
-    args.database_table="pyway"
-    db:duckdb.Duckdb = factory(args.database_type)(args)
+    args.database_type = "duckdb"
+    args.database_name = "./unittest.duckdb"
+    args.database_table = "pyway"
+    db: duckdb.Duckdb = factory(args.database_type)(args)
 
     assert db.connect().sql(
         f"select 1 from information_schema.tables where table_name = '{args.database_table}'"
@@ -22,12 +24,13 @@ def test_factory():
     db.disconnect()
 
 
-def test_migrations():
+@pytest.mark.duckdb_test
+def test_migrations() -> None:
     args = ConfigFile()
-    args.database_type="duckdb"
-    args.database_name="./unittest.duckdb"
-    args.database_table="pyway"
-    db:duckdb.Duckdb = factory(args.database_type)(args)
+    args.database_type = "duckdb"
+    args.database_name = "./unittest.duckdb"
+    args.database_table = "pyway"
+    db: duckdb.Duckdb = factory(args.database_type)(args)
 
     db.execute(f"truncate table {args.database_table}")
 
@@ -65,6 +68,4 @@ def test_migrations():
     assert fetched.checksum == updated.checksum
     assert fetched.extension == updated.extension
 
-
     db.disconnect()
-

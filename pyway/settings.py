@@ -1,9 +1,11 @@
 import os
 import argparse
 import yaml
-from typing import Tuple, Dict
+from typing import Tuple, Dict, Union
 
 from pyway.configfile import ConfigFile
+from pyway.configfile import MockConfig
+from pyway.configfile import MockArgs
 
 # Pyway consts
 SQL_MIGRATION_PREFIX = os.environ.get('PYWAY_SQL_MIGRATION_PREFIX', 'V')
@@ -16,7 +18,7 @@ ARGS = ['database_migration_dir', 'database_table', 'database_type', 'database_h
 
 class Settings():
     @staticmethod
-    def parse_args(config: ConfigFile, args: argparse.Namespace) -> ConfigFile:
+    def parse_args(config: ConfigFile, args: Union[argparse.Namespace, MockArgs]) -> ConfigFile:
         for arg in ARGS:
             if getattr(args, arg):
                 setattr(config, arg, getattr(args, arg))
