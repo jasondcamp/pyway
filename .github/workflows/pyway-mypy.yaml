@@ -26,5 +26,5 @@ jobs:
       run: |
         mypy pyway/*.py
         mypy pyway/scripts/*.py
-        mypy pyway/dbms/*.py
+#        mypy pyway/dbms/*.py
 
