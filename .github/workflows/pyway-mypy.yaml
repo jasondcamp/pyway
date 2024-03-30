@@ -22,7 +22,7 @@ jobs:
         pip install -r requirements.txt
         pip install mypy
 
-    - name: Run Flake8
+    - name: Run Mypy
       run: |
         mypy pyway/*.py
         mypy pyway/scripts/*.py
