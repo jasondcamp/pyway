@@ -6,6 +6,12 @@
 ## Overview
 Pyway is a database versioning and migration tool inspired by Flyway
 
+## Supported Databases
+- MySQLd Commercial (Version 8+)
+- MariaDB (Version 10+)
+- PostgreSQL
+- DuckDB (Version 0.10+)
+
 ## Download and Install
 To install use pip:
 

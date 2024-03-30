@@ -1,4 +1,5 @@
 import os
+from typing import Union
 
 
 class ConfigFile():
@@ -11,8 +12,16 @@ class ConfigFile():
         self.database_name = os.environ.get('PYWAY_DATABASE_NAME', 'postgres')
         self.database_username = os.environ.get('PYWAY_DATABASE_USERNAME', 'postgres')
         self.database_password = os.environ.get('PYWAY_DATABASE_PASSWORD', 'password')
-        self.schema_file = None
+        self.schema_file: Union[str, None] = None
         self.checksum_file = None
         self.config = os.environ.get('PYWAY_CONFIG_FILE', '.pyway.conf')
         self.version = False
         self.cmd = None
+
+
+class MockConfig():
+    pass
+
+
+class MockArgs():
+    pass

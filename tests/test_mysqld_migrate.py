@@ -26,6 +26,7 @@ def mysqld_connect(autouse: bool = True) -> Mysqld:
 
 
 @pytest.mark.migrate_test
+@pytest.mark.mysqld_test
 def test_pyway_migrate(mysqld_connect: Mysqld) -> None:
     config = ConfigFile()
     config.database_type = "mysql"
@@ -42,6 +43,7 @@ def test_pyway_migrate(mysqld_connect: Mysqld) -> None:
 
 
 @pytest.mark.migrate_test
+@pytest.mark.mysqld_test
 def test_pyway_migrate_nothingtodo(mysqld_connect: Mysqld) -> None:
     config = ConfigFile()
     config.database_type = "mysql"
@@ -61,6 +63,7 @@ def test_pyway_migrate_nothingtodo(mysqld_connect: Mysqld) -> None:
 
 
 @pytest.mark.migrate_test
+@pytest.mark.mysqld_test
 def test_pyway_migrate_no_local_files(mysqld_connect: Mysqld) -> None:
     config = ConfigFile()
     config.database_type = "mysql"

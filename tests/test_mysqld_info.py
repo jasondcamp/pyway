@@ -22,6 +22,7 @@ def mysqld_connect(autouse=True) -> Mysqld:
 
 
 @pytest.mark.info_test
+@pytest.mark.mysqld_test
 def test_pyway_info(mysqld_connect: Mysqld) -> None:
     config = ConfigFile()
     config.database_type = "mysql"
@@ -37,6 +38,7 @@ def test_pyway_info(mysqld_connect: Mysqld) -> None:
 
 
 @pytest.mark.info_test
+@pytest.mark.mysqld_test
 def test_pyway_info_nofiles(mysqld_connect: Mysqld) -> None:
     config = ConfigFile()
     config.database_type = "mysql"
