@@ -60,7 +60,7 @@ class Duckdb():
 
     def get_schema_migration(self, version: str) -> Migration:
         cursor = self.connect()
-        cursor.execute(f"SELECT {','.join(SELECT_FIELDS)} FROM {self.version_table} WHERE version=%s", [version])
+        cursor.execute(f"SELECT {','.join(SELECT_FIELDS)} FROM {self.version_table} WHERE version=?", [version])
         row = cursor.fetchone()
         migration = Migration(row[0], row[1], row[2], row[3], row[4])
         cursor.close()

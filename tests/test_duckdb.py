@@ -11,7 +11,7 @@ from pyway.migration import Migration
 def test_factory():
     args = ConfigFile()
     args.database_type="duckdb"
-    args.database_name="./data/unittest.duckdb"
+    args.database_name="./unittest.duckdb"
     args.database_table="pyway"
     db:duckdb.Duckdb = factory(args.database_type)(args)
 
@@ -58,6 +58,13 @@ def test_migrations():
     migrations = db.get_all_schema_migrations()
     assert len(migrations) == 1
     assert migrations[0].checksum == updated.checksum
+
+    fetched = db.get_schema_migration(updated.version)
+    assert fetched.version == updated.version
+    assert fetched.name == updated.name
+    assert fetched.checksum == updated.checksum
+    assert fetched.extension == updated.extension
+
 
     db.disconnect()
 
