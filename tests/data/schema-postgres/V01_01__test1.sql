@@ -1,0 +1,3 @@
+CREATE TABLE testtable (
+    id BIGSERIAL PRIMARY KEY
+);

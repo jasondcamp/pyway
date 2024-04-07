@@ -12,4 +12,5 @@ pyyaml>=6.0.1
 types-PyYAML>=6.0.12
 strip_ansi>=0.1.1
 mysqld-integration-test>=0.0.20
+postgresql-integration-test>=0.0.3
 duckdb>=0.10.0
