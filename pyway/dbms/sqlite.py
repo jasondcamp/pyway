@@ -1,5 +1,5 @@
 import sqlite3
-from typing import List
+from typing import Any, List, Tuple
 
 from pyway.migration import Migration
 from pyway.configfile import ConfigFile
@@ -27,14 +27,14 @@ class Sqlite():
         self.version_table = config.database_table
         self.create_version_table_if_not_exists()
 
-    def connect(self):
+    def connect(self) -> Any:
         conn = sqlite3.connect(self.config.database_name)
         return conn
 
     def create_version_table_if_not_exists(self) -> None:
         self.execute(CREATE_VERSION_MIGRATIONS % self.version_table)
 
-    def execute(self, script: str):
+    def execute(self, script: str) -> List[Tuple]:
         cnx = self.connect()
         cursor = cnx.cursor()
         cursor.execute(script)
