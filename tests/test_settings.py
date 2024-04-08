@@ -17,43 +17,43 @@ def test_settings_database_migration_dir() -> None:
 
 @pytest.mark.settings_test
 def test_settings_database_table() -> None:
-    config = ConfigFile()
+    config = ConfigFile(database_table = 'public.pyway')
     assert config.database_table == 'public.pyway'
 
 
 @pytest.mark.settings_test
 def test_settings_database_type() -> None:
-    config = ConfigFile()
+    config = ConfigFile(database_type='postgres')
     assert config.database_type == 'postgres'
 
 
 @pytest.mark.settings_test
 def test_settings_database_host() -> None:
-    config = ConfigFile()
+    config = ConfigFile(database_host='localhost')
     assert config.database_host == 'localhost'
 
 
 @pytest.mark.settings_test
 def test_settings_database_port() -> None:
-    config = ConfigFile()
+    config = ConfigFile(database_port='5432')
     assert config.database_port == '5432'
 
 
 @pytest.mark.settings_test
 def test_settings_database_name() -> None:
-    config = ConfigFile()
+    config = ConfigFile(database_name = 'postgres')
     assert config.database_name == 'postgres'
 
 
 @pytest.mark.settings_test
 def test_settings_database_username() -> None:
-    config = ConfigFile()
+    config = ConfigFile(database_username = 'postgres')
     assert config.database_username == 'postgres'
 
 
 @pytest.mark.settings_test
 def test_settings_database_password() -> None:
-    config = ConfigFile()
+    config = ConfigFile(database_password = 'password')
     assert config.database_password == 'password'
 
 
