@@ -1,9 +1,9 @@
 import os
-from typing import Union
+from typing import Any, Union
 
 
 class ConfigFile():
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs: Any) -> None:
         self.database_migration_dir = os.environ.get('PYWAY_DATABASE_MIGRATION_DIR', 'resources')
         self.database_table = os.environ.get('PYWAY_TABLE', kwargs.get('database_table'))
         self.database_type = os.environ.get('PYWAY_TYPE', kwargs.get('database_type'))

@@ -17,7 +17,7 @@ def test_settings_database_migration_dir() -> None:
 
 @pytest.mark.settings_test
 def test_settings_database_table() -> None:
-    config = ConfigFile(database_table = 'public.pyway')
+    config = ConfigFile(database_table='public.pyway')
     assert config.database_table == 'public.pyway'
 
 
@@ -41,19 +41,19 @@ def test_settings_database_port() -> None:
 
 @pytest.mark.settings_test
 def test_settings_database_name() -> None:
-    config = ConfigFile(database_name = 'postgres')
+    config = ConfigFile(database_name='postgres')
     assert config.database_name == 'postgres'
 
 
 @pytest.mark.settings_test
 def test_settings_database_username() -> None:
-    config = ConfigFile(database_username = 'postgres')
+    config = ConfigFile(database_username='postgres')
     assert config.database_username == 'postgres'
 
 
 @pytest.mark.settings_test
 def test_settings_database_password() -> None:
-    config = ConfigFile(database_password = 'password')
+    config = ConfigFile(database_password='password')
     assert config.database_password == 'password'
 
 
