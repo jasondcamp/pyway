@@ -29,6 +29,8 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
           #      - name: Setup upterm session
         #        uses: lhotari/action-upterm@v1
+      - name: Add directory to PATH
+        run: echo "/usr/lib/postgresql/14/bin" >> $GITHUB_PATH
       - name: Test with pytest
         run: |
           pytest
