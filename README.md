@@ -11,6 +11,7 @@ Pyway is a database versioning and migration tool inspired by Flyway
 - MariaDB (Version 10+)
 - PostgreSQL
 - DuckDB (Version 0.10+)
+- SQLite 3
 
 ## Download and Install
 To install use pip:
@@ -34,7 +35,7 @@ Priority is `env variables` -> `config file` -> `command args`
 | PYWAY_SQL_MIGRATION_SEPARATOR | | Separator between version and description to the migration file | __ |
 | PYWAY_SQL_MIGRATION_SUFFIXES | | Suffix extension for migration files | .sql |
 | PYWAY_TABLE | --database-table | Name of schema history table | *None* |
-| PYWAY_TYPE | --database-type | Data Base Management System [`postgres`, `mysql`, `duckdb` ] | *None* *required* |
+| PYWAY_TYPE | --database-type | Data Base Management System [`postgres`, `mysql`, `duckdb`, `sqlite` ] | *None* *required* |
 | PYWAY_DATABASE_HOST | --database-host | Host to connect to the database | *None* |
 | PYWAY_DATABASE_PORT | --database-port | Port to connect to the database | *None* |
 | PYWAY_DATABASE_NAME | --database-name | Name of database to connect | *None* |
