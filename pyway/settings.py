@@ -28,7 +28,7 @@ class Settings():
         parser: argparse.ArgumentParser = argparse.ArgumentParser()
         parser.add_argument("--database-migration-dir", help="Database migration directory")
         parser.add_argument("--database-table", help="Database table that stores pyway metadata")
-        parser.add_argument("--database-type", help="Database type [postgres|mysql]")
+        parser.add_argument("--database-type", help="Database type [postgres|mysql|duckdb]")
         parser.add_argument("--database-host", help="Database host")
         parser.add_argument("--database-port", help="Database port")
         parser.add_argument("--database-name", help="Database name")
