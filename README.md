@@ -34,7 +34,7 @@ Priority is `env variables` -> `config file` -> `command args`
 | PYWAY_SQL_MIGRATION_SEPARATOR | | Separator between version and description to the migration file | __ |
 | PYWAY_SQL_MIGRATION_SUFFIXES | | Suffix extension for migration files | .sql |
 | PYWAY_TABLE | --database-table | Name of schema history table | public.pyway |
-| PYWAY_TYPE | --database-type | Data Base Management System [`postgres`, `mysql` ] | *required* |
+| PYWAY_TYPE | --database-type | Data Base Management System [`postgres`, `mysql`, `duckdb` ] | *required* |
 | PYWAY_DATABASE_HOST | --database-host | Host to connect to the database | localhost |
 | PYWAY_DATABASE_PORT | --database-port | Port to connect to the database | 5432 |
 | PYWAY_DATABASE_NAME | --database-name | Name of database to connect | postgres |
