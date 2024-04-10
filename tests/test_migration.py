@@ -29,4 +29,5 @@ def test_semantic_version_from_name() -> None:
 @pytest.mark.migration_test
 def test_str() -> None:
     migration = Migration.from_name('V01_01_01__test1.sql', os.path.join('tests', 'data', 'schemasemver'))
-    assert str(migration) == "version=01.01.01, extension=SQL, name=V01_01_01__test1.sql, checksum=8327AD7B, apply_timestamp=None"
+    assert str(migration) == "version=01.01.01, extension=SQL, name=V01_01_01__test1.sql, " \
+                             "checksum=8327AD7B, apply_timestamp=None"
