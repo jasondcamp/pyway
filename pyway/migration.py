@@ -24,5 +24,5 @@ class Migration():
         return [cls(m.version, m.extension, m.name, m.checksum, m.apply_timestamp) for m in list_]
 
     def __str__(self) -> str:
-        return f"version={self.version}, extension={self.extension}, checksum={self.checksum}, " \
-                "apply_timestamp={self.apply_timestamp}"
+        return f"version={self.version}, extension={self.extension}, name={self.name}, " \
+               f"checksum={self.checksum}, apply_timestamp={self.apply_timestamp}"
