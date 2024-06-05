@@ -7,7 +7,7 @@ pytest-cov==4.0.0
 coverage>=7.2.1
 psycopg2-binary>=2.9.5
 types-psycopg2>=2.9.21
-mysql-connector-python>=8.0.32
+mysql-connector-python>=8.4.0
 pyyaml>=6.0.1
 types-PyYAML>=6.0.12
 strip_ansi>=0.1.1
