@@ -11,7 +11,6 @@ description = "Pyway is a database versioning and migration tool inspired by Fly
 classifiers = [
     "Development Status :: 4 - Beta",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -27,15 +26,15 @@ dependencies = [
     "strip_ansi >= 0.1.1"
 ]
 
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 
 [project.optional-dependencies]
 tests = [
   "pytest >= 7.2.1",
-  "pytest-env == 0.8.1",
-  "pytest-cov == 4.0.0",
+  "pytest-env >= 0.8.1",
+  "pytest-cov >= 4.0.0",
   "coverage >= 7.2.1",
-  "mysqld-integration-test >= 0.0.20"
+  "mysqld-integration-test >= 8.4.0"
 ]
 
 [project.urls]
