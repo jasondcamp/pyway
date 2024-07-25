@@ -37,7 +37,7 @@ class Sqlite():
     def execute(self, script: str) -> List[Tuple]:
         cnx = self.connect()
         cursor = cnx.cursor()
-        cursor.execute(script)
+        cursor.executescript(script)
         rows = cursor.fetchall()
         cnx.commit()
         cnx.close()
