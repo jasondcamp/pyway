@@ -12,6 +12,8 @@ Migrating --> V01_02__test2.sql
 V01_02__test2.sql SUCCESS
 Migrating --> V01_03__test3.sql
 V01_03__test3.sql SUCCESS
+Migrating --> V01_04__test4.sql
+V01_04__test4.sql SUCCESS
 """
 
 
