@@ -5,5 +5,6 @@ DIFF_CHECKSUM_ERROR_DOS: str = "ERROR: Local file [%s] with diff script (%s) of 
                                " - one or more files have DOS line breaks which may cause checksum differences"
 VALID_NAME_ERROR: str = "ERROR: Local file [%s] has invalid format name - expected: %s"
 DIRECTORY_NOT_FOUND: str = "ERROR: directory not found ('%s')"
+MIGRATIONS_MISSING: str = "ERROR: Missing local migration file (%s)"
 MIGRATIONS_NOT_FOUND: str = "ERROR: no local migration files found in (%s) folder"
 MIGRATIONS_NOT_STARTED: str = "ERROR: no migrations applied yet, no validation necessary."

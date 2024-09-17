@@ -1,7 +1,7 @@
 import pytest
 import os
 import sys
-from pyway.settings import ConfigFile
+from pyway.configfile import ConfigFile
 from pyway.settings import Settings
 from pyway.settings import ARGS
 from pyway.configfile import MockConfig
@@ -85,7 +85,7 @@ def test_settings_cmd() -> None:
 def test_parse_config_file() -> None:
     config = ConfigFile()
     config.config = 'tests/data/pyway.conf'
-    config = Settings.parse_config_file(config)
+    config = Settings.parse_config_file(config.config)
     assert config.database_username == "unittest"
 
 
@@ -100,8 +100,8 @@ def test_parse_args() -> None:
     for arg in ARGS:
         setattr(args, arg, f"test_{arg}")
 
-    # Call your function
-    Settings.parse_args(config, args)
+    # Call function
+    config = Settings.parse_args(args)
 
     # Assert that config is updated correctly
     for arg in ARGS:
@@ -110,10 +110,6 @@ def test_parse_args() -> None:
 
 @pytest.mark.settings_test
 def test_parse_arguments() -> None:
-    class MockConfig:
-        pass
-
-    # Create a mock config object
     config = MockConfig()
 
     test_args = [
@@ -121,13 +117,14 @@ def test_parse_arguments() -> None:
         '--database-migration-dir', 'migrations',
         '--database-table', 'pyway_meta',
         '--database-type', 'postgres',
-        '--database-host', 'localhost'
+        '--database-host', 'localhost',
+        'info'
     ]
 
     _ = sys.argv
     sys.argv = test_args
 
-    Settings.parse_arguments(config)
+    config = Settings.parse_arguments()
 
     assert config.database_migration_dir == 'migrations'
     assert config.database_table == 'pyway_meta'
@@ -142,5 +139,5 @@ def test_env_var_interpolation() -> None:
 
     config = ConfigFile()
     config.config = 'tests/data/pyway_variable.conf'
-    config = Settings.parse_config_file(config)
+    config = Settings.parse_config_file(config.config)
     assert config.database_username == "unittest_sometest"

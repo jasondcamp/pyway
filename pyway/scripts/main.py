@@ -50,20 +50,9 @@ def checksum(config: ConfigFile) -> None:
 def cli() -> None:
     logger.info(f"PyWay {__version__}")
 
-    config = ConfigFile()
-    config = Settings.parse_config_file(config)
-    (config, parser) = Settings.parse_arguments(config)
-
-    # Display version if it exists
-    if config.version:
-        print(f"Version: {__version__}")
-        sys.exit(1)
-
-    # If no arg is specified, show help
-    if not config.cmd:
-        # TODO: figure out how to print help
-        parser.print_help()
-        sys.exit(1)
+    config = Settings.parse_arguments()
+    config_file = Settings.parse_config_file(config.config)
+    config.merge(config_file)
 
     if config.cmd == "info":
         info(config)
