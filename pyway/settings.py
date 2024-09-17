@@ -2,7 +2,7 @@ import os
 import sys
 import argparse
 import yaml
-from typing import Tuple, Dict, Union
+from typing import Dict, Union
 
 from pyway.configfile import ConfigFile
 from pyway.configfile import MockArgs
