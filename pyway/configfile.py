@@ -18,6 +18,11 @@ class ConfigFile():
         self.version = False
         self.cmd = None
 
+    def merge(self, other: 'ConfigFile') -> None:
+        for key, value in vars(other).items():
+            if value is not None:
+                setattr(self, key, value)
+
 
 class MockConfig():
     pass
