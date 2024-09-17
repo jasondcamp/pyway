@@ -26,7 +26,7 @@ class Settings():
         return config
 
     @classmethod
-    def parse_arguments(self) -> Tuple[ConfigFile, argparse.ArgumentParser]:
+    def parse_arguments(self) -> ConfigFile:
         parser: argparse.ArgumentParser = argparse.ArgumentParser()
         parser.add_argument("--database-migration-dir", help="Database migration directory")
         parser.add_argument("--database-table", help="Database table that stores pyway metadata")
