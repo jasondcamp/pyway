@@ -32,14 +32,20 @@ class Mysql():
         self.create_version_table_if_not_exists()
 
     def connect(self) -> Union[PooledMySQLConnection, MySQLConnection, CMySQLConnection, MySQLConnectionAbstract]:
-        return mysql.connector.connect(
-            host=self.config.database_host,
-            port=self.config.database_port,
-            database=self.config.database_name,
-            user=self.config.database_username,
-            password=self.config.database_password,
-            use_pure=True
-        )
+        connection_params = {
+            'host': self.config.database_host,
+            'database': self.config.database_name,
+            'user': self.config.database_username,
+            'use_pure': True
+        }
+
+        if self.config.database_password:
+            connection_params['password'] = self.config.database_password
+
+        if self.config.database_port:
+            connection_params['port'] = self.config.database_port
+
+        return mysql.connector.connect(**connection_params)
 
     def create_version_table_if_not_exists(self) -> None:
         self.execute(CREATE_VERSION_MIGRATIONS % self.version_table)

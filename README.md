@@ -81,7 +81,8 @@ Example: V01_01__initial_schema.sql
 
 Example: V01_01_01__initial_schema.sql
 
-Note that the description needs to match the word regexp [A-Za-z0-9_]
+The description needs to match the word regexp [A-Za-z0-9_].
+It also supports 2 digits per version component, so 99.99.99 is the maximum version allowed.
 
 
 ## Usage

@@ -51,7 +51,7 @@ class Utils():
     def flatten_migrations(migrations: Iterable[Any]) -> List[Dict[Any, Any]]:
         migration_list = []
         for migration in migrations:
-            migration_list.append({'version': migration.version, 'extension': migration.extension,
+            migration_list.append({'version': Utils.format_version(migration.version), 'extension': migration.extension,
                                    'name': migration.name, 'checksum': migration.checksum,
                                    'apply_timestamp': migration.apply_timestamp})
         return migration_list
@@ -109,3 +109,18 @@ class Utils():
     @staticmethod
     def color(msg: str, color: str) -> str:
         return f"{color}{msg}{bcolors.ENDC}"
+
+    @staticmethod
+    def check_required_vars(required_keys: List[str], obj: Any) -> bool:
+        missing_keys = []
+        for key in required_keys:
+            if not getattr(obj, key):
+                missing_keys.append(key)
+
+        if missing_keys:
+            raise KeyError(f"Missing configuration options: {', '.join(missing_keys)}")
+        return True
+
+    @staticmethod
+    def format_version(version: str) -> str:
+        return ".".join(f"{int(v):02}" for v in version.split("."))

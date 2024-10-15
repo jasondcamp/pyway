@@ -28,7 +28,16 @@ class Postgres():
         self.create_version_table_if_not_exists()
 
     def connect(self) -> psycopg2.extensions.connection:
-        return psycopg2.connect(f"dbname={self.args.database_name} user={self.args.database_username} host={self.args.database_host} password={self.args.database_password} port={self.args.database_port}")  # noqa: E501
+        connection_string = f"dbname={self.args.database_name} user={self.args.database_username}"
+        connection_string += f" host={self.args.database_host}"
+
+        if self.args.database_password:
+            connection_string += f" password={self.args.database_password}"
+
+        if self.args.database_port:
+            connection_string += f" port={self.args.database_port}"
+
+        return psycopg2.connect(connection_string)
 
     def create_version_table_if_not_exists(self) -> None:
         self.execute(CREATE_VERSION_MIGRATIONS % self.version_table)
