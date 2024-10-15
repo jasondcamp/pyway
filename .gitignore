@@ -147,3 +147,5 @@ dmypy.json
 .pyway.conf
 unittest.duckdb
 unittest*.sqlite
+
+schema

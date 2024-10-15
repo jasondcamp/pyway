@@ -13,7 +13,7 @@ class Migration():
 
     @classmethod
     def from_name(cls: Type['Migration'], name: str, path: str, **kwargs: str) -> 'Migration':
-        version = kwargs.get('version', Utils.get_version_from_name(name))
+        version = Utils.format_version(kwargs.get('version', Utils.get_version_from_name(name)))
         extension = kwargs.get('extension', Utils.get_extension_from_name(name))
         checksum = kwargs.get('checksum', Utils.load_checksum_from_name(name, path))
         apply_timestamp = kwargs.get('apply_timestamp')

@@ -19,8 +19,13 @@ class Info():
         self.config = config
 
     def run(self) -> str:
-        return tabulate(Utils.flatten_migrations(self.get_table_info()), headers="keys",
-                        tablefmt=self.tablefmt, floatfmt=".2f")
+        tbls = Utils.flatten_migrations(self.get_table_info())
+
+        if not tbls:
+            return "No migrations found."
+        else:
+            return tabulate(tbls, headers="keys",
+                            tablefmt=self.tablefmt, floatfmt=".2f")
 
     def get_table_info(self) -> List:
         # Get remote migrations (and validate that the files exist)
