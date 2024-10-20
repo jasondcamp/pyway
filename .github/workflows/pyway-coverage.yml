@@ -21,6 +21,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
+          sudo DEBIAN_FRONTEND=noninteractive apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql
           python -m pip install --upgrade pip
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
@@ -28,6 +30,9 @@ jobs:
         run: echo "/usr/lib/postgresql/14/bin" >> $GITHUB_PATH
       - name: Run tests
         run: |
+          export GITHUB_PATH=/usr/lib/postgresql/14/bin:$GITHUB_PATH
+          export PATH=/usr/lib/postgresql/14/bin:$PATH
+          export LD_PRELOAD=/lib/x86_64-linux-gnu/libstdc++.so.6:$LD_PRELOAD
           coverage run -m pytest
 
       - name: Test & publish code coverage
