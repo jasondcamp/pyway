@@ -26,8 +26,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Add directory to PATH
-        run: echo "/usr/lib/postgresql/14/bin" >> $GITHUB_PATH
+
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
+
       - name: Run tests
         run: |
           export GITHUB_PATH=/usr/lib/postgresql/14/bin:$GITHUB_PATH
