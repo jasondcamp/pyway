@@ -1,14 +1,13 @@
-name: pyway Testing
+name: pyway Testing OSX
 
 on: [push]
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     strategy:
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9"]
 
     steps:
       - uses: actions/checkout@v3
@@ -18,11 +17,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          sudo DEBIAN_FRONTEND=noninteractive apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get -y install postgresql
+          brew install mariadb
+          brew install postgresql
 
           python -m pip install --upgrade pip
-          pip install flake8 pytest
+          pip install flake8 pytest build
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Lint with flake8
         run: |
@@ -30,13 +29,14 @@ jobs:
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - name: Build and install mysqld code
+        run: |
+          python -m build
+          pip install dist/*.gz
 
 #      - name: Setup upterm session
 #        uses: lhotari/action-upterm@v1
 
       - name: Test with pytest
         run: |
-          export GITHUB_PATH=/usr/lib/postgresql/14/bin:$GITHUB_PATH
-          export PATH=/usr/lib/postgresql/14/bin:$PATH
-          export LD_PRELOAD=/lib/x86_64-linux-gnu/libstdc++.so.6:$LD_PRELOAD
-          pytest
+          pytest -m "not integration_test"
