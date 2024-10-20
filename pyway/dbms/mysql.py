@@ -36,7 +36,8 @@ class Mysql():
             'host': self.config.database_host,
             'database': self.config.database_name,
             'user': self.config.database_username,
-            'use_pure': True
+            'use_pure': True,
+            'collation': self.config.database_collation
         }
 
         if self.config.database_password:
