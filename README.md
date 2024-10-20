@@ -41,7 +41,7 @@ Priority is `env variables` -> `config file` -> `command args`
 | PYWAY_DATABASE_NAME | --database-name | Name of database to connect | *None* |
 | PYWAY_DATABASE_USERNAME |--database-username | User to use to connect to the database | *None* |
 | PYWAY_DATABASE_PASSWORD | --database-password | Password to use to connect to the database | *None* |
-| PYWAY_DATABASE_COLLATION | --database-collation | Collation type to use in the database | MySQL - utf8mb4_general_ci |
+| PYWAY_DATABASE_COLLATION | --database-collation | Collation type to use in the database | MySQL: utf8mb4_general_ci Postgres: *not supported*|
 | PYWAY_CONFIG_FILE | -c, --config | Configuration file | .pyway.conf |
 | | --schema-file | Used when importing a schema file | |
 | | --checksum-file | Used when updating a checksum - *advanced use*! | |
