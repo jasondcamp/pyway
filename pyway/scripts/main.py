@@ -1,4 +1,5 @@
 import sys
+import os
 
 from pyway.settings import Settings
 from pyway.configfile import ConfigFile
@@ -54,9 +55,28 @@ def cli() -> None:
     config_file = Settings.parse_config_file(config.config)
     config.merge(config_file)
 
-    # Validate required vars
-    Utils.check_required_vars(["database_type", "database_table", "database_host",
-                               "database_name", "database_username"], config)
+    # Base validation - required for all databases
+    required_vars = ["database_type", "database_table", "database_name"]
+    
+    # Database-specific validation
+    if config.database_type == "oracle":
+        # Oracle: flexible validation based on connection method
+        oracle_use_wallet = getattr(config, 'oracle_use_wallet', False)
+        wallet_location = getattr(config, 'oracle_wallet_location', None) or os.getenv('TNS_ADMIN')
+        has_username = getattr(config, 'database_username', None)
+        
+        # For Oracle, database_username is only required if not using wallet
+        if not oracle_use_wallet and not wallet_location and not has_username:
+            required_vars.append("database_username")
+        
+        # For Oracle, database_host is optional (can use TNS Names)
+        # Do not add database_host to required_vars for Oracle
+    else:
+        # For all other databases: require host and username
+        required_vars.extend(["database_host", "database_username"])
+    
+    # Validate required fields
+    Utils.check_required_vars(required_vars, config)
 
     if config.cmd == "info":
         info(config)
