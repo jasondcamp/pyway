@@ -205,3 +205,19 @@ def test_pyway_table_validate_outofdate(postgresql_connect: PostgreSQL) -> None:
         _ = Validate(config).run()
 
     assert bool("Out of date" in str(e.value))
+
+
+@pytest.mark.validate_test
+@pytest.mark.postgresql_test
+def test_pyway_table_validate_connection_string(postgresql_connect: PostgreSQL) -> None:
+    config = ConfigFile()
+    config.database_type = "postgres"
+    config.database_table = 'pyway'
+    config.database_migration_dir = os.path.join('tests', 'data', 'schema')
+    config.schema_file = "V01_01__test1.sql"
+    config.database_connection_string = f"host={postgresql_connect.host} port={postgresql_connect.port} dbname=test user={postgresql_connect.username}"
+
+    # Import file
+    output = Import(config).run()
+    output = Validate(config).run()
+    assert strip_ansi(output) == VALIDATE_OUTPUT

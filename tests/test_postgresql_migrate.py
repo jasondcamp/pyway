@@ -82,3 +82,16 @@ def test_pyway_migrate_no_local_files(postgresql_connect: PostgreSQL) -> None:
         _ = Migrate(config).run()
 
     assert bool("no local migration files found" in str(e.value))
+
+
+@pytest.mark.migrate_test
+@pytest.mark.postgresql_test
+def test_pyway_migrate_connection_string(postgresql_connect: PostgreSQL) -> None:
+    config = ConfigFile()
+    config.database_type = "postgres"
+    config.database_table = 'public.pyway'
+    config.database_migration_dir = os.path.join('tests', 'data', 'schema-postgres')
+    config.database_connection_string = f"host={postgresql_connect.host} port={postgresql_connect.port} dbname=test user={postgresql_connect.username}"
+
+    output = Migrate(config).run()
+    assert strip_ansi(output) == MIGRATE_OUTPUT

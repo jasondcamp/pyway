@@ -29,14 +29,18 @@ class Postgres():
         self.create_version_table_if_not_exists()
 
     def connect(self) -> psycopg2.extensions.connection:
-        connection_string = f"dbname={self.args.database_name} user={self.args.database_username}"
-        connection_string += f" host={self.args.database_host}"
+        connection_string: str
+        if self.args.database_connection_string is None:
+            connection_string = f"dbname={self.args.database_name} user={self.args.database_username}"
+            connection_string += f" host={self.args.database_host}"
 
-        if self.args.database_password:
-            connection_string += f" password={self.args.database_password}"
-
-        if self.args.database_port:
-            connection_string += f" port={self.args.database_port}"
+            if self.args.database_password:
+                connection_string += f" password={self.args.database_password}"
+    
+            if self.args.database_port:
+                connection_string += f" port={self.args.database_port}"
+        else:
+            connection_string = self.args.database_connection_string
 
         return psycopg2.connect(connection_string)
 

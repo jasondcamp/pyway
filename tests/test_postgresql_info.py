@@ -50,3 +50,15 @@ def test_pyway_info_nofiles(postgresql_connect: PostgreSQL) -> None:
 
     files = Info(config).get_new_local_migrations([], config.database_migration_dir)
     assert files == []
+
+
+@pytest.mark.info_test
+@pytest.mark.postgresql_test
+def test_pyway_info_connection_string(postgresql_connect: PostgreSQL) -> None:
+    config = ConfigFile()
+    config.database_type = "postgres"
+    config.database_table = 'public.pyway'
+    config.database_migration_dir = os.path.join('tests', 'data', 'schema')
+    config.database_connection_string = f"host={postgresql_connect.host} port={postgresql_connect.port} dbname=test user={postgresql_connect.username}"
+    tbl = Info(config).run()
+    assert strip_ansi(tbl) == INFO_OUTPUT

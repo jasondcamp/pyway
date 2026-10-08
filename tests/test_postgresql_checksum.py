@@ -100,3 +100,22 @@ def test_pyway_table_checksum_invalid_filename(postgresql_connect: PostgreSQL) -
         _, _ = Checksum(config).run()
 
     assert True
+
+
+@pytest.mark.checksum_test
+@pytest.mark.postgresql_test
+def test_pyway_table_checksum_connection_string(postgresql_connect: PostgreSQL) -> None:
+    config = ConfigFile()
+    config.database_type = "postgres"
+    config.database_table = 'public.pyway'
+    config.database_migration_dir = os.path.join('tests', 'data', 'schema-postgres')
+    config.checksum_file = "V01_01__test1.sql"
+    config.database_connection_string = f"host={postgresql_connect.host} port={postgresql_connect.port} dbname=test user={postgresql_connect.username}"
+
+    # Add migration
+    _ = Migrate(config).run()
+
+    # Test once migration is complete
+    name, checksum = Checksum(config).run()
+    assert name == "V01_01__test1.sql"
+    assert checksum == "B78E2BE3"

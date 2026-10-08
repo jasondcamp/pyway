@@ -108,3 +108,16 @@ def test_pyway_table_import_invalidfilename(postgresql_connect: PostgreSQL) -> N
     with pytest.raises(ValueError):
         _ = Import(config).run()
     assert True
+
+
+@pytest.mark.import_test
+@pytest.mark.postgresql_test
+def test_pyway_table_import_connection_string(postgresql_connect: PostgreSQL) -> None:
+    config = ConfigFile()
+    config.database_type = "postgres"
+    config.database_table = 'public.pyway'
+    config.database_migration_dir = os.path.join('tests', 'data', 'schema')
+    config.schema_file = "V01_01__test1.sql"
+    config.database_connection_string = f"host={postgresql_connect.host} port={postgresql_connect.port} dbname=test user={postgresql_connect.username}"
+    output = Import(config).run()
+    assert output == "V01_01__test1.sql"
